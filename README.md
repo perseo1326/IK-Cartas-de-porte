@@ -1,7 +1,7 @@
 # **Cartas de Porte Pick Up Points**
 
 
-Esta **"applicación"** permite al usuario la creacion de las cartas de porte para los pick up points de la tiendad 406 L'Hospitalet Tarragona, Sant Pere y Diagonal, cada una con una subdivision entre furgonetas uno y dos de cada uno de los flujos.
+Esta **"applicación"** permite al usuario la creacion de las cartas de porte para diferentes pick up points y la generacion de su documentacion correspondiente.
 
 ## **Actualizaciones y mejoras**
 
