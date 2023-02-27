@@ -12,23 +12,95 @@
 
 </head>
 <body>
-    <div class="container">
+    <div class="container-column">
         <div class="ancho-100 margen-bajo-1">
             <h1 class="centrar">Cartas de Porte Pick Up Points </h1>
         </div>
+
+        <!-- Cabecera seleccion de info -->
         <div class="margen-bajo-1 ancho-100">
+            <!-- File selection -->
+            <div class="ancho-100">
+                <label class="" for="">1. Seleccionar archivo de datos:</label>
+                <div class="ancho-100 margen-izq-1">
+                    <label class="custom-button" id="upload-file-b" for="file-input" >Subir archivo...</label>
+                    <input type="file" class="" id="file-input" value="" />
+                </div>
+            </div>
+
+            <!-- Date selection -->
+            <div class="ancho-100">
+                <label class="" for="">2. Fecha (CUT OFF TIME):</label>
+                <div class="ancho-100 margen-izq-1">
+                    <input type="date" id="selected-date" class="custom-button">
+                </div>
+            </div>
+
             <div class="container">
-                <ol>
-                    <li>
-                        <label for="load-file" class="back ancho-100">Examinar archivo de datos: </label>
-                        <input type="file">
-                    </li>
-                </ol>
+                <!-- destino -->
+                <div class="ancho-50 inline">
+                    <label for="">3. Seleccione el destino:</label>
+                    <div class="ancho-100 margen-izq-1">
+                        <select id="destino" name="destinos" class="custom-button disable" disabled>
+                            <option value="tarragona">Tarragona</option>
+                            <option value="sant-pere">Sant Pere</option>
+                            <option value="diagonal">Diagonal</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- window service furgo No. -->
+                <div class="ancho-50 inline">
+                    <label for="">4. Seleccione el service window:</label>
+                    <div class="ancho-100 margen-izq-1">
+                        <select id="service-window" name="" class="custom-button">
+                            <option value="furgo1">Furgo No. 1</option>
+                            <option value="furgo2">Furgo No. 2</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process info -->
+            <div class="ancho-50 inline">
+                <label for="">5. Analizar información</label>
+                <div class="ancho-100 margen-izq-1">
+                    <input type="button" class="custom-button disable" value="Procesar información" disabled>
+                </div>
+            </div>
+
+            <!-- Print documents -->
+            <div class="ancho-50 inline">
+                <label for="">6. Imprimir Documentación</label>
+                <div class="ancho-100 margen-izq-1">
+                    <input type="button" class="custom-button disable" value="Imprimir Documentación" disabled>
+                </div>
             </div>
         </div>
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <!-- <th>encabezado de tabla</th> -->
+                    </tr>
+                </thead>
+                <tbody id="data-body">
+                    <tr>
+                        <td>datos de la tabla</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Version de la aplicacion -->
         <div>
             <p class="version">Versión 1.0</p>
         </div>
     </div>
+    <script>
+
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -10,31 +10,51 @@
     box-sizing: border-box;
 }
 
-.back {
-    background-color: aqua;
-}
-
 body {
     background-color: var(--background);
     padding: 0.5rem;
 }
 
-div.container {
+.back1 {
+    background-color: aqua;
+}
+
+.back2 {
+    background-color: orange;
+}
+
+div.container-column {
     padding: 0 0.5rem;
     display: flex;
     flex-direction: column;
+}
+
+.container {
+    display: flex;
 }
 
 .no-visible {
     display: none;
 }
 
+.inline {
+    display: inline-block;
+}
+
 .margen-alto-05 {
     margin-top: 0.5rem;
 }
 
+.margen-izq-1 {
+    margin-left: 1rem;
+}
+
 .ancho-100 {
     width: 100%;
+}
+
+.ancho-50 {
+    width: 50%;
 }
 
 .margen-bajo-05 {
@@ -53,10 +73,6 @@ h1 {
     font-weight: bolder;
 }
 
-ol {
-    padding-left: 0.5rem;
-}
-
 label {
     display: inline-block;
 }
@@ -65,17 +81,11 @@ div p.version {
     text-align: right;
     padding: 0 1rem;
     font-size: 0.7rem;
-    color: lightgray;
+    color: gray;
 }
 
-
-/*
-input[type="file"], input[type='button'] {
-    display: none;
-}
-
-
-div label.custom-button {
+.custom-button {
+    border: none;
     border-radius: 4px;
 	background-color: var(--first-color);
 	color: var(--second-color);
@@ -86,11 +96,31 @@ div label.custom-button {
 	text-align: center;
 }
 
-div label.custom-button:hover {
+.custom-button:hover {
     background-color: var(--second-color);
     color: var(--first-color)
 }
 
+.disable {
+    background-color: lightgray;
+    color: black;
+    cursor: not-allowed;
+}
+
+.disable:hover {
+    background-color: lightgray;
+    color: orangered;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+select option {
+    /* background-color: red; */
+}
+
+/*
 ul li {
 	list-style-type: none;
     margin-bottom: 0.3rem;
@@ -188,7 +218,7 @@ div.loading p {
 
 /* ***** TABLE STYLES ***** */
 
-/*
+
 table {
     border-collapse: collapse;
     border: 2px solid var(--first-color);
@@ -199,6 +229,7 @@ th, td {
 }
 
 tr td {
+    min-width: 5rem;
     max-height: 1rem;
 }
 
