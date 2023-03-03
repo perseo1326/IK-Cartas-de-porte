@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUP Cartas de Porte</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+
+
+/* *,*:after,*:before{
+    box-sizing: border-box;
+  } */
+
+
+
+  * {
+    --background: white;
+    --first-color: #0057a4;
+    --second-color: #ffdb01;
+    --warning-color: rgba(255, 165, 0, 1);
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+.warning {
+    background-color: var(--warning-color);
+}
+
+body {
+    background-color: var(--background);
+    padding: 0.5rem;
+}
+
+.back1 {
+    background-color: aqua;
+}
+
+.back2 {
+    background-color: orange;
+}
+
+div.container-column {
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+}
+
+.no-visible {
+    display: none;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.margen-alto-05 {
+    margin-top: 0.5rem;
+}
+
+.margen-izq-1 {
+    margin-left: 1rem;
+}
+
+.ancho-100 {
+    width: 100%;
+}
+
+.ancho-50 {
+    width: 50%;
+}
+
+.margen-bajo-05 {
+    margin-bottom: 0.5rem;
+}
+
+.margen-bajo-1 {
+    margin-bottom: 1rem;
+}
+
+.centrar {
+    text-align: center;
+}
+
+h1 {
+    font-weight: bolder;
+}
+
+label {
+    display: inline-block;
+}
+
+div p.version {
+    text-align: right;
+    padding: 0 1rem;
+    font-size: 0.7rem;
+    color: gray;
+}
+
+.custom-button {
+    border: none;
+    border-radius: 4px;
+	background-color: var(--first-color);
+	color: var(--second-color);
+	cursor: pointer;
+	font-size: 1rem;
+	margin: 0.3rem auto;
+	padding: 0.3rem 0.6rem;
+	text-align: center;
+}
+
+.custom-button:hover {
+    background-color: var(--second-color);
+    color: var(--first-color)
+}
+
+.disable {
+    background-color: lightgray;
+    color: black;
+    cursor: not-allowed;
+}
+
+.disable:hover {
+    background-color: lightgray;
+    color: orangered;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* select {
+    background-color: red;
+} */
+
+select option[selected] {
+    background-color: orange;
+}
+
+/*
+ul li {
+	list-style-type: none;
+    margin-bottom: 0.3rem;
+    padding-left: auto;
+}
+
+/* ***** CUSTOM RADIO BUTTONS ***** */
+
+/*
+.custom-radio {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+label.custom-radio > input[type="radio"] {
+    display: none;
+}
+
+.custom-radio-show {
+    position: relative;
+    background-color: var(--first-color);
+    border-radius: 50%;
+    width: 1rem; 
+    height: 1rem;
+}
+
+.custom-radio-show::after {
+    position: absolute;
+    content: "";
+    background-color: var(--background);
+    top: 12.5%;
+    left: 12.5%;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+}
+
+.custom-radio > input[type="radio"]:checked ~ .custom-radio {
+    background-color: var(--first-color);
+    color: var(--second-color);
+}
+
+.custom-radio > input[type="radio"]:checked + .custom-radio-show::after {
+    position: absolute;
+    content: "";
+    background-color: var(--second-color);
+    top: 12.5%;
+    left: 12.5%;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+}
+
+span.custom-radio-text {
+    margin-left: 0.3rem;
+    padding: 0 0.2rem ;
+}
+
+/* ***** CUSTOM RADIO BUTTONS ENDS ***** */
+
+/*
+div.loading-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+/*    backdrop-filter: blur(5px);
+    /* background-color: hsla(210, 4%, 20%, 0.5); */
+/* 
+}
+
+
+div.loading-frame div.loading {
+	position: relative;
+	background-color: var(--first-color);
+    color: var(--second-color);
+    text-align: center;
+    max-width: 40%;
+    margin : auto;
+    top: 50%;
+	padding: 2rem ;
+    border-radius: 5px;
+    transform: translate(-0%, -50%);
+    -webkit-transform: translate(-0%, -50%);
+}
+
+div.loading p {
+    margin: auto;
+    font-weight: bold;
+    font-size: larger;
+}
+
+/* ***** TABLE STYLES ***** */
+
+
+table {
+    border-collapse: collapse;
+    border: 2px solid var(--first-color);
+}
+
+th, td {
+    border-bottom: 1px solid gray;
+}
+
+tr td {
+    min-width: 5rem;
+    max-height: 1rem;
+    border: 0.5px solid gray;
+    padding: 0.3rem ;
+}
+
+tr td input[type='text'] {
+    text-align: center;
+}
+
+tr:nth-last-of-type(2n+0) {
+    background-color: lightgray;
+}
+
+tbody tr:hover, tbody tr.editable {
+    background-color: var(--second-color);
+}
+
+tbody tr td[data-index]:focus-within,
+tbody tr:hover td[data-index],
+tbody tr td input[type='text']:focus, 
+tbody tr:hover td input[type='text'] {
+    color: var(--second-color);
+    background-color: var(--first-color);
+}
+
+tbody tr td.is-fictitious-location {
+    background-color: var(--warning-color);
+}
+
+.cabecera {
+    background-color: var(--first-color);
+    color: var(--second-color);
+}
+
+.resaltar {
+    background-color: var(--second-color);
+}
+
+    </style>
+
+</head>
+<body>
+    <div class="container-column">
+        <div class="ancho-100 margen-bajo-1">
+            <h1 class="centrar">Cartas de Porte Pick Up Points </h1>
+        </div>
+
+        <!-- Cabecera seleccion de info -->
+        <div class="margen-bajo-1 ancho-100">
+            <!-- File selection -->
+            <div class="ancho-100">
+                <label class="" for="">1. Seleccionar archivo de datos:</label>
+                <div class="ancho-100 margen-izq-1">
+                    <label class="custom-button" id="upload-file-b" for="file-input" >Subir archivo...</label>
+                    <input type="file" class="" id="file-input" value="" />
+                </div>
+            </div>
+
+            <!-- Date selection -->
+            <div class="ancho-100">
+                <label class="" for="">2. Fecha (CUT OFF DATE):</label>
+                <div class="ancho-100 margen-izq-1">
+                    <input type="date" id="selected-date" class="custom-button disable" disabled>
+                </div>
+            </div>
+
+            <div class="container">
+                <!-- destino -->
+                <div class="ancho-50 inline">
+                    <label for="">3. Seleccione el destino (CUT OFF TIME):</label>
+                    <div class="ancho-100 margen-izq-1">
+                        <select id="destino-cut-off-time" name="destinos" class="custom-button disable" disabled>
+                            <!-- <option value="" >Selecciona un valor </option> -->
+                            <option value="DIAGONAL">Diagonal</option>
+                            <option value="SANT_PERE">Sant Pere</option>
+                            <option value="TARRAGONA">Tarragona</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- window service furgo No. -->
+                <div class="ancho-50 inline">
+                    <label for="">4. Seleccione el Service Window:</label>
+                    <div class="ancho-100 margen-izq-1">
+                        <select id="service-window" name="" class="custom-button disable" disabled>
+                            <!-- <option value="" >Selecciona un valor </option> -->
+                            <option value="_ONE">Primera Furgo</option>
+                            <option value="_TWO">Segunda Furgo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process info -->
+            <div class="ancho-50 inline">
+                <label for="">5. Analizar información</label>
+                <div class="ancho-100 margen-izq-1">
+                    <input type="button" id="process-data" class="custom-button disable" value="Procesar información" disabled>
+                </div>
+            </div>
+
+            <!-- Print documents -->
+            <div class="ancho-50 inline">
+                <label for="">6. Imprimir Documentación</label>
+                <div class="ancho-100 margen-izq-1">
+                    <input type="button" class="custom-button disable" value="Imprimir Documentación" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <!-- <th>encabezado de tabla</th> -->
+                    </tr>
+                </thead>
+                <tbody id="data-body">
+                    <tr>
+                        <td>datos de la tabla</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Version de la aplicacion -->
+        <div>
+            <p class="version">Versión 1.0</p>
+        </div>
+    </div>
+    <script>
+    /*
+
+        filtrar por flujo de mercancia = PUP
+        obtener los cut of time para inicalizar la visualizacion 
+        
+        seleccionar fecha = CUT_OFF_DATE
+        seleccionar el destino, Diagonal, Tarragona, Sant Pere = CUT_OFF_TIME
+        
+
+        ACTUAL_ORDER_STATUS = 
+            Not Started
+            Started
+            Picking
+            Picked
+            Wait for Merge
+            Check Started
+            Checked
+            Completed
+            Open Return
+            Returned
+    */
+        /* 
+            ISELL_ORDER_NUMBER
+            PICK_ID
+            ORDER_TYPE
+            PACKAGES
+            WEIGHT
+            VOLUME
+            ORDERED_QTY
+            PICK_AREA
+            ACTUAL_ORDER_STATUS
+            * CANCELLED
+            * NOT_HANDED_OUT
+            CUT_OFF_DATE
+            CUT_OFF_TIME
+            SERVICE_WINDOW
+            */
+
+    class PickOrder {
+        constructor(pickId, packages, weight, volume, orderedQty, pickArea, actualOrderStatus, cancelled, notHandedOut ) {
+            this.pickArea       = pickArea;
+            this.pickId         = pickId;
+            this.packages       = packages;
+            this.weight         = weight;
+            this.volume         = volume;
+            this.orderedQty     = orderedQty;
+            this.actualOrderStatus = actualOrderStatus;
+            this.cancelled      = cancelled;
+            this.notHandedOut  = notHandedOut;
+        }
+    }
+
+    class OrderPUP {
+        constructor(isellOrderNumber, cutOffDate, cutOffTime, serviceWindow, pickOrder) {
+            this.isellOrderNumber   = isellOrderNumber;
+            this.cutOffDate         = cutOffDate;
+            this.cutOffTime         = cutOffTime;
+            this.serviceWindow      = serviceWindow;
+            this.pickOrder          = new Map();
+            this.pickOrder.set(pickOrder.pickArea, pickOrder);
+            this.totalPackages      = 0.0;
+            this.totalWeight        = 0.0;
+            this.totalVolume        = 0.0;
+        }
+
+        addPickOrder(pickOrder) {
+            if(this.pickOrder.has(pickOrder.pickArea)) {
+                console.log("ERROR: picking task ya existente! ID = " + pickOrder.pickId);
+                alert("ERROR: picking task ya existente! ID = " + pickOrder.pickId);
+                return;
+            }
+            this.pickOrder.set(pickOrder.pickArea, pickOrder);
+        }
+
+        calculateTotals() {
+
+        }
+
+        toString() {
+            let string = "Isell: " + this.isellOrderNumber + "\n";
+            string += "Cut of Date: " + this.cutOffDate + "\n";
+            string += "Cut of Time: " + this.cutOffTime + "\n";
+            string += "Service Window: " + this.serviceWindow + "\n";
+            return string;
+        }
+
+    }
+
+    // *********************************************************
+    // Variables y constantes
+    const fileSelector = document.getElementById('file-input');
+    const selectedDate = document.getElementById("selected-date");
+    const cutOffTimeSelector = document.getElementById("destino-cut-off-time");
+    const serviceWindowSelector = document.getElementById("service-window");
+    const processDataB = document.getElementById("process-data");
+
+
+
+    const tableBody = document.getElementById("data-body");
+
+    const fileReader = new FileReader();
+    let contentOriginal = [];
+    const todayDate = new Date("2023-02-16");
+
+    const CUT_OFF_TIME = new Map();
+    CUT_OFF_TIME.set("DIAGONAL", "06:30");
+    CUT_OFF_TIME.set("SANT_PERE", "20:00");
+    CUT_OFF_TIME.set("TARRAGONA", "19:45");
+
+    const WINDOW_SERVICE = new Map();
+    // WINDOW_SERVICE.set("DIAGONAL_ONE", []);
+    // WINDOW_SERVICE.set("DIAGONAL_TWO", []);
+    WINDOW_SERVICE.set("SANT_PERE_ONE", ["10:00-13:00", "13:00-16:00"]);
+    WINDOW_SERVICE.set("SANT_PERE_TWO", ["16:00-19:00", "19:00-21:00"]);
+    WINDOW_SERVICE.set("TARRAGONA_ONE", ["10:00-13:00", "13:00-17:00"]);
+    WINDOW_SERVICE.set("TARRAGONA_TWO", ["17:00-19:00", "19:00-21:00"]);
+    
+    // *********************************************************
+    selectedDate.valueAsDate = todayDate;
+
+    // *********************************************************
+    // Event Listeners 
+    fileSelector.addEventListener('change', openFile); 
+    processDataB.addEventListener('click', processData);
+
+    
+    
+    // *********************************************************
+    // Function to validate a given date
+    function validateDate() {
+        const date = selectedDate.valueAsDate;
+        if(!date ){
+            console.log("La fecha seleccionada es inválida.");
+            alert("La fecha seleccionada es inválida.");
+            return false;
+        } 
+        // console.log("FECHA: ", date.toISOString());
+        return selectedDate.value;
+    }
+
+    // *********************************************************
+    // Verifica el archivo seleccionado        
+    function verifyFileExist(file) {
+        if (!file) {
+            alert("No se ha seleccionado ningun archivo.");
+            console.log("No se ha seleccionado ningun archivo.");
+            return null;
+        }
+        
+        return file;
+    }
+
+    // *********************************************************
+    function openFile(evento) {
+        console.clear();
+        let file = evento.target.files[0];
+
+        file = verifyFileExist(file);
+        if(!file) {            
+            return;
+        }
+
+        fileReader.readAsText(file, "windows-1252");
+        document.getElementById("upload-file-b").innerText = file.name;
+        fileReader.onload = loadFile;
+    }
+    
+    // *********************************************************
+    // load the content of the file to memory
+    function readDataFromFile (fileData) {
+        // Divide info into rows and columns
+        let rows = fileData.split('\n');
+        let columns = [];
+        let originalData = [];
+        rows.forEach(row => {
+            columns = row.split('\t');
+            originalData.push(columns);
+        });
+        return originalData;
+    }
+
+    // *********************************************************
+    // Verify the valid structure of data readed from the file based on the headers of info
+    function validateContent(arrayRow) {
+
+        if (arrayRow[0].trim() == "ISELL_ORDER_NUMBER" && 
+            arrayRow[1].trim() == "PICK_ID" && 
+            arrayRow[3].trim() == "ORDER_TYPE" && 
+            arrayRow[5].trim() == "PACKAGES" && 
+            arrayRow[6].trim() == "WEIGHT" && 
+            arrayRow[7].trim() == "VOLUME" && 
+            arrayRow[12].trim() == "PICK_AREA" && 
+            arrayRow[38].trim() == "CUT_OFF_DATE" && 
+            arrayRow[39].trim() == "CUT_OFF_TIME" && 
+            arrayRow[42].trim() == "SERVICE_WINDOW" ) {
+                return true;
+        } 
+        return false;
+    }
+
+    // *********************************************************
+    // Clean all invalid final lines read from the file.
+    function deleteInvalidFinalLines(dataArray, totalColumns) {
+        if (dataArray[dataArray.length - 1].length < totalColumns) {
+            dataArray.pop();
+            deleteInvalidFinalLines(dataArray, totalColumns);
+        }
+        return dataArray;
+    }
+
+    // *********************************************************
+    // Remove all unnecessary columns from the matrix data
+    function filterColumns(dataMatrix) {
+        /* 
+            ISELL_ORDER_NUMBER
+            PICK_ID
+            ORDER_TYPE
+            PACKAGES
+            WEIGHT
+            VOLUME
+            ORDERED_QTY
+            PICK_AREA
+            ACTUAL_ORDER_STATUS
+            * CANCELLED
+            * NOT_HANDED_OUT
+            CUT_OFF_DATE
+            CUT_OFF_TIME
+            SERVICE_WINDOW
+            */
+
+        let objectsArray = [];
+        dataMatrix.forEach( row => {
+            const order = [];
+                order.push(row[0].trim());
+                order.push(row[1].trim());
+                order.push(row[3].trim());
+                order.push(row[5].trim());
+                order.push(row[6].trim());
+                order.push(row[7].trim());
+                order.push(row[8].trim());
+                order.push(row[12].trim());
+                order.push(row[13].trim());
+                order.push(row[23].trim());
+                order.push(row[24].trim());
+                order.push(row[38].trim());
+                order.push(row[39].trim());
+                order.push(row[42].trim());
+            objectsArray.push(order);
+        });
+        return objectsArray;
+    }
+
+    // *********************************************************
+    // Check and remove all elements with "Order Type" different that "PUP"
+    function filterOrderTypeOnlyPUP(dataArray) {
+        return dataArray.filter( (row) => { return row[2] == "PUP" } );
+    }
+
+    // *********************************************************
+    function loadFile() {
+        if (!fileReader.result) {
+            cleanVariablesAndVisual();
+            console.log("El contenido del archivo no pudo ser leido.");
+            alert("El contenido del archivo no pudo ser leido.");
+            return;
+        }
+
+        let dataFileArray = readDataFromFile(fileReader.result);
+        // Validate the format of the file and data
+        if(!validateContent(dataFileArray[0])) {
+            // Delete any info into the variables to avoid further errors
+            cleanVariablesAndVisual();
+            console.log("El archivo NO contiene información válida.");
+            alert("El archivo NO contiene información válida.");
+            return;
+        }
+        
+        dataFileArray = deleteInvalidFinalLines(dataFileArray, dataFileArray[0].length);
+        // Remove the headers from the loaded info
+        dataFileArray.shift();
+        dataFileArray = filterColumns(dataFileArray);
+        contentOriginal = filterOrderTypeOnlyPUP(dataFileArray);
+        
+        selectedDate.disabled = false;
+        selectedDate.classList.remove("disable");
+
+        cutOffTimeSelector.disabled = false;
+        cutOffTimeSelector.classList.remove("disable");
+
+        serviceWindowSelector.disabled = false;
+        serviceWindowSelector.classList.remove("disable");
+
+        processDataB.disabled = false;
+        processDataB.classList.remove("disable");
+    }
+
+    // *********************************************************
+    // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
+    function mappingOrdersFromArray(arrayData) {
+        
+        
+        const dataMap = new Map();
+        arrayData.forEach( (row) => {
+            // console.log("Fila #" + i + " [" + row + "]");
+
+            // (pickArea, pickId, packages, weight, volume, orderedQty, actualOrderStatus, cancelled, notHandedOut )
+
+            let pickTask = new PickOrder(row[1], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]);
+
+            if(dataMap.has(row[0])) {
+                console.log("Isell duplicado: ", row[0]);
+                // console.log("ANTIGUO objeto OrderPUP: ", dataMap.get(row[0]));
+                
+                dataMap.get(row[0]).addPickOrder(pickTask);
+                // dataMap.set(row[0], temp);
+                // console.log("nuevo objeto OrderPUP: ", dataMap.get(row[0]));
+
+            } else {
+                let order = new OrderPUP(row[0], row[11], row[12], row[13], pickTask);
+                dataMap.set(row[0], order);
+                // console.log("Order ", order);
+            }
+        });
+        return dataMap;
+        
+    }
+
+    // *********************************************************
+    function processData() {
+
+        const dateCutOffDate = validateDate();
+        if(!dateCutOffDate) {
+            return;
+        }
+
+        // console.log("contentOriginal inicial: ", contentOriginal.length);
+
+        let content = dataFilterByDate(contentOriginal, dateCutOffDate);
+        // console.log("data filter by date: ", content.length);
+
+        const cutOffTime = cutOffTimeSelector.value;
+        content = dataFilterByCutOffTime(content, CUT_OFF_TIME.get(cutOffTime));
+        // console.log("data filter by cut off time (Destination): ", content.length);
+        
+
+        // console.log("CUTO OFF TIME value: ", cutOffTime);
+        // console.log("VALOR de service window: ", serviceWindowSelector.value, );
+        
+        const windowServiceSelection = WINDOW_SERVICE.get(cutOffTime + serviceWindowSelector.value)
+        // console.log("valor concatenado : ", windowServiceSelection );
+        content = dataFilterByServiceWindow(content, windowServiceSelection );
+
+        // Bind orders with the same "ISELL_ORDER_NUMBER"
+        const dataMap = mappingOrdersFromArray(content);
+
+        console.log("Mapa: ", dataMap);
+
+
+        showContent(content);
+        // showContent(dataMap);
+    }
+
+    // *********************************************************
+    // Function fo filter the data set by date
+    function dataFilterByDate(dataArray, textDate) {
+        return dataArray.filter( (row) => { return row[11] == textDate });
+    }
+    
+    // *********************************************************
+    // Function to filter data by "CUT_OFF_TIME" value selected
+    function dataFilterByCutOffTime(dataArray, selection) {
+        return dataArray.filter( (row) => { return row[12] === selection });
+    }
+    
+    // *********************************************************
+    function dataFilterByServiceWindow(dataArray, windowServiceArrayOptions) {
+
+        console.log("Valor de window service: ", windowServiceArrayOptions);
+        return dataArray.filter( row => {
+            return windowServiceArrayOptions.includes(row[13]); 
+        });
+    }
+
+    // *********************************************************
+    function showContent(data) {
+        // Clean and initialize values for the table data view
+        tableBody.innerHTML = "";
+        let dataTableBody = "";
+        let count = 0;
+        
+        console.log("Data en showContent ", data);
+
+        data.forEach(row => {
+
+            dataTableBody += "<tr>";
+            dataTableBody += "<td>";
+            dataTableBody += count;
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            dataTableBody += row[0];
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            dataTableBody += row.toString();
+            dataTableBody += "</td>";
+            dataTableBody += "</tr>";
+
+            count++;
+        });
+
+        tableBody.innerHTML += dataTableBody;
+        // tableBody.innerHTML += data;
+    }
+    
+    // *********************************************************
+    function cleanVariablesAndVisual() {
+        content = contentOriginal = [];
+        document.getElementById("upload-file-b").innerText = "Subir archivo...";
+        showContent(content);
+    }
+
+    </script>
+</body>
+</html>
