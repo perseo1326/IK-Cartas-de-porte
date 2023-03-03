@@ -60,6 +60,9 @@
             this.serviceWindow      = serviceWindow;
             this.pickOrder          = new Map();
             this.pickOrder.set(pickOrder.pickArea, pickOrder);
+            this.totalPackages      = 0.0;
+            this.totalWeight        = 0.0;
+            this.totalVolume        = 0.0;
         }
 
         addPickOrder(pickOrder) {
@@ -69,6 +72,10 @@
                 return;
             }
             this.pickOrder.set(pickOrder.pickArea, pickOrder);
+        }
+
+        calculateTotals() {
+
         }
 
         toString() {
@@ -94,13 +101,21 @@
     const tableBody = document.getElementById("data-body");
 
     const fileReader = new FileReader();
-    let optionsCutOffTime = [];
     let contentOriginal = [];
-    const contentOriginalMap = new Map();
     const todayDate = new Date("2023-02-16");
 
-    const WINDOW_SERVICE_TARRAGONA_FURGO_1 = ["10:00-13:00", "13:00-17:00"];
-    const WINDOW_SERVICE_TARRAGONA_FURGO_2 = ["17:00-19:00", "19:00-21:00"];
+    const CUT_OFF_TIME = new Map();
+    CUT_OFF_TIME.set("DIAGONAL", "06:30");
+    CUT_OFF_TIME.set("SANT_PERE", "20:00");
+    CUT_OFF_TIME.set("TARRAGONA", "19:45");
+
+    const WINDOW_SERVICE = new Map();
+    // WINDOW_SERVICE.set("DIAGONAL_ONE", []);
+    // WINDOW_SERVICE.set("DIAGONAL_TWO", []);
+    WINDOW_SERVICE.set("SANT_PERE_ONE", ["10:00-13:00", "13:00-16:00"]);
+    WINDOW_SERVICE.set("SANT_PERE_TWO", ["16:00-19:00", "19:00-21:00"]);
+    WINDOW_SERVICE.set("TARRAGONA_ONE", ["10:00-13:00", "13:00-17:00"]);
+    WINDOW_SERVICE.set("TARRAGONA_TWO", ["17:00-19:00", "19:00-21:00"]);
     
     // *********************************************************
     selectedDate.valueAsDate = todayDate;
@@ -109,14 +124,7 @@
     // Event Listeners 
     fileSelector.addEventListener('change', openFile); 
     processDataB.addEventListener('click', processData);
-    cutOffTimeSelector.addEventListener('change', visualizeServiceWindowOptions);
-    serviceWindowSelector.addEventListener('change', xx);
 
-
-    function xx() {
-        console.log("valores selector WINDOW SERVICE: ", this.options);
-
-    }
     
     
     // *********************************************************
@@ -164,56 +172,7 @@
         document.getElementById("upload-file-b").innerText = file.name;
         fileReader.onload = loadFile;
     }
-
-    // *********************************************************
-    function loadFile() {
-        if (!fileReader.result) {
-            cleanVariablesAndVisual();
-            console.log("El contenido del archivo no pudo ser leido.");
-            alert("El contenido del archivo no pudo ser leido.");
-            return;
-        }
-
-        let dataFileArray = readDataFromFile(fileReader.result);
-
-        // Validate the format of the file and data
-        if(!validateContent(dataFileArray[0])) {
-            // Delete any info into the variables to avoid further errors
-            cleanVariablesAndVisual();
-            console.log("El contenido del archivo NO tiene formato válido.");
-            alert("El contenido del archivo NO tiene formato válido.");
-            return;
-        }
-        
-        dataFileArray = deleteInvalidFinalLines(dataFileArray, dataFileArray[0].length);
-        // Remove the headers from the loaded info
-        dataFileArray.shift();
-        dataFileArray = filterColumns(dataFileArray);
-        contentOriginal = filterOrderTypeOnlyPUP(dataFileArray);
-        
-        selectedDate.disabled = false;
-        selectedDate.classList.remove("disable");
-        
-        // Get "CUT_OFF_TIME" values and load them into the dropdown list on the page.
-        optionsCutOffTime = visualizeCutOffTimeOptions(contentOriginal);
-        
-        // Return the data array filtered
-
-
-        // dataFileArray.unshift(temp);
-
-         /* */
-        // console.log("añadido encabezado: ", dataFileArray);
-
-        // contentOriginalMap = mappingOrdersFromArray(dataFileArray);
-
-        // console.log("Tamaño del mapa: ", contentOriginalMap.size);
-
-        // content = contentOriginalMap;
-
-        // showContent(content);
-    }
-
+    
     // *********************************************************
     // load the content of the file to memory
     function readDataFromFile (fileData) {
@@ -306,82 +265,119 @@
     }
 
     // *********************************************************
-    // function to obtain all values of "CUT_OFF_TIME"  
-    function getCutOffTimeValues(dataArray) {
-        const cutOffTimeValues = new Set();
-        const optionsDestination = [];
-
-        dataArray.forEach( (row) => { cutOffTimeValues.add(row[12]) });
-        cutOffTimeValues.forEach( (item) => {optionsDestination.push(item) });
-        optionsDestination.sort();
-        return optionsDestination;
-    }
-
-    // *********************************************************
-    // Given an Array of "CUT_OFF_TIME" elements load those into the Dropdown list "Destination" 
-    function visualizeCutOffTimeOptions (dataArray) {
-        cleanOptionsScrollDown(cutOffTimeSelector);
-
-        // Get options from the file data.
-        const optionsCutOffTime = getCutOffTimeValues(dataArray);
-        optionsCutOffTime.unshift("");
-
-        addOptionsScrollDown(cutOffTimeSelector, optionsCutOffTime);
-
-        cutOffTimeSelector.disabled = false;
-        cutOffTimeSelector.classList.remove("disable");
-        return optionsCutOffTime;
-    }
-
-    // *********************************************************
-    // Function to get the "SERVICE_WINDOW" values for a "CUT_OFF_TIME" value
-    function visualizeServiceWindowOptions (){
-        serviceWindowSelector.disabled = false;
-        serviceWindowSelector.classList.remove("disable");
-
-        let content = dataFilterByDate(contentOriginal );
-        
-        if(!content) {
-            // if the date is invalid, return and do nothing.
+    function loadFile() {
+        if (!fileReader.result) {
+            cleanVariablesAndVisual();
+            console.log("El contenido del archivo no pudo ser leido.");
+            alert("El contenido del archivo no pudo ser leido.");
             return;
         }
 
-        content = dataFilterByCutOffTime(content, this.value);
-        
-        let serviceWindowOptions = getServiceWindowValues(content);
-
-        console.log("SERVICE WINDOW OPTIONS ", serviceWindowOptions);
-
-
-        showContent(content);
-
-    }
-
-    // *********************************************************
-    function addOptionsScrollDown(scrollDownControl, optionsArray) {
-            optionsArray.forEach( (element) => {
-            const option = document.createElement("option");
-            option.value = option.text = element;
-            scrollDownControl.appendChild(option);
-        });
-    }       
-    // *********************************************************
-    function cleanOptionsScrollDown(scrollDownControl ) {
-        // Function to clean a given scroll down control options
-        while(scrollDownControl.options.length > 0) {
-            scrollDownControl.removeChild(scrollDownControl.firstElementChild);
+        let dataFileArray = readDataFromFile(fileReader.result);
+        // Validate the format of the file and data
+        if(!validateContent(dataFileArray[0])) {
+            // Delete any info into the variables to avoid further errors
+            cleanVariablesAndVisual();
+            console.log("El archivo NO contiene información válida.");
+            alert("El archivo NO contiene información válida.");
+            return;
         }
+        
+        dataFileArray = deleteInvalidFinalLines(dataFileArray, dataFileArray[0].length);
+        // Remove the headers from the loaded info
+        dataFileArray.shift();
+        dataFileArray = filterColumns(dataFileArray);
+        contentOriginal = filterOrderTypeOnlyPUP(dataFileArray);
+        
+        selectedDate.disabled = false;
+        selectedDate.classList.remove("disable");
+
+        cutOffTimeSelector.disabled = false;
+        cutOffTimeSelector.classList.remove("disable");
+
+        serviceWindowSelector.disabled = false;
+        serviceWindowSelector.classList.remove("disable");
+
+        processDataB.disabled = false;
+        processDataB.classList.remove("disable");
     }
+
+    // *********************************************************
+    // function to obtain all values of "CUT_OFF_TIME"  
+    // function getCutOffTimeValues(dataArray) {
+    //     const cutOffTimeValues = new Set();
+    //     const optionsDestination = [];
+
+    //     dataArray.forEach( (row) => { cutOffTimeValues.add(row[12]) });
+    //     cutOffTimeValues.forEach( (item) => {optionsDestination.push(item) });
+    //     optionsDestination.sort();
+    //     return optionsDestination;
+    // }
+
+    // *********************************************************
+    // Given an Array of "CUT_OFF_TIME" elements load those into the Dropdown list "Destination" 
+    // function visualizeCutOffTimeOptions (dataArray) {
+    //     cleanOptionsScrollDown(cutOffTimeSelector);
+
+    //     // Get options from the file data.
+    //     const optionsCutOffTime = getCutOffTimeValues(dataArray);
+    //     optionsCutOffTime.unshift("");
+
+    //     addOptionsScrollDown(cutOffTimeSelector, optionsCutOffTime);
+
+    //     cutOffTimeSelector.disabled = false;
+    //     cutOffTimeSelector.classList.remove("disable");
+    //     return optionsCutOffTime;
+    // }
+
+    // *********************************************************
+    // Function to get the "SERVICE_WINDOW" values for a "CUT_OFF_TIME" value
+    // function visualizeServiceWindowOptions (){
+    //     serviceWindowSelector.disabled = false;
+    //     serviceWindowSelector.classList.remove("disable");
+
+    //     let content = dataFilterByDate(contentOriginal );
+        
+        // if(!content) {
+        //     // if the date is invalid, return and do nothing.
+        //     return;
+        // }
+
+        // content = dataFilterByCutOffTime(content, this.value);
+        
+        // let serviceWindowOptions = getServiceWindowValues(content);
+
+    //     console.log("SERVICE WINDOW OPTIONS ", serviceWindowOptions);
+
+
+    //     showContent(content);
+
+    // }
+
+    // *********************************************************
+    // function addOptionsScrollDown(scrollDownControl, optionsArray) {
+    //         optionsArray.forEach( (element) => {
+    //         const option = document.createElement("option");
+    //         option.value = option.text = element;
+    //         scrollDownControl.appendChild(option);
+    //     });
+    // }       
+    // // *********************************************************
+    // function cleanOptionsScrollDown(scrollDownControl ) {
+    //     // Function to clean a given scroll down control options
+    //     while(scrollDownControl.options.length > 0) {
+    //         scrollDownControl.removeChild(scrollDownControl.firstElementChild);
+    //     }
+    // }
 
 
     // *********************************************************
     // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
     function mappingOrdersFromArray(arrayData) {
         
-        /*
+        
         const dataMap = new Map();
-        for (let i = 0; i < arrayData.length; i++) {
-            const row = arrayData[i];
+        arrayData.forEach( (row) => {
             // console.log("Fila #" + i + " [" + row + "]");
 
             // (pickArea, pickId, packages, weight, volume, orderedQty, actualOrderStatus, cancelled, notHandedOut )
@@ -401,44 +397,50 @@
                 dataMap.set(row[0], order);
                 // console.log("Order ", order);
             }
-        }
+        });
         return dataMap;
-        */
+        
     }
-
-
 
     // *********************************************************
     function processData() {
 
+        const dateCutOffDate = validateDate();
+        if(!dateCutOffDate) {
+            return;
+        }
 
+        // console.log("contentOriginal inicial: ", contentOriginal.length);
 
-        // let content = dataFilterByDate(contentOriginal, dateCutOffDate);
+        let content = dataFilterByDate(contentOriginal, dateCutOffDate);
+        // console.log("data filter by date: ", content.length);
+
+        const cutOffTime = cutOffTimeSelector.value;
+        content = dataFilterByCutOffTime(content, CUT_OFF_TIME.get(cutOffTime));
+        // console.log("data filter by cut off time (Destination): ", content.length);
         
-        console.log("filter by date, contentOriginal lenght inicial: ", contentOriginal.length);
-        // content = dataFilterByCutOffTime(content);
-        console.log("filter by date, content lenght Final: ", content.length);
 
-        // let serviceWindowValues = getServiceWindowValues(content);
+        // console.log("CUTO OFF TIME value: ", cutOffTime);
+        // console.log("VALOR de service window: ", serviceWindowSelector.value, );
+        
+        const windowServiceSelection = WINDOW_SERVICE.get(cutOffTime + serviceWindowSelector.value)
+        // console.log("valor concatenado : ", windowServiceSelection );
+        content = dataFilterByServiceWindow(content, windowServiceSelection );
 
-        console.log("service window options ", serviceWindowValues);
+        // Bind orders with the same "ISELL_ORDER_NUMBER"
+        const dataMap = mappingOrdersFromArray(content);
 
-
-
+        console.log("Mapa: ", dataMap);
 
 
         showContent(content);
+        // showContent(dataMap);
     }
 
     // *********************************************************
     // Function fo filter the data set by date
-    function dataFilterByDate(dataArray) {
-        
-        const dateCutOffDate = validateDate();
-        if(!dateCutOffDate) {
-            return null;
-        }
-        return dataArray.filter( (row) => { return row[11] == dateCutOffDate });
+    function dataFilterByDate(dataArray, textDate) {
+        return dataArray.filter( (row) => { return row[11] == textDate });
     }
     
     // *********************************************************
@@ -448,16 +450,25 @@
     }
     
     // *********************************************************
-    // function to obtain all values of "SERVICE_WINDOW"  
-    function getServiceWindowValues(dataArray) {
-        const serviceWindow = new Set();
-        const options = [];
+    function dataFilterByServiceWindow(dataArray, windowServiceArrayOptions) {
 
-        dataArray.forEach( (row) => { serviceWindow.add(row[13]) });
-        serviceWindow.forEach( (item) => {options.push(item) });
-        options.sort();
-        return options;
+        console.log("Valor de window service: ", windowServiceArrayOptions);
+        return dataArray.filter( row => {
+            return windowServiceArrayOptions.includes(row[13]); 
+        });
     }
+
+    // *********************************************************
+    // function to obtain all values of "SERVICE_WINDOW"  
+    // function getServiceWindowValues(dataArray) {
+    //     const serviceWindow = new Set();
+    //     const options = [];
+
+    //     dataArray.forEach( (row) => { serviceWindow.add(row[13]) });
+    //     serviceWindow.forEach( (item) => {options.push(item) });
+    //     options.sort();
+    //     return options;
+    // }
 
     // *********************************************************
     function showContent(data) {
@@ -483,6 +494,7 @@
         });
 
         tableBody.innerHTML += dataTableBody;
+        // tableBody.innerHTML += data;
     }
     
     // *********************************************************
