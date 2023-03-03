@@ -30,32 +30,30 @@
 
             <!-- Date selection -->
             <div class="ancho-100">
-                <label class="" for="">2. Fecha (CUT OFF TIME):</label>
+                <label class="" for="">2. Fecha (CUT OFF DATE):</label>
                 <div class="ancho-100 margen-izq-1">
-                    <input type="date" id="selected-date" class="custom-button">
+                    <input type="date" id="selected-date" class="custom-button disable" disabled>
                 </div>
             </div>
 
             <div class="container">
                 <!-- destino -->
                 <div class="ancho-50 inline">
-                    <label for="">3. Seleccione el destino:</label>
+                    <label for="">3. Seleccione el destino (CUT OFF TIME):</label>
                     <div class="ancho-100 margen-izq-1">
-                        <select id="destino" name="destinos" class="custom-button disable" disabled>
-                            <option value="tarragona">Tarragona</option>
-                            <option value="sant-pere">Sant Pere</option>
-                            <option value="diagonal">Diagonal</option>
+                        <select id="destino-cut-off-time" name="destinos" class="custom-button disable" disabled>
+                            <option value="" >Selecciona un valor </option>
                         </select>
                     </div>
                 </div>
                 
                 <!-- window service furgo No. -->
                 <div class="ancho-50 inline">
-                    <label for="">4. Seleccione el service window:</label>
+                    <label for="">4. Seleccione el Service Window:</label>
                     <div class="ancho-100 margen-izq-1">
-                        <select id="service-window" name="" class="custom-button">
-                            <option value="furgo1">Furgo No. 1</option>
-                            <option value="furgo2">Furgo No. 2</option>
+                        <select id="service-window" name="" class="custom-button disable" disabled>
+                            <option value="furgo1">Primera Furgo</option>
+                            <option value="furgo2">Segunda Furgo</option>
                         </select>
                     </div>
                 </div>
@@ -65,7 +63,7 @@
             <div class="ancho-50 inline">
                 <label for="">5. Analizar información</label>
                 <div class="ancho-100 margen-izq-1">
-                    <input type="button" class="custom-button disable" value="Procesar información" disabled>
+                    <input type="button" id="process-data" class="custom-button disable" value="Procesar información" disabled>
                 </div>
             </div>
 

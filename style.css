@@ -10,6 +10,10 @@
     box-sizing: border-box;
 }
 
+.warning {
+    background-color: var(--warning-color);
+}
+
 body {
     background-color: var(--background);
     padding: 0.5rem;
