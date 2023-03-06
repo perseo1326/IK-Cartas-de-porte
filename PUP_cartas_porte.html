@@ -18,7 +18,7 @@
         </div>
 
         <!-- Cabecera seleccion de info -->
-        <div class="margen-bajo-1 ancho-100">
+        <div class="hide-print margen-bajo-1 ancho-100">
             <!-- File selection -->
             <div class="ancho-100">
                 <label class="" for="">1. Seleccionar archivo de datos:</label>
@@ -75,24 +75,65 @@
             <div class="ancho-50 inline">
                 <label for="">6. Imprimir Documentación</label>
                 <div class="ancho-100 margen-izq-1">
-                    <input type="button" class="custom-button disable" value="Imprimir Documentación" disabled>
+                    <input type="button" id="print-documentation-b" class="custom-button disable" value="Imprimir Documentación" disabled>
                 </div>
             </div>
         </div>
 
         <div>
+            <div class="transport-document-info">
+                                
+                <div class="ancho-100">
+                    <div class=" ancho-60 ">
+                        <h3 class="title">Carta de Porte / Transport Document</h3>
+                    </div>
+                    <div class="back2 page-number">
+                        <p>Página 1/1</p>
+                        <p>Page 1/1</p>
+                    </div>
+                </div>
+
+                <div class="ancho-100 back2">prueba</div>
+
+            </div>
+
             <table>
                 <thead>
-                    <tr>
-                        <!-- <th>encabezado de tabla</th> -->
+                    <tr class="show-print">
+                        <th colspan="6">
+                            <!-- Container for the whole document header -->
+                            <!-- <div class="transport-document-info">
+                                
+                                <div class="ancho-100">
+                                    <div class=" ancho-60 ">
+                                        <h3 class="title">Carta de Porte / Transport Document</h3>
+                                    </div>
+                                    <div class="back2 page-number">
+                                        <p>Página 1/1</p>
+                                        <p>Page 1/1</p>
+                                    </div>
+                                </div>
+
+                                <div class="ancho-100 back2">prueba</div>
+
+                            </div> -->
+                        </th>
+                    </tr>
+                    <tr class="cabecera">
+                        <th class="centrar ordinal">No.</th>
+                        <th class="isell">Isell</th>
+                        <th class="">Estado</th>
+                        <th class="">No. Paquetes</th>
+                        <th class="">Peso (Kg)</th>
+                        <th class="">Volumen (m<sup>3</sup>)</th>
                     </tr>
                 </thead>
                 <tbody id="data-body">
-                    <tr>
-                        <td>datos de la tabla</td>
-                    </tr>
                 </tbody>
             </table>
+            <div class="centrar">
+                <p>Final de la Información</p>
+            </div>
         </div>
 
         <!-- Version de la aplicacion -->

@@ -38,14 +38,57 @@
             SERVICE_WINDOW
             */
 
+            
+    // *********************************************************
+    // Variables y constantes
+    const fileSelector = document.getElementById('file-input');
+    const selectedDate = document.getElementById("selected-date");
+    const cutOffTimeSelector = document.getElementById("destino-cut-off-time");
+    const serviceWindowSelector = document.getElementById("service-window");
+    const processDataB = document.getElementById("process-data");
+    const printDocumentationB = document.getElementById("print-documentation-b");
+
+
+    const tableBody = document.getElementById("data-body");
+
+    const fileReader = new FileReader();
+    let contentOriginal = [];
+    const todayDate = new Date("2023-02-25");
+
+    const NOT_STARTED       = "Not Started";
+    const STARTED           = "Started";
+    const PICKING           = "Picking";
+    const PICKED            = "Picked";
+    const WAIT_FOR_MERGE    = "Wait for Merge";
+    const CHECK_STARTED     = "Check Started";
+    const CHECKED           = "Checked";
+    const COMPLETED         = "Completed";
+    const OPEN_RETURN       = "Open Return";
+    const RETURNED          = "Returned";
+
+    const CUT_OFF_TIME = new Map();
+    CUT_OFF_TIME.set("DIAGONAL", "06:30");
+    CUT_OFF_TIME.set("SANT_PERE", "20:00");
+    CUT_OFF_TIME.set("TARRAGONA", "19:45");
+
+    const WINDOW_SERVICE = new Map();
+    // WINDOW_SERVICE.set("DIAGONAL_ONE", []);
+    // WINDOW_SERVICE.set("DIAGONAL_TWO", []);
+    WINDOW_SERVICE.set("SANT_PERE_ONE", ["10:00-13:00", "13:00-16:00"]);
+    WINDOW_SERVICE.set("SANT_PERE_TWO", ["16:00-19:00", "19:00-21:00"]);
+    WINDOW_SERVICE.set("TARRAGONA_ONE", ["10:00-13:00", "13:00-17:00"]);
+    WINDOW_SERVICE.set("TARRAGONA_TWO", ["17:00-19:00", "19:00-21:00"]);
+
+    // *********************************************************
+    
     class PickOrder {
         constructor(pickId, packages, weight, volume, orderedQty, pickArea, actualOrderStatus, cancelled, notHandedOut ) {
             this.pickArea       = pickArea;
             this.pickId         = pickId;
-            this.packages       = packages;
-            this.weight         = weight;
-            this.volume         = volume;
-            this.orderedQty     = orderedQty;
+            this.packages       = Number (packages.replace(',', '.'));
+            this.weight         = Number (weight.replace(',', '.'));
+            this.volume         = Number (volume.replace(',', '.'));
+            this.orderedQty     = Number (orderedQty.replace(',', '.'));
             this.actualOrderStatus = actualOrderStatus;
             this.cancelled      = cancelled;
             this.notHandedOut  = notHandedOut;
@@ -60,9 +103,10 @@
             this.serviceWindow      = serviceWindow;
             this.pickOrder          = new Map();
             this.pickOrder.set(pickOrder.pickArea, pickOrder);
-            this.totalPackages      = 0.0;
-            this.totalWeight        = 0.0;
-            this.totalVolume        = 0.0;
+            this.totalPackages      = Number (0.0);
+            this.totalWeight        = Number (0.0);
+            this.totalVolume        = Number (0.0);
+            this.status             = STARTED;
         }
 
         addPickOrder(pickOrder) {
@@ -75,48 +119,41 @@
         }
 
         calculateTotals() {
+            // Initialize variables
+            this.totalPackages      = 0.0;
+            this.totalWeight        = 0.0;
+            this.totalVolume        = 0.0;
 
+            this.setStatusOrder();
+
+            if(this.status === RETURNED) {
+                return;
+            }
+
+            this.pickOrder.forEach( (value,key) => {
+                this.totalPackages      += value.packages;
+                this.totalWeight        += value.weight;
+                this.totalVolume        += value.volume;
+            } );
         }
 
-        toString() {
-            let string = "Isell: " + this.isellOrderNumber + "\n";
-            string += "Cut of Date: " + this.cutOffDate + "\n";
-            string += "Cut of Time: " + this.cutOffTime + "\n";
-            string += "Service Window: " + this.serviceWindow + "\n";
-            return string;
+        setStatusOrder() {
+            this.pickOrder.forEach( (value, key) => {
+                if (value.actualOrderStatus === OPEN_RETURN || value.actualOrderStatus === RETURNED ) {
+                    this.status = RETURNED;
+                }
+            });
         }
 
+        // toString() {
+        //     let string = "Isell: " + this.isellOrderNumber + "\n";
+        //     string += "Cut of Date: " + this.cutOffDate + "\n";
+        //     string += "Cut of Time: " + this.cutOffTime + "\n";
+        //     string += "Service Window: " + this.serviceWindow + "\n";
+        //     return string;
+        // }
     }
 
-    // *********************************************************
-    // Variables y constantes
-    const fileSelector = document.getElementById('file-input');
-    const selectedDate = document.getElementById("selected-date");
-    const cutOffTimeSelector = document.getElementById("destino-cut-off-time");
-    const serviceWindowSelector = document.getElementById("service-window");
-    const processDataB = document.getElementById("process-data");
-
-
-
-    const tableBody = document.getElementById("data-body");
-
-    const fileReader = new FileReader();
-    let contentOriginal = [];
-    const todayDate = new Date("2023-02-16");
-
-    const CUT_OFF_TIME = new Map();
-    CUT_OFF_TIME.set("DIAGONAL", "06:30");
-    CUT_OFF_TIME.set("SANT_PERE", "20:00");
-    CUT_OFF_TIME.set("TARRAGONA", "19:45");
-
-    const WINDOW_SERVICE = new Map();
-    // WINDOW_SERVICE.set("DIAGONAL_ONE", []);
-    // WINDOW_SERVICE.set("DIAGONAL_TWO", []);
-    WINDOW_SERVICE.set("SANT_PERE_ONE", ["10:00-13:00", "13:00-16:00"]);
-    WINDOW_SERVICE.set("SANT_PERE_TWO", ["16:00-19:00", "19:00-21:00"]);
-    WINDOW_SERVICE.set("TARRAGONA_ONE", ["10:00-13:00", "13:00-17:00"]);
-    WINDOW_SERVICE.set("TARRAGONA_TWO", ["17:00-19:00", "19:00-21:00"]);
-    
     // *********************************************************
     selectedDate.valueAsDate = todayDate;
 
@@ -124,6 +161,7 @@
     // Event Listeners 
     fileSelector.addEventListener('change', openFile); 
     processDataB.addEventListener('click', processData);
+    printDocumentationB.addEventListener('click', printDocument);
 
     
     
@@ -136,7 +174,6 @@
             alert("La fecha seleccionada es inválida.");
             return false;
         } 
-        // console.log("FECHA: ", date.toISOString());
         return selectedDate.value;
     }
 
@@ -373,33 +410,20 @@
 
     // *********************************************************
     // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
-    function mappingOrdersFromArray(arrayData) {
-        
-        
+    function bindOrdersPUP_FromArray(arrayData) {
         const dataMap = new Map();
         arrayData.forEach( (row) => {
-            // console.log("Fila #" + i + " [" + row + "]");
-
             // (pickArea, pickId, packages, weight, volume, orderedQty, actualOrderStatus, cancelled, notHandedOut )
-
             let pickTask = new PickOrder(row[1], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]);
-
             if(dataMap.has(row[0])) {
                 console.log("Isell duplicado: ", row[0]);
-                // console.log("ANTIGUO objeto OrderPUP: ", dataMap.get(row[0]));
-                
                 dataMap.get(row[0]).addPickOrder(pickTask);
-                // dataMap.set(row[0], temp);
-                // console.log("nuevo objeto OrderPUP: ", dataMap.get(row[0]));
-
             } else {
                 let order = new OrderPUP(row[0], row[11], row[12], row[13], pickTask);
                 dataMap.set(row[0], order);
-                // console.log("Order ", order);
             }
         });
         return dataMap;
-        
     }
 
     // *********************************************************
@@ -418,7 +442,6 @@
         const cutOffTime = cutOffTimeSelector.value;
         content = dataFilterByCutOffTime(content, CUT_OFF_TIME.get(cutOffTime));
         // console.log("data filter by cut off time (Destination): ", content.length);
-        
 
         // console.log("CUTO OFF TIME value: ", cutOffTime);
         // console.log("VALOR de service window: ", serviceWindowSelector.value, );
@@ -428,13 +451,17 @@
         content = dataFilterByServiceWindow(content, windowServiceSelection );
 
         // Bind orders with the same "ISELL_ORDER_NUMBER"
-        const dataMap = mappingOrdersFromArray(content);
+        const dataMap = bindOrdersPUP_FromArray(content);
 
-        console.log("Mapa: ", dataMap);
+        // Calculate the totals for each "OrderPUP" 
+        dataMap.forEach( function(value, key){
+            value.calculateTotals();
+        });
 
+        printDocumentationB.disabled = false;
+        printDocumentationB.classList.remove("disable");
 
-        showContent(content);
-        // showContent(dataMap);
+        showContent(dataMap);
     }
 
     // *********************************************************
@@ -459,6 +486,17 @@
     }
 
     // *********************************************************
+    function printDocument() {
+        window.print();
+    }
+
+
+
+
+
+
+
+    // *********************************************************
     // function to obtain all values of "SERVICE_WINDOW"  
     // function getServiceWindowValues(dataArray) {
     //     const serviceWindow = new Set();
@@ -471,30 +509,64 @@
     // }
 
     // *********************************************************
+    // Function to round a value for better presentation
+    function roundValue(value) {
+        value *= 100;
+        value = Math.round(value); 
+        return (value / 100);
+    }
+    // *********************************************************
     function showContent(data) {
         // Clean and initialize values for the table data view
         tableBody.innerHTML = "";
         let dataTableBody = "";
-        let count = 0;
+        let count = 1;
+        let totalPakagesShipment = 0;
+        let totalWeightShipment = 0;
+        let totalVolumeShipment = 0;
         
         console.log("Data en showContent ", data);
 
-        data.forEach(row => {
+        data.forEach( (value, key) => {
 
-            dataTableBody += "<tr>";
+            const isReturned = (value.status === RETURNED) ? "warning-row" : "";
+
+            dataTableBody += "<tr class='centrar " + isReturned + "'>";
             dataTableBody += "<td>";
             dataTableBody += count;
             dataTableBody += "</td>";
             dataTableBody += "<td>";
-            dataTableBody += row.toString();
+            dataTableBody += value.isellOrderNumber;
             dataTableBody += "</td>";
-            dataTableBody += "</tr>";
+            dataTableBody += "<td>";
+            dataTableBody += value.status;
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            let temp = roundValue(value.totalPackages);
+            totalPakagesShipment += temp;
+            dataTableBody += temp;
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            temp = roundValue(value.totalWeight);
+            totalWeightShipment += temp,
+            dataTableBody += temp;
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            temp = roundValue(value.totalVolume );
+            totalVolumeShipment += temp;
+            dataTableBody += temp;
+            dataTableBody += "</td>";
 
             count++;
         });
 
+        dataTableBody += "<tr class='centrar totales'>";
+        dataTableBody += "<td colspan='3'>Totales</td>";
+        dataTableBody += "<td>" + roundValue(totalPakagesShipment) + " bultos</td>";
+        dataTableBody += "<td>" + roundValue(totalWeightShipment) + " Kgs</td>";
+        dataTableBody += "<td>" + roundValue(totalVolumeShipment) + " m<sup>3</sup></td>";
+
         tableBody.innerHTML += dataTableBody;
-        // tableBody.innerHTML += data;
     }
     
     // *********************************************************

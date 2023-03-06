@@ -1,5 +1,6 @@
 
-* {
+
+*, *:after, *:before {
     --background: white;
     --first-color: #0057a4;
     --second-color: #ffdb01;
@@ -7,6 +8,7 @@
     padding: 0;
     margin: 0;
     font-family: 'Roboto', sans-serif;
+    font-size: 16px;
     box-sizing: border-box;
 }
 
@@ -41,6 +43,10 @@ div.container-column {
     display: none;
 }
 
+.show-print{
+    /* display: none; */
+}
+
 .inline {
     display: inline-block;
 }
@@ -59,6 +65,10 @@ div.container-column {
 
 .ancho-50 {
     width: 50%;
+}
+
+.ancho-60 {
+    width: 60%;
 }
 
 .margen-bajo-05 {
@@ -120,72 +130,6 @@ input[type="file"] {
     display: none;
 }
 
-select option {
-    /* background-color: red; */
-}
-
-/*
-ul li {
-	list-style-type: none;
-    margin-bottom: 0.3rem;
-    padding-left: auto;
-}
-
-/* ***** CUSTOM RADIO BUTTONS ***** */
-
-/*
-.custom-radio {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-label.custom-radio > input[type="radio"] {
-    display: none;
-}
-
-.custom-radio-show {
-    position: relative;
-    background-color: var(--first-color);
-    border-radius: 50%;
-    width: 1rem; 
-    height: 1rem;
-}
-
-.custom-radio-show::after {
-    position: absolute;
-    content: "";
-    background-color: var(--background);
-    top: 12.5%;
-    left: 12.5%;
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-}
-
-.custom-radio > input[type="radio"]:checked ~ .custom-radio {
-    background-color: var(--first-color);
-    color: var(--second-color);
-}
-
-.custom-radio > input[type="radio"]:checked + .custom-radio-show::after {
-    position: absolute;
-    content: "";
-    background-color: var(--second-color);
-    top: 12.5%;
-    left: 12.5%;
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-}
-
-span.custom-radio-text {
-    margin-left: 0.3rem;
-    padding: 0 0.2rem ;
-}
-
-/* ***** CUSTOM RADIO BUTTONS ENDS ***** */
-
 /*
 div.loading-frame {
     position: absolute;
@@ -198,7 +142,6 @@ div.loading-frame {
     /* background-color: hsla(210, 4%, 20%, 0.5); */
 /* 
 }
-
 
 div.loading-frame div.loading {
 	position: relative;
@@ -222,14 +165,26 @@ div.loading p {
 
 /* ***** TABLE STYLES ***** */
 
-
 table {
+    width: 100%;
     border-collapse: collapse;
     border: 2px solid var(--first-color);
 }
 
+tr.warning-row {
+    background-color: orange !important;
+}
+
 th, td {
     border-bottom: 1px solid gray;
+}
+
+thead tr th.ordinal {
+    width: 4rem;
+}
+
+thead tr th.isell {
+    width: 20%;
 }
 
 tr td {
@@ -257,17 +212,46 @@ tbody tr:hover td input[type='text'] {
     background-color: var(--first-color);
 }
 
-tbody tr td.is-fictitious-location {
-    background-color: var(--warning-color);
-}
-
 .cabecera {
     background-color: var(--first-color);
     color: var(--second-color);
 }
 
+tr.totales {
+    font-weight: bolder;
+}
+
 .resaltar {
-    background-color: var(--second-color);
+    /* background-color: var(--second-color); */
+}
+
+/* ***** TABLE DOCUMENT STYLES  ***** */
+
+div.transport-document-info{
+    /* display: inline-block; */
+    /* flex-direction: column; */
+    width: 100%;
+    font-size: 12px;
+    font-weight:lighter;
+    height: 8rem;
+}
+
+div.transport-document-info div {
+    display: inline-block;
+}
+
+div h3.title {
+    padding: 0.7rem 3rem;
+    font-size: 1.3rem;
+}
+
+div.page-number {
+    text-align: right;
+    width: 40%;
+}
+
+.borde {
+    border: 4px solid rgb(5, 244, 13);
 }
 
 /* ***** TABLE STYLES ENDS ***** */
@@ -275,7 +259,6 @@ tbody tr td.is-fictitious-location {
 
 /* ***** PRINTABLE STYLES ***** */
 
-/*
 @media print {
     body, html {
         background-color: transparent !important;
@@ -284,6 +267,10 @@ tbody tr td.is-fictitious-location {
 
     .hide-print {
         display: none !important;
+    }
+
+    .show-print {
+        display: block;
     }
 
     .cabecera {
