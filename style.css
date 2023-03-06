@@ -280,57 +280,6 @@ table tbody#transport-document-info tr td p.note {
 }
 
 /*
-div.transport-document-info {
-    width: 100%;
-    font-weight:lighter;
-    border: 2px solid black;
-}
-
-div.transport-document-info div {
-    display: flex;
-    border: 1px solid red;
-    border-collapse: collapse;
-}
-
-div.transport-document-info p {
-    background-color: lightpink;
-    font-size: var(--doc-font);
-    margin: 0.2rem;
-}
-
-div.transport-document-info p.value {
-    font-size:small;
-    background-color: green;
-}
-
-.justify {
-    justify-content: center;
-}
-
-div.flex-row-reverse {
-    flex-direction: row-reverse;
-}
-
-div.column {
-    flex-direction: column;
-}
-
-div h3.title {
-    padding: 0.7rem;
-}
-
-div.page-number {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    padding: 0.8rem;
-    width: 40%;
-}
-
-div.page-number p {
-    font-size: 6px;
-    margin: 0%;
-}
 
 ._borde {
     border: 4px solid rgb(5, 244, 13);
