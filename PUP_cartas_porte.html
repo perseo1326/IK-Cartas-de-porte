@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
-<body>
+<body class="page-a4">
     <div class="container-column">
         <div class="ancho-100 margen-bajo-1">
             <h1 class="centrar">Cartas de Porte Pick Up Points </h1>
@@ -75,50 +75,88 @@
             <div class="ancho-50 inline">
                 <label for="">6. Imprimir Documentación</label>
                 <div class="ancho-100 margen-izq-1">
-                    <input type="button" id="print-documentation-b" class="custom-button disable" value="Imprimir Documentación" disabled>
+                    <input type="button" id="print-documentation-b" class="custom-button _disable" value="Imprimir Documentación" >
                 </div>
             </div>
         </div>
 
         <div>
-            <div class="transport-document-info">
-                                
-                <div class="ancho-100">
-                    <div class=" ancho-60 ">
-                        <h3 class="title">Carta de Porte / Transport Document</h3>
-                    </div>
-                    <div class="back2 page-number">
-                        <p>Página 1/1</p>
-                        <p>Page 1/1</p>
-                    </div>
-                </div>
-
-                <div class="ancho-100 back2">prueba</div>
-
+                <!-- Container for the whole document header -->
+                <table>
+                    <tbody id="transport-document-info">
+                        <tr>
+                            <td class="ancho-50 title">
+                                <h3>Carta de Porte / Transport Document</h3></td>
+                            <td class="ancho-40_ page-number" colspan="2">Página 1 de 1<br>Page 1 of 1</td>
+                        </tr>
+                        <tr>
+                            <td>No. Carta de porte / Transport document number</td>
+                            <td>Fecha de carga / Date of loading</td>
+                            <td>Fecha de entrega / Date of receipt</td>
+                        </tr>
+                        <tr>
+                            <td class="value">406SP 06/03/2023 SANT PERE (FURGO 1)</td>
+                            <td class="value">06/03/2023</td>
+                            <td class="value">06/03/2023</td>
+                        </tr>
+                        <tr>
+                            <td class="">Remitente / Sender</td>
+                            <td colspan="2">No. de precinto</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><strong>Ikea Gran Via 406</strong></p>
+                                <p>Gran Via de l'Hospiitalet 115-133</p>
+                                <p>Hospitalet de Llobregat 08908</p>
+                                <p>Barcelona, Espanya</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Destinario / Consignee</td>
+                            <td colspan="2">Transportista / Carrier</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p><strong>Ikea St Pere Planning Studio</strong></p>
+                                <p>Rambla del Garraf s/n, Parc d'Oci Les Roquetes Local 10-B2</p>
+                                <p>El Mas d'en Serra, 08812</p>
+                                <p>Barcelona, Espanya</p>
+                            </td>
+                            <td colspan="2">
+                                <p><strong>SAMA Logística Aplicada SL</strong></p>
+                                <p>Gran Via de l'Hospitalet 115-133</p>
+                                <p>Hospitalet de Llobregat 08908</p>
+                                <p>Barcelona, Espanya</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Número de albarán / Invoice number</td>
+                            <td colspan="2">Matrícula Vehículo / Trailer registration</td>
+                        </tr>
+                        <tr>
+                            <td class="blank-space"></td>
+                            <td class="blank-space" colspan="2"></td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <p class="note">El conductor, mediante su firma declara que durante las operaciones de carga se ha seguido una relación de comprobaciones relativa a la carga de las mercancías peligrosas, habiendo iniciado el transporte cumpliendo con todos los requisitos exigibles por el ADR.</p>
+                                <p class="note">The driver, by signing states that during the loading a dangerous goods check-list has been completed, initiating transport in compliance with all applicable requirements of the ADR.</p>
+                            </td>
+                            <td class="text-top-left" colspan="2" rowspan="2">Firma del conductor / Driver's signature</td>
+                        </tr>
+                        <!-- <tr class="back1">
+                            <td >El conductor, mediante su firma declara que durante las operaciones de carga se ha seguido una relación de comprobaciones relativa a la carga de las mercancías peligrosas, habiendo iniciado el transporte cumpliendo con todos los requisitos exigibles por el ADR.</td>
+                            <td colspan="2" rowspan="2">Firma del conductor / Driver's signature</td>
+                        </tr>
+                        <tr>
+                            <td>The driver, by signing states that during the loading a dangerous goods check-list has been completed, initiating transport in compliance with all applicable requirements of the ADR.</td>
+                        </tr> -->
+                    </tbody>
+                </table>
             </div>
 
             <table>
                 <thead>
-                    <tr class="show-print">
-                        <th colspan="6">
-                            <!-- Container for the whole document header -->
-                            <!-- <div class="transport-document-info">
-                                
-                                <div class="ancho-100">
-                                    <div class=" ancho-60 ">
-                                        <h3 class="title">Carta de Porte / Transport Document</h3>
-                                    </div>
-                                    <div class="back2 page-number">
-                                        <p>Página 1/1</p>
-                                        <p>Page 1/1</p>
-                                    </div>
-                                </div>
-
-                                <div class="ancho-100 back2">prueba</div>
-
-                            </div> -->
-                        </th>
-                    </tr>
                     <tr class="cabecera">
                         <th class="centrar ordinal">No.</th>
                         <th class="isell">Isell</th>
