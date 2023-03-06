@@ -5,23 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUP Cartas de Porte</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
+
     <style>
+        
 
-
-
-
-  * {
+*, *:after, *:before {
     --background: white;
     --first-color: #0057a4;
     --second-color: #ffdb01;
     --warning-color: rgba(255, 165, 0, 1);
+    --doc-font: 8px;
     padding: 0;
     margin: 0;
     font-family: 'Roboto', sans-serif;
+    font-size: 16px;
     box-sizing: border-box;
 }
 
@@ -56,6 +57,10 @@ div.container-column {
     display: none;
 }
 
+.show-print{
+    display: none;
+}
+
 .inline {
     display: inline-block;
 }
@@ -74,6 +79,10 @@ div.container-column {
 
 .ancho-50 {
     width: 50%;
+}
+
+.ancho-60 {
+    width: 60%;
 }
 
 .margen-bajo-05 {
@@ -98,7 +107,7 @@ label {
 
 div p.version {
     text-align: right;
-    padding: 0 1rem;
+    padding: 0.3rem 1rem;
     font-size: 0.7rem;
     color: gray;
 }
@@ -135,76 +144,6 @@ input[type="file"] {
     display: none;
 }
 
-/* select {
-    background-color: red;
-} */
-
-select option[selected] {
-    background-color: orange;
-}
-
-/*
-ul li {
-	list-style-type: none;
-    margin-bottom: 0.3rem;
-    padding-left: auto;
-}
-
-/* ***** CUSTOM RADIO BUTTONS ***** */
-
-/*
-.custom-radio {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-label.custom-radio > input[type="radio"] {
-    display: none;
-}
-
-.custom-radio-show {
-    position: relative;
-    background-color: var(--first-color);
-    border-radius: 50%;
-    width: 1rem; 
-    height: 1rem;
-}
-
-.custom-radio-show::after {
-    position: absolute;
-    content: "";
-    background-color: var(--background);
-    top: 12.5%;
-    left: 12.5%;
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-}
-
-.custom-radio > input[type="radio"]:checked ~ .custom-radio {
-    background-color: var(--first-color);
-    color: var(--second-color);
-}
-
-.custom-radio > input[type="radio"]:checked + .custom-radio-show::after {
-    position: absolute;
-    content: "";
-    background-color: var(--second-color);
-    top: 12.5%;
-    left: 12.5%;
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-}
-
-span.custom-radio-text {
-    margin-left: 0.3rem;
-    padding: 0 0.2rem ;
-}
-
-/* ***** CUSTOM RADIO BUTTONS ENDS ***** */
-
 /*
 div.loading-frame {
     position: absolute;
@@ -217,7 +156,6 @@ div.loading-frame {
     /* background-color: hsla(210, 4%, 20%, 0.5); */
 /* 
 }
-
 
 div.loading-frame div.loading {
 	position: relative;
@@ -241,45 +179,45 @@ div.loading p {
 
 /* ***** TABLE STYLES ***** */
 
+strong {
+    font-weight: bold;
+}
 
 table {
+    width: 100%;
     border-collapse: collapse;
     border: 2px solid var(--first-color);
 }
 
-th, td {
-    border-bottom: 1px solid gray;
+thead tr th {
+    padding: 0.1rem;
+    border-bottom: 2px solid var(--first-color);
 }
 
-tr td {
+thead tr th.ordinal {
+    width: 4rem;
+}
+
+thead tr th.isell {
+    width: 20%;
+}
+
+table tbody#data-body tr.warning-row {
+    background-color: orange !important;
+}
+
+table tbody#data-body tr td {
+    border-bottom: 1px solid gray;
     min-width: 5rem;
     max-height: 1rem;
-    border: 0.5px solid gray;
-    padding: 0.3rem ;
 }
 
-tr td input[type='text'] {
-    text-align: center;
-}
-
-tr:nth-last-of-type(2n+0) {
+table tbody#data-body tr:nth-last-of-type(2n+0) {
     background-color: lightgray;
 }
 
-tbody tr:hover, tbody tr.editable {
+table tbody#data-body tr:hover {
     background-color: var(--second-color);
-}
-
-tbody tr td[data-index]:focus-within,
-tbody tr:hover td[data-index],
-tbody tr td input[type='text']:focus, 
-tbody tr:hover td input[type='text'] {
-    color: var(--second-color);
-    background-color: var(--first-color);
-}
-
-tbody tr td.is-fictitious-location {
-    background-color: var(--warning-color);
 }
 
 .cabecera {
@@ -287,21 +225,146 @@ tbody tr td.is-fictitious-location {
     color: var(--second-color);
 }
 
-.resaltar {
-    background-color: var(--second-color);
+table tbody#data-body tr.totales {
+    font-weight: bolder;
 }
 
-    </style>
+/* ***** TABLE DOCUMENT HEADER STYLES  ***** */
 
+body.page-a4 {
+    /* width: 21cm;
+    height: 29.7cm;
+    border: 0.5px dotted black; */
+}
+
+table tbody#transport-document-info tr td.title {
+    border-right: 1px solid transparent;
+}
+
+table tbody#transport-document-info tr td.page-number {
+    font-size: 6px;
+    text-align: right;
+    padding: 0 0.5rem;
+    vertical-align: top;
+}
+
+table tbody#transport-document-info tr td h3 {
+    text-align: right;
+    padding: 0.5rem;
+    font-size: large;
+}
+
+table tbody#transport-document-info tr td {
+    font-size: var(--doc-font);
+    padding: 0.2rem;
+    border: 1px solid black;
+}
+
+table tbody#transport-document-info tr td.value {
+    text-align: center;
+    font-size:small;
+}
+
+table tbody#transport-document-info tr td p {
+    /* font-size: small; */
+}
+
+table tbody#transport-document-info tr td p.note {
+    font-size: var(--doc-font);
+    text-align: justify;
+}
+
+table tbody#transport-document-info tr td.text-top-left {
+    text-align: left;
+    vertical-align: text-top;
+}
+
+.blank-space {
+    height: 4rem;
+}
+
+.blank-space-big {
+    height: 6rem;
+}
+
+/* ***** FOOTER TABLE STYLES ***** */
+
+table tbody#footer-table tr td {
+    font-size: var(--doc-font);
+    padding: 0.2rem;
+    border: 1px solid black;
+}
+
+div p.footer-page {
+    font-size: var(--doc-font);
+    font-style: italic;
+    text-align: right;
+}
+/* ***** TABLE STYLES ENDS ***** */
+
+
+/* ***** PRINTABLE STYLES ***** */
+
+@media print {
+
+    *, *:after, *:before {
+        --background: transparent;
+        --first-color: black;
+        --second-color: black;
+        --warning-color: rgba(255, 165, 0, 1);
+        /* --doc-font: 8px; */
+        padding: 0;
+        margin: 0;
+        font-size: 10px;
+        /* box-sizing: border-box; */
+    }
+    body, html {
+        /* background-color: transparent !important; */
+        color: black !important;
+    }
+
+    .hide-print {
+        display: none !important;
+    }
+
+    .show-print {
+        display: block;
+    }
+
+    .cabecera {
+        background-color: rgb(199, 199, 199);
+        border-bottom: 1px solid black;
+        /* color: black; */
+    }
+
+    table tbody#data-body tr td {
+        background-color: transparent;
+    }
+
+    table.print-hide-borders {
+        border-top: none;
+        border-bottom: none;
+    }
+
+    p.version {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust:exact;
+        color: gray;
+    }
+}
+
+/* ***** PRINTABLE STYLES ENDS ***** */
+
+    </style>
 </head>
-<body>
+<body class="page-a4">
     <div class="container-column">
-        <div class="ancho-100 margen-bajo-1">
+        <div class="hide-print ancho-100 margen-bajo-1">
             <h1 class="centrar">Cartas de Porte Pick Up Points </h1>
         </div>
 
         <!-- Cabecera seleccion de info -->
-        <div class="margen-bajo-1 ancho-100">
+        <div class="hide-print margen-bajo-1 ancho-100">
             <!-- File selection -->
             <div class="ancho-100">
                 <label class="" for="">1. Seleccionar archivo de datos:</label>
@@ -358,25 +421,127 @@ tbody tr td.is-fictitious-location {
             <div class="ancho-50 inline">
                 <label for="">6. Imprimir Documentación</label>
                 <div class="ancho-100 margen-izq-1">
-                    <input type="button" class="custom-button disable" value="Imprimir Documentación" disabled>
+                    <input type="button" id="print-documentation-b" class="custom-button _disable" value="Imprimir Documentación" >
                 </div>
             </div>
         </div>
 
-        <div>
+        <div class="show-print">
+            <!-- Container for the whole document header -->
             <table>
-                <thead>
+                <tbody id="transport-document-info">
                     <tr>
-                        <!-- <th>encabezado de tabla</th> -->
+                        <td class="ancho-50 title">
+                            <h3>Carta de Porte / Transport Document</h3></td>
+                        <td class="page-number" colspan="2">Página 1 de 1<br>Page 1 of 1</td>
                     </tr>
-                </thead>
-                <tbody id="data-body">
                     <tr>
-                        <td>datos de la tabla</td>
+                        <td>No. Carta de porte / Transport document number</td>
+                        <td>Fecha de carga / Date of loading</td>
+                        <td>Fecha de entrega / Date of receipt</td>
+                    </tr>
+                    <tr>
+                        <td class="value">406SP 06/03/2023 SANT PERE (FURGO 1)</td>
+                        <td class="value">06/03/2023</td>
+                        <td class="value">06/03/2023</td>
+                    </tr>
+                    <tr>
+                        <td class="">Remitente / Sender</td>
+                        <td colspan="2">No. de precinto</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p><strong>Ikea Gran Via 406</strong></p>
+                            <p>Gran Via de l'Hospitalet 115-133</p>
+                            <p>Hospitalet de Llobregat 08908</p>
+                            <p>Barcelona, Espanya</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Destinario / Consignee</td>
+                        <td colspan="2">Transportista / Carrier</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p><strong>Ikea St Pere Planning Studio</strong></p>
+                            <p>Rambla del Garraf s/n, Parc d'Oci Les Roquetes Local 10-B2</p>
+                            <p>El Mas d'en Serra, 08812</p>
+                            <p>Barcelona, Espanya</p>
+                        </td>
+                        <td colspan="2">
+                            <p><strong>SAMA Logística Aplicada SL</strong></p>
+                            <p>Gran Via de l'Hospitalet 115-133</p>
+                            <p>Hospitalet de Llobregat 08908</p>
+                            <p>Barcelona, Espanya</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Número de albarán / Invoice number</td>
+                        <td colspan="2">Matrícula Vehículo / Trailer registration</td>
+                    </tr>
+                    <tr>
+                        <td class="blank-space"></td>
+                        <td class="blank-space" colspan="2"></td>
+                    </tr>
+                    <tr class="">
+                        <td>
+                            <p class="note">El conductor, mediante su firma declara que durante las operaciones de carga se ha seguido una relación de comprobaciones relativa a la carga de las mercancías peligrosas, habiendo iniciado el transporte cumpliendo con todos los requisitos exigibles por el ADR.</p>
+                            <p class="note">The driver, by signing states that during the loading a dangerous goods check-list has been completed, initiating transport in compliance with all applicable requirements of the ADR.</p>
+                        </td>
+                        <td class="text-top-left" colspan="2" >Firma del conductor / Driver's signature</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+        <div>
+            
+            <!-- Table with data -->
+            <table class="print-hide-borders">
+                <thead>
+                    <tr class="cabecera">
+                        <th class="centrar ordinal">No.</th>
+                        <th class="isell">Isell</th>
+                        <th class="hide-print">Estado</th>
+                        <th class="">No. Paquetes</th>
+                        <th class="">Peso (Kg)</th>
+                        <th class="">Volumen (m<sup>3</sup>)</th>
+                    </tr>
+                </thead>
+                <tbody id="data-body">
+                </tbody>
+            </table>
+        </div>
+            
+        <div class="show-print">
+            <!-- Footer table -->
+            <table>
+                <tbody id="footer-table">
+                    <tr>
+                        <td class="centrar" colspan="3">Observaciones de la expedición / Shipping remarks</td>
+                    </tr>
+                    <tr>
+                        <td class="blank-space" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Firma y sello Expedidor</td>
+                        <td>Firma y sello Transportista</td>
+                        <td>Firma y sello Destinatario</td>
+                    </tr>
+                    <tr>
+                        <td class="blank-space-big"></td>
+                        <td class="blank-space-big"></td>
+                        <td class="blank-space-big"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <p class="footer-page">Imprimir 3 copias: 1 Consignatario, 1 transportista y 1 receptor.</p>
+            </div>
+        </div>
+
+    </div>
 
         <!-- Version de la aplicacion -->
         <div>
@@ -384,6 +549,8 @@ tbody tr td.is-fictitious-location {
         </div>
     </div>
     <script>
+
+
     /*
 
         filtrar por flujo de mercancia = PUP
@@ -422,14 +589,57 @@ tbody tr td.is-fictitious-location {
             SERVICE_WINDOW
             */
 
+            
+    // *********************************************************
+    // Variables y constantes
+    const fileSelector = document.getElementById('file-input');
+    const selectedDate = document.getElementById("selected-date");
+    const cutOffTimeSelector = document.getElementById("destino-cut-off-time");
+    const serviceWindowSelector = document.getElementById("service-window");
+    const processDataB = document.getElementById("process-data");
+    const printDocumentationB = document.getElementById("print-documentation-b");
+
+
+    const tableBody = document.getElementById("data-body");
+
+    const fileReader = new FileReader();
+    let contentOriginal = [];
+    const todayDate = new Date("2023-02-25");
+
+    const NOT_STARTED       = "Not Started";
+    const STARTED           = "Started";
+    const PICKING           = "Picking";
+    const PICKED            = "Picked";
+    const WAIT_FOR_MERGE    = "Wait for Merge";
+    const CHECK_STARTED     = "Check Started";
+    const CHECKED           = "Checked";
+    const COMPLETED         = "Completed";
+    const OPEN_RETURN       = "Open Return";
+    const RETURNED          = "Returned";
+
+    const CUT_OFF_TIME = new Map();
+    CUT_OFF_TIME.set("DIAGONAL", "06:30");
+    CUT_OFF_TIME.set("SANT_PERE", "20:00");
+    CUT_OFF_TIME.set("TARRAGONA", "19:45");
+
+    const WINDOW_SERVICE = new Map();
+    // WINDOW_SERVICE.set("DIAGONAL_ONE", []);
+    // WINDOW_SERVICE.set("DIAGONAL_TWO", []);
+    WINDOW_SERVICE.set("SANT_PERE_ONE", ["10:00-13:00", "13:00-16:00"]);
+    WINDOW_SERVICE.set("SANT_PERE_TWO", ["16:00-19:00", "19:00-21:00"]);
+    WINDOW_SERVICE.set("TARRAGONA_ONE", ["10:00-13:00", "13:00-17:00"]);
+    WINDOW_SERVICE.set("TARRAGONA_TWO", ["17:00-19:00", "19:00-21:00"]);
+
+    // *********************************************************
+    
     class PickOrder {
         constructor(pickId, packages, weight, volume, orderedQty, pickArea, actualOrderStatus, cancelled, notHandedOut ) {
             this.pickArea       = pickArea;
             this.pickId         = pickId;
-            this.packages       = packages;
-            this.weight         = weight;
-            this.volume         = volume;
-            this.orderedQty     = orderedQty;
+            this.packages       = Number (packages.replace(',', '.'));
+            this.weight         = Number (weight.replace(',', '.'));
+            this.volume         = Number (volume.replace(',', '.'));
+            this.orderedQty     = Number (orderedQty.replace(',', '.'));
             this.actualOrderStatus = actualOrderStatus;
             this.cancelled      = cancelled;
             this.notHandedOut  = notHandedOut;
@@ -444,9 +654,10 @@ tbody tr td.is-fictitious-location {
             this.serviceWindow      = serviceWindow;
             this.pickOrder          = new Map();
             this.pickOrder.set(pickOrder.pickArea, pickOrder);
-            this.totalPackages      = 0.0;
-            this.totalWeight        = 0.0;
-            this.totalVolume        = 0.0;
+            this.totalPackages      = Number (0.0);
+            this.totalWeight        = Number (0.0);
+            this.totalVolume        = Number (0.0);
+            this.status             = STARTED;
         }
 
         addPickOrder(pickOrder) {
@@ -459,48 +670,41 @@ tbody tr td.is-fictitious-location {
         }
 
         calculateTotals() {
+            // Initialize variables
+            this.totalPackages      = 0.0;
+            this.totalWeight        = 0.0;
+            this.totalVolume        = 0.0;
 
+            this.setStatusOrder();
+
+            if(this.status === RETURNED) {
+                return;
+            }
+
+            this.pickOrder.forEach( (value,key) => {
+                this.totalPackages      += value.packages;
+                this.totalWeight        += value.weight;
+                this.totalVolume        += value.volume;
+            } );
         }
 
-        toString() {
-            let string = "Isell: " + this.isellOrderNumber + "\n";
-            string += "Cut of Date: " + this.cutOffDate + "\n";
-            string += "Cut of Time: " + this.cutOffTime + "\n";
-            string += "Service Window: " + this.serviceWindow + "\n";
-            return string;
+        setStatusOrder() {
+            this.pickOrder.forEach( (value, key) => {
+                if (value.actualOrderStatus === OPEN_RETURN || value.actualOrderStatus === RETURNED ) {
+                    this.status = RETURNED;
+                }
+            });
         }
 
+        // toString() {
+        //     let string = "Isell: " + this.isellOrderNumber + "\n";
+        //     string += "Cut of Date: " + this.cutOffDate + "\n";
+        //     string += "Cut of Time: " + this.cutOffTime + "\n";
+        //     string += "Service Window: " + this.serviceWindow + "\n";
+        //     return string;
+        // }
     }
 
-    // *********************************************************
-    // Variables y constantes
-    const fileSelector = document.getElementById('file-input');
-    const selectedDate = document.getElementById("selected-date");
-    const cutOffTimeSelector = document.getElementById("destino-cut-off-time");
-    const serviceWindowSelector = document.getElementById("service-window");
-    const processDataB = document.getElementById("process-data");
-
-
-
-    const tableBody = document.getElementById("data-body");
-
-    const fileReader = new FileReader();
-    let contentOriginal = [];
-    const todayDate = new Date("2023-02-16");
-
-    const CUT_OFF_TIME = new Map();
-    CUT_OFF_TIME.set("DIAGONAL", "06:30");
-    CUT_OFF_TIME.set("SANT_PERE", "20:00");
-    CUT_OFF_TIME.set("TARRAGONA", "19:45");
-
-    const WINDOW_SERVICE = new Map();
-    // WINDOW_SERVICE.set("DIAGONAL_ONE", []);
-    // WINDOW_SERVICE.set("DIAGONAL_TWO", []);
-    WINDOW_SERVICE.set("SANT_PERE_ONE", ["10:00-13:00", "13:00-16:00"]);
-    WINDOW_SERVICE.set("SANT_PERE_TWO", ["16:00-19:00", "19:00-21:00"]);
-    WINDOW_SERVICE.set("TARRAGONA_ONE", ["10:00-13:00", "13:00-17:00"]);
-    WINDOW_SERVICE.set("TARRAGONA_TWO", ["17:00-19:00", "19:00-21:00"]);
-    
     // *********************************************************
     selectedDate.valueAsDate = todayDate;
 
@@ -508,6 +712,7 @@ tbody tr td.is-fictitious-location {
     // Event Listeners 
     fileSelector.addEventListener('change', openFile); 
     processDataB.addEventListener('click', processData);
+    printDocumentationB.addEventListener('click', printDocument);
 
     
     
@@ -520,7 +725,6 @@ tbody tr td.is-fictitious-location {
             alert("La fecha seleccionada es inválida.");
             return false;
         } 
-        // console.log("FECHA: ", date.toISOString());
         return selectedDate.value;
     }
 
@@ -532,7 +736,13 @@ tbody tr td.is-fictitious-location {
             console.log("No se ha seleccionado ningun archivo.");
             return null;
         }
-        
+        /*
+        if (file.type && !file.type.startsWith('text/')) {
+            alert('El archivo seleccionado NO es válido.');
+            console.log('El archivo seleccionado NO es válido.');
+            return null;
+        }
+        */
         return file;
     }
 
@@ -681,34 +891,90 @@ tbody tr td.is-fictitious-location {
     }
 
     // *********************************************************
+    // function to obtain all values of "CUT_OFF_TIME"  
+    // function getCutOffTimeValues(dataArray) {
+    //     const cutOffTimeValues = new Set();
+    //     const optionsDestination = [];
+
+    //     dataArray.forEach( (row) => { cutOffTimeValues.add(row[12]) });
+    //     cutOffTimeValues.forEach( (item) => {optionsDestination.push(item) });
+    //     optionsDestination.sort();
+    //     return optionsDestination;
+    // }
+
+    // *********************************************************
+    // Given an Array of "CUT_OFF_TIME" elements load those into the Dropdown list "Destination" 
+    // function visualizeCutOffTimeOptions (dataArray) {
+    //     cleanOptionsScrollDown(cutOffTimeSelector);
+
+    //     // Get options from the file data.
+    //     const optionsCutOffTime = getCutOffTimeValues(dataArray);
+    //     optionsCutOffTime.unshift("");
+
+    //     addOptionsScrollDown(cutOffTimeSelector, optionsCutOffTime);
+
+    //     cutOffTimeSelector.disabled = false;
+    //     cutOffTimeSelector.classList.remove("disable");
+    //     return optionsCutOffTime;
+    // }
+
+    // *********************************************************
+    // Function to get the "SERVICE_WINDOW" values for a "CUT_OFF_TIME" value
+    // function visualizeServiceWindowOptions (){
+    //     serviceWindowSelector.disabled = false;
+    //     serviceWindowSelector.classList.remove("disable");
+
+    //     let content = dataFilterByDate(contentOriginal );
+        
+        // if(!content) {
+        //     // if the date is invalid, return and do nothing.
+        //     return;
+        // }
+
+        // content = dataFilterByCutOffTime(content, this.value);
+        
+        // let serviceWindowOptions = getServiceWindowValues(content);
+
+    //     console.log("SERVICE WINDOW OPTIONS ", serviceWindowOptions);
+
+
+    //     showContent(content);
+
+    // }
+
+    // *********************************************************
+    // function addOptionsScrollDown(scrollDownControl, optionsArray) {
+    //         optionsArray.forEach( (element) => {
+    //         const option = document.createElement("option");
+    //         option.value = option.text = element;
+    //         scrollDownControl.appendChild(option);
+    //     });
+    // }       
+    // // *********************************************************
+    // function cleanOptionsScrollDown(scrollDownControl ) {
+    //     // Function to clean a given scroll down control options
+    //     while(scrollDownControl.options.length > 0) {
+    //         scrollDownControl.removeChild(scrollDownControl.firstElementChild);
+    //     }
+    // }
+
+
+    // *********************************************************
     // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
-    function mappingOrdersFromArray(arrayData) {
-        
-        
+    function bindOrdersPUP_FromArray(arrayData) {
         const dataMap = new Map();
         arrayData.forEach( (row) => {
-            // console.log("Fila #" + i + " [" + row + "]");
-
             // (pickArea, pickId, packages, weight, volume, orderedQty, actualOrderStatus, cancelled, notHandedOut )
-
             let pickTask = new PickOrder(row[1], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]);
-
             if(dataMap.has(row[0])) {
                 console.log("Isell duplicado: ", row[0]);
-                // console.log("ANTIGUO objeto OrderPUP: ", dataMap.get(row[0]));
-                
                 dataMap.get(row[0]).addPickOrder(pickTask);
-                // dataMap.set(row[0], temp);
-                // console.log("nuevo objeto OrderPUP: ", dataMap.get(row[0]));
-
             } else {
                 let order = new OrderPUP(row[0], row[11], row[12], row[13], pickTask);
                 dataMap.set(row[0], order);
-                // console.log("Order ", order);
             }
         });
         return dataMap;
-        
     }
 
     // *********************************************************
@@ -727,7 +993,6 @@ tbody tr td.is-fictitious-location {
         const cutOffTime = cutOffTimeSelector.value;
         content = dataFilterByCutOffTime(content, CUT_OFF_TIME.get(cutOffTime));
         // console.log("data filter by cut off time (Destination): ", content.length);
-        
 
         // console.log("CUTO OFF TIME value: ", cutOffTime);
         // console.log("VALOR de service window: ", serviceWindowSelector.value, );
@@ -737,13 +1002,17 @@ tbody tr td.is-fictitious-location {
         content = dataFilterByServiceWindow(content, windowServiceSelection );
 
         // Bind orders with the same "ISELL_ORDER_NUMBER"
-        const dataMap = mappingOrdersFromArray(content);
+        const dataMap = bindOrdersPUP_FromArray(content);
 
-        console.log("Mapa: ", dataMap);
+        // Calculate the totals for each "OrderPUP" 
+        dataMap.forEach( function(value, key){
+            value.calculateTotals();
+        });
 
+        printDocumentationB.disabled = false;
+        printDocumentationB.classList.remove("disable");
 
-        showContent(content);
-        // showContent(dataMap);
+        showContent(dataMap);
     }
 
     // *********************************************************
@@ -768,33 +1037,88 @@ tbody tr td.is-fictitious-location {
     }
 
     // *********************************************************
+    function printDocument() {
+        window.print();
+    }
+
+
+
+
+
+
+
+    // *********************************************************
+    // function to obtain all values of "SERVICE_WINDOW"  
+    // function getServiceWindowValues(dataArray) {
+    //     const serviceWindow = new Set();
+    //     const options = [];
+
+    //     dataArray.forEach( (row) => { serviceWindow.add(row[13]) });
+    //     serviceWindow.forEach( (item) => {options.push(item) });
+    //     options.sort();
+    //     return options;
+    // }
+
+    // *********************************************************
+    // Function to round a value for better presentation
+    function roundValue(value) {
+        value *= 100;
+        value = Math.round(value); 
+        return (value / 100);
+    }
+    // *********************************************************
     function showContent(data) {
         // Clean and initialize values for the table data view
         tableBody.innerHTML = "";
         let dataTableBody = "";
-        let count = 0;
+        let count = 1;
+        let totalPakagesShipment = 0;
+        let totalWeightShipment = 0;
+        let totalVolumeShipment = 0;
         
         console.log("Data en showContent ", data);
 
-        data.forEach(row => {
+        data.forEach( (value, key) => {
 
-            dataTableBody += "<tr>";
+            const isReturned = (value.status === RETURNED) ? "warning-row" : "";
+
+            dataTableBody += "<tr class='centrar " + isReturned + "'>";
             dataTableBody += "<td>";
             dataTableBody += count;
             dataTableBody += "</td>";
             dataTableBody += "<td>";
-            dataTableBody += row[0];
+            dataTableBody += value.isellOrderNumber;
+            dataTableBody += "</td>";
+            dataTableBody += "<td class='hide-print'>";
+            dataTableBody += value.status;
             dataTableBody += "</td>";
             dataTableBody += "<td>";
-            dataTableBody += row.toString();
+            let temp = roundValue(value.totalPackages);
+            totalPakagesShipment += temp;
+            dataTableBody += temp;
             dataTableBody += "</td>";
-            dataTableBody += "</tr>";
+            dataTableBody += "<td>";
+            temp = roundValue(value.totalWeight);
+            totalWeightShipment += temp,
+            dataTableBody += temp;
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            temp = roundValue(value.totalVolume );
+            totalVolumeShipment += temp;
+            dataTableBody += temp;
+            dataTableBody += "</td>";
 
             count++;
         });
 
+        dataTableBody += "<tr class='centrar totales'>";
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td colspan='2'>Totales</td>";
+        dataTableBody += "<td>" + roundValue(totalPakagesShipment) + " bultos</td>";
+        dataTableBody += "<td>" + roundValue(totalWeightShipment) + " Kgs</td>";
+        dataTableBody += "<td>" + roundValue(totalVolumeShipment) + " m<sup>3</sup></td>";
+
         tableBody.innerHTML += dataTableBody;
-        // tableBody.innerHTML += data;
     }
     
     // *********************************************************

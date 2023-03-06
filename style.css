@@ -45,7 +45,7 @@ div.container-column {
 }
 
 .show-print{
-    /* display: none; */
+    display: none;
 }
 
 .inline {
@@ -94,7 +94,7 @@ label {
 
 div p.version {
     text-align: right;
-    padding: 0 1rem;
+    padding: 0.3rem 1rem;
     font-size: 0.7rem;
     color: gray;
 }
@@ -166,18 +166,19 @@ div.loading p {
 
 /* ***** TABLE STYLES ***** */
 
+strong {
+    font-weight: bold;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     border: 2px solid var(--first-color);
 }
 
-tr.warning-row {
-    background-color: orange !important;
-}
-
-th, td {
-    border-bottom: 1px solid gray;
+thead tr th {
+    padding: 0.1rem;
+    border-bottom: 2px solid var(--first-color);
 }
 
 thead tr th.ordinal {
@@ -188,29 +189,22 @@ thead tr th.isell {
     width: 20%;
 }
 
-tr td {
+table tbody#data-body tr.warning-row {
+    background-color: orange !important;
+}
+
+table tbody#data-body tr td {
+    border-bottom: 1px solid gray;
     min-width: 5rem;
     max-height: 1rem;
 }
 
-/* tr td input[type='text'] {
-    text-align: center;
-} */
-
-tr:nth-last-of-type(2n+0) {
-    /* background-color: lightgray; */
+table tbody#data-body tr:nth-last-of-type(2n+0) {
+    background-color: lightgray;
 }
 
-tbody tr:hover, tbody tr.editable {
+table tbody#data-body tr:hover {
     background-color: var(--second-color);
-}
-
-tbody tr td[data-index]:focus-within,
-tbody tr:hover td[data-index],
-tbody tr td input[type='text']:focus, 
-tbody tr:hover td input[type='text'] {
-    color: var(--second-color);
-    background-color: var(--first-color);
 }
 
 .cabecera {
@@ -218,18 +212,15 @@ tbody tr:hover td input[type='text'] {
     color: var(--second-color);
 }
 
-tr.totales {
+table tbody#data-body tr.totales {
     font-weight: bolder;
 }
 
-.resaltar {
-    /* background-color: var(--second-color); */
-}
-
-/* ***** TABLE DOCUMENT STYLES  ***** */
+/* ***** TABLE DOCUMENT HEADER STYLES  ***** */
 
 body.page-a4 {
     width: 21cm;
+    height: 29.7cm;
     border: 0.5px dotted black;
 }
 
@@ -262,7 +253,7 @@ table tbody#transport-document-info tr td.value {
 }
 
 table tbody#transport-document-info tr td p {
-    font-size: small;
+    /* font-size: small; */
 }
 
 table tbody#transport-document-info tr td p.note {
@@ -270,7 +261,7 @@ table tbody#transport-document-info tr td p.note {
     text-align: justify;
 }
 
-.text-top-left {
+table tbody#transport-document-info tr td.text-top-left {
     text-align: left;
     vertical-align: text-top;
 }
@@ -279,14 +270,43 @@ table tbody#transport-document-info tr td p.note {
     height: 4rem;
 }
 
+.blank-space-big {
+    height: 6rem;
+}
+
+/* ***** FOOTER TABLE STYLES ***** */
+
+table tbody#footer-table tr td {
+    font-size: var(--doc-font);
+    padding: 0.2rem;
+    border: 1px solid black;
+}
+
+div p.footer-page {
+    font-size: var(--doc-font);
+    font-style: italic;
+    text-align: right;
+}
 /* ***** TABLE STYLES ENDS ***** */
 
 
 /* ***** PRINTABLE STYLES ***** */
-/*
+
 @media print {
+
+    *, *:after, *:before {
+        --background: transparent;
+        --first-color: black;
+        --second-color: black;
+        --warning-color: rgba(255, 165, 0, 1);
+        /* --doc-font: 8px; */
+        padding: 0;
+        margin: 0;
+        font-size: 10px;
+        /* box-sizing: border-box; */
+    }
     body, html {
-        background-color: transparent !important;
+        /* background-color: transparent !important; */
         color: black !important;
     }
 
@@ -295,29 +315,29 @@ table tbody#transport-document-info tr td p.note {
     }
 
     .show-print {
-        display block;
-    }
-
-    .cabecera {
-        background-color: rgb(109, 84, 84);
-        color: black;
-    }
-    
-    .borde {
-        border: 2px solid black;
-    }
-
-    td p.text-print-overflow-hidden {
-        overflow: hidden;
-        max-height: 1rem;
         display: block;
     }
 
-    tbody tr td.is-fictitious-location {
-        background-color: rgb(201, 201, 201);
-        print-color-adjust: exact;
-        -webkit-print-color-adjust:exact;
+    .cabecera {
+        background-color: rgb(199, 199, 199);
+        border-bottom: 1px solid black;
+        /* color: black; */
     }
+
+    table tbody#data-body tr td {
+        background-color: transparent;
+    }
+
+    table.print-hide-borders {
+        border-top: none;
+        border-bottom: none;
+    }
+
+    /* table tbody#data-body tr td p.text-print-overflow-hidden {
+        overflow: hidden;
+        max-height: 1rem;
+        display: block;
+    } */
 
     p.version {
         print-color-adjust: exact;

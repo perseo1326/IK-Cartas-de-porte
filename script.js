@@ -538,7 +538,7 @@
             dataTableBody += "<td>";
             dataTableBody += value.isellOrderNumber;
             dataTableBody += "</td>";
-            dataTableBody += "<td>";
+            dataTableBody += "<td class='hide-print'>";
             dataTableBody += value.status;
             dataTableBody += "</td>";
             dataTableBody += "<td>";
@@ -561,7 +561,8 @@
         });
 
         dataTableBody += "<tr class='centrar totales'>";
-        dataTableBody += "<td colspan='3'>Totales</td>";
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td colspan='2'>Totales</td>";
         dataTableBody += "<td>" + roundValue(totalPakagesShipment) + " bultos</td>";
         dataTableBody += "<td>" + roundValue(totalWeightShipment) + " Kgs</td>";
         dataTableBody += "<td>" + roundValue(totalVolumeShipment) + " m<sup>3</sup></td>";
