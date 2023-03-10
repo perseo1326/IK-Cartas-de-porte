@@ -30,6 +30,45 @@ body {
     background-color: orange;
 }
 
+div.panel {
+    /* display: flex; */
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+div.panel div.frame {
+    margin: auto;
+    width: 40%;
+    background-color: whitesmoke;
+    border-radius: 4px;
+}
+
+div.panel div.frame div.frame-title h3 {
+    background-color: var(--first-color);
+    color: var(--second-color);
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+div.panel div.frame div.frame-content {
+    padding: 0.5rem;
+}
+
+div.panel div.frame div.frame-content div p span {
+    text-decoration: underline;
+    display: inline-block;
+    margin-bottom: 0.3rem;
+    color: var(--first-color);
+}
+
 div.container-column {
     padding: 0 0.5rem;
     display: flex;
@@ -95,12 +134,12 @@ label {
 div p.version {
     text-align: right;
     padding: 0.3rem 1rem;
-    font-size: 0.7rem;
+    font-size: var(--doc-font);
     color: gray;
 }
 
 .custom-button {
-    border: none;
+    border: 1px solid var(--first-color);
     border-radius: 4px;
 	background-color: var(--first-color);
 	color: var(--second-color);
@@ -113,7 +152,8 @@ div p.version {
 
 .custom-button:hover {
     background-color: var(--second-color);
-    color: var(--first-color)
+    color: var(--first-color);
+    border: 1px solid var(--first-color);
 }
 
 .disable {
@@ -129,6 +169,28 @@ div p.version {
 
 input[type="file"] {
     display: none;
+}
+
+div.resume {
+    border: 2px solid var(--first-color);
+}
+
+div.resume p {
+    padding: 0 1rem 0.2rem 1rem;
+}
+
+div.resume p span {
+    color: var(--first-color);
+    font-weight: bold;
+}
+
+div.resume p:hover {
+    background-color: #ffdb01;
+}
+
+div.report-info {
+    background-color: #ffdb01;
+    margin-bottom: 0.5rem;
 }
 
 /*
@@ -164,7 +226,7 @@ div.loading p {
     font-size: larger;
 }
 
-/* ***** TABLE STYLES ***** */
+/* ***** TABLE DATA STYLES ***** */
 
 strong {
     font-weight: bold;
@@ -219,8 +281,8 @@ table tbody#data-body tr.totales {
 /* ***** TABLE DOCUMENT HEADER STYLES  ***** */
 
 body.page-a4 {
-    width: 21cm;
-    height: 29.7cm;
+    /* width: 21cm; */
+    /* height: 29.7cm; */
     border: 0.5px dotted black;
 }
 
@@ -229,7 +291,7 @@ table tbody#transport-document-info tr td.title {
 }
 
 table tbody#transport-document-info tr td.page-number {
-    font-size: 6px;
+    font-size: var(--doc-font);
     text-align: right;
     padding: 0 0.5rem;
     vertical-align: top;
@@ -267,11 +329,11 @@ table tbody#transport-document-info tr td.text-top-left {
 }
 
 .blank-space {
-    height: 4rem;
+    height: 6rem;
 }
 
 .blank-space-big {
-    height: 6rem;
+    height: 9rem;
 }
 
 /* ***** FOOTER TABLE STYLES ***** */
@@ -298,15 +360,15 @@ div p.footer-page {
         --background: transparent;
         --first-color: black;
         --second-color: black;
-        --warning-color: rgba(255, 165, 0, 1);
+        /* --warning-color: rgba(255, 165, 0, 1); */
         /* --doc-font: 8px; */
-        padding: 0;
-        margin: 0;
-        font-size: 10px;
+        /* padding: 0; */
+        /* margin: 0; */
+        font-size: 12px;
         /* box-sizing: border-box; */
     }
     body, html {
-        /* background-color: transparent !important; */
+        background-color: transparent !important;
         color: black !important;
     }
 
@@ -319,9 +381,9 @@ div p.footer-page {
     }
 
     .cabecera {
-        background-color: rgb(199, 199, 199);
-        border-bottom: 1px solid black;
-        /* color: black; */
+        print-color-adjust: exact;
+        -webkit-print-color-adjust:exact;
+        background-color: rgb(170, 167, 167);
     }
 
     table tbody#data-body tr td {
@@ -342,7 +404,6 @@ div p.footer-page {
     p.version {
         print-color-adjust: exact;
         -webkit-print-color-adjust:exact;
-        color: gray;
     }
 }
 

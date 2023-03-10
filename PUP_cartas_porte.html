@@ -2,24 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="autor" content="https://github.com/perseo1326" />
     <title>PUP Cartas de Porte</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
 
 </head>
 <body class="page-a4">
     <div class="container-column">
+        <!-- Panel  -->
+        <div id="panel" class="panel">
+            <div class="frame">
+                <div class="frame-title">
+                    <h3>Fecha de envío</h3>
+                </div>
+                <div class="frame-content">
+                    <div class="margen-bajo-05">
+                        <p class="">Destino: <span id="frame-destination">Tarragona - Primera Furgo</span></p>
+                        <label for="">Seleccionar fecha de envío:</label>
+                        <input type="date" id="frame-shipping-date" class="custom-button">
+                    </div>
+                    <div class="container">
+                        <input type="button" id="frame-ok-b" class="custom-button" value="Continuar">
+                        <input type="button" id="frame-cancel-b" class="custom-button" value="Cancelar">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="hide-print ancho-100 margen-bajo-1">
             <h1 class="centrar">Cartas de Porte Pick Up Points </h1>
         </div>
 
         <!-- Cabecera seleccion de info -->
-        <div class="hide-print margen-bajo-1 ancho-100">
+        <div class="hide-print margen-bajo-05 ancho-100">
             <!-- File selection -->
             <div class="ancho-100">
                 <label class="" for="">1. Seleccionar archivo de datos:</label>
@@ -43,10 +63,10 @@
                     <label for="">3. Seleccione el destino (CUT OFF TIME):</label>
                     <div class="ancho-100 margen-izq-1">
                         <select id="destino-cut-off-time" name="destinos" class="custom-button disable" disabled>
-                            <!-- <option value="" >Selecciona un valor </option> -->
-                            <option value="DIAGONAL">Diagonal</option>
-                            <option value="SANT_PERE">Sant Pere</option>
-                            <option value="TARRAGONA">Tarragona</option>
+                            <option value="" >Selecciona una opción </option>
+                            <!-- <option value="DIAGONAL">Diagonal</option> -->
+                            <!-- <option value="SANT_PERE">Sant Pere</option> -->
+                            <!-- <option value="TARRAGONA">Tarragona</option> -->
                         </select>
                     </div>
                 </div>
@@ -56,9 +76,9 @@
                     <label for="">4. Seleccione el Service Window:</label>
                     <div class="ancho-100 margen-izq-1">
                         <select id="service-window" name="" class="custom-button disable" disabled>
-                            <!-- <option value="" >Selecciona un valor </option> -->
-                            <option value="_ONE">Primera Furgo</option>
-                            <option value="_TWO">Segunda Furgo</option>
+                            <option value="" >Selecciona una opción</option>
+                            <!-- <option value="_ONE">Primera Furgo</option> -->
+                            <!-- <option value="_TWO">Segunda Furgo</option> -->
                         </select>
                     </div>
                 </div>
@@ -68,7 +88,7 @@
             <div class="ancho-50 inline">
                 <label for="">5. Analizar información</label>
                 <div class="ancho-100 margen-izq-1">
-                    <input type="button" id="process-data" class="custom-button disable" value="Procesar información" disabled>
+                    <input type="button" id="process-data" class="custom-button disable" value="Procesar información" disabled />
                 </div>
             </div>
 
@@ -76,7 +96,7 @@
             <div class="ancho-50 inline">
                 <label for="">6. Imprimir Documentación</label>
                 <div class="ancho-100 margen-izq-1">
-                    <input type="button" id="print-documentation-b" class="custom-button _disable" value="Imprimir Documentación" >
+                    <input type="button" id="print-documentation-b" class="custom-button disable" value="Imprimir Documentación" disabled>
                 </div>
             </div>
         </div>
@@ -149,6 +169,12 @@
             </table>
         </div>
 
+        <div id="resume" class="resume no-visible">
+            <p>Fecha (CUT OFF DATE): <span id="resume-cut-off-date"></span></p>
+            <p>Destino (CUT OFF TIME): <span id="resume-cut-off-time"></span></p>
+            <p>Service Window: <span id="resume-service-window"></span></p> 
+        </div>
+
         <div>
             
             <!-- Table with data -->
@@ -200,12 +226,13 @@
 
         <!-- Version de la aplicacion -->
         <div>
-            <p class="version">Versión 1.0</p>
+            <p class="version">Versión 1.0 - (https://github.com/perseo1326)</p>
         </div>
     </div>
     <script>
 
     </script>
+    <script src="./datos_pup.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

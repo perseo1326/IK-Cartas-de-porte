@@ -38,7 +38,7 @@
             SERVICE_WINDOW
             */
 
-            
+
     // *********************************************************
     // Variables y constantes
     const fileSelector = document.getElementById('file-input');
@@ -47,6 +47,10 @@
     const serviceWindowSelector = document.getElementById("service-window");
     const processDataB = document.getElementById("process-data");
     const printDocumentationB = document.getElementById("print-documentation-b");
+    const panel = document.getElementById("panel");
+    const frameShippingDate = document.getElementById("frame-shipping-date");
+    const frameOkB = document.getElementById("frame-ok-b");
+    const frameCancelB = document.getElementById("frame-cancel-b");
 
 
     const tableBody = document.getElementById("data-body");
@@ -55,16 +59,33 @@
     let contentOriginal = [];
     const todayDate = new Date("2023-02-25");
 
-    const NOT_STARTED       = "Not Started";
-    const STARTED           = "Started";
-    const PICKING           = "Picking";
-    const PICKED            = "Picked";
-    const WAIT_FOR_MERGE    = "Wait for Merge";
-    const CHECK_STARTED     = "Check Started";
-    const CHECKED           = "Checked";
-    const COMPLETED         = "Completed";
-    const OPEN_RETURN       = "Open Return";
-    const RETURNED          = "Returned";
+    const DEFAULT_DROPDOWNLIST_VALUE = { 
+        value : "",
+        text : "Selecciona una opción" 
+    };
+
+    // const NOT_STARTED       = "Not Started";
+    // const STARTED           = "Started";
+    // const PICKING           = "Picking";
+    // const PICKED            = "Picked";
+    // const WAIT_FOR_MERGE    = "Wait for Merge";
+    // const CHECK_STARTED     = "Check Started";
+    // const CHECKED           = "Checked";
+    // const COMPLETED         = "Completed";
+    // const OPEN_RETURN       = "Open Return";
+    // const RETURNED          = "Returned";
+
+
+    // class DestinoPUP {
+    //     titulo              = "Tarragona";
+    //     value               = "TARRAGONA";
+    //     address             = [];
+    //     carrier             = [];
+    //     cutOffTime          = "19:45";
+    //     windowServiceQty    = 2;
+    //     windowService       = [];
+    
+    // }
 
     const CUT_OFF_TIME = new Map();
     CUT_OFF_TIME.set("DIAGONAL", "06:30");
@@ -145,25 +166,80 @@
             });
         }
 
-        // toString() {
-        //     let string = "Isell: " + this.isellOrderNumber + "\n";
-        //     string += "Cut of Date: " + this.cutOffDate + "\n";
-        //     string += "Cut of Time: " + this.cutOffTime + "\n";
-        //     string += "Service Window: " + this.serviceWindow + "\n";
-        //     return string;
-        // }
     }
 
     // *********************************************************
     selectedDate.valueAsDate = todayDate;
+    loadConfigurationPUP();
 
     // *********************************************************
     // Event Listeners 
     fileSelector.addEventListener('change', openFile); 
     processDataB.addEventListener('click', processData);
     printDocumentationB.addEventListener('click', printDocument);
+    cutOffTimeSelector.addEventListener('change', loadServiceWindowOptions);
 
+    frameCancelB.addEventListener('click', () => { 
+        panel.style.display = "none";
+    });
+
+
+    // *********************************************************
+    // Function to load the options into the drop down list "CUT OFF TIME" and "SERVICE_WINDOW". 
+    function loadOptionsDropDownListView(parentNode, value, text) {
+        const option = document.createElement("option");
+        option.value = value;
+        option.text = text;
+        
+        parentNode.appendChild(option);
+    }
     
+    // *********************************************************
+    function cleanOptionsScrollDown(dropDownListSelector) {
+        if(dropDownListSelector.options.length > 0) {
+            dropDownListSelector.remove(0);
+            cleanOptionsScrollDown(dropDownListSelector);
+        }
+    }
+
+    // *********************************************************
+    function loadConfigurationPUP() {
+
+        if(typeof(arrayData) === "undefined") {
+            console.log("No fue posible cargar la configuración inicial.");
+            alert("No fue posible cargar la configuración inicial.");
+            // exit();
+        }
+
+        arrayData.forEach( (destination) => {
+            loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
+        } );
+    }
+
+    // *********************************************************
+    function findObjectPUP (value) {
+        return arrayData.find( obj => { return obj.pupId === value});
+    }
+
+
+
+
+    // *********************************************************
+    // *********************************************************
+    function loadServiceWindowOptions () {
+
+        cleanOptionsScrollDown(serviceWindowSelector);
+        loadOptionsDropDownListView(serviceWindowSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
+        
+        const pupSelected = findObjectPUP(this.value);
+        if (!pupSelected) {
+            return;
+        }
+
+        pupSelected.windowService.forEach( service => {
+            loadOptionsDropDownListView(serviceWindowSelector, service.serviceCode, service.serviceName );
+        });
+    }
     
     // *********************************************************
     // Function to validate a given date
@@ -433,18 +509,10 @@
         if(!dateCutOffDate) {
             return;
         }
-
-        // console.log("contentOriginal inicial: ", contentOriginal.length);
-
         let content = dataFilterByDate(contentOriginal, dateCutOffDate);
-        // console.log("data filter by date: ", content.length);
 
         const cutOffTime = cutOffTimeSelector.value;
         content = dataFilterByCutOffTime(content, CUT_OFF_TIME.get(cutOffTime));
-        // console.log("data filter by cut off time (Destination): ", content.length);
-
-        // console.log("CUTO OFF TIME value: ", cutOffTime);
-        // console.log("VALOR de service window: ", serviceWindowSelector.value, );
         
         const windowServiceSelection = WINDOW_SERVICE.get(cutOffTime + serviceWindowSelector.value)
         // console.log("valor concatenado : ", windowServiceSelection );
@@ -460,6 +528,15 @@
 
         printDocumentationB.disabled = false;
         printDocumentationB.classList.remove("disable");
+
+        document.getElementById("resume").classList.remove("no-visible");
+
+        const fecha = new Date(dateCutOffDate);
+        document.getElementById("resume-cut-off-date").innerText = fecha.toLocaleDateString();
+        document.getElementById("resume-cut-off-time").innerText = cutOffTime;
+        document.getElementById("resume-service-window").innerText = windowServiceSelection;
+
+
 
         showContent(dataMap);
     }
