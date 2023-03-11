@@ -2,42 +2,22 @@
 
     /*
 
-        filtrar por flujo de mercancia = PUP
-        obtener los cut of time para inicalizar la visualizacion 
-        
-        seleccionar fecha = CUT_OFF_DATE
-        seleccionar el destino, Diagonal, Tarragona, Sant Pere = CUT_OFF_TIME
-        
-
-        ACTUAL_ORDER_STATUS = 
-            Not Started
-            Started
-            Picking
-            Picked
-            Wait for Merge
-            Check Started
-            Checked
-            Completed
-            Open Return
-            Returned
+    ROWS FROM DATA FILE:
+        ISELL_ORDER_NUMBER
+        PICK_ID
+        ORDER_TYPE
+        PACKAGES
+        WEIGHT
+        VOLUME
+        ORDERED_QTY
+        PICK_AREA
+        ACTUAL_ORDER_STATUS
+        * CANCELLED
+        * NOT_HANDED_OUT
+        CUT_OFF_DATE
+        CUT_OFF_TIME
+        SERVICE_WINDOW
     */
-        /* 
-            ISELL_ORDER_NUMBER
-            PICK_ID
-            ORDER_TYPE
-            PACKAGES
-            WEIGHT
-            VOLUME
-            ORDERED_QTY
-            PICK_AREA
-            ACTUAL_ORDER_STATUS
-            * CANCELLED
-            * NOT_HANDED_OUT
-            CUT_OFF_DATE
-            CUT_OFF_TIME
-            SERVICE_WINDOW
-            */
-
 
     // *********************************************************
     // Variables y constantes
@@ -48,71 +28,42 @@
     const processDataB = document.getElementById("process-data");
     const printDocumentationB = document.getElementById("print-documentation-b");
     const panel = document.getElementById("panel");
+    const frameDestination = document.getElementById("frame-destination");
     const frameShippingDate = document.getElementById("frame-shipping-date");
     const frameOkB = document.getElementById("frame-ok-b");
     const frameCancelB = document.getElementById("frame-cancel-b");
-
-
     const tableBody = document.getElementById("data-body");
 
     const fileReader = new FileReader();
     let contentOriginal = [];
-    const todayDate = new Date("2023-02-25");
+    let windowServiceObj = {};
+    const todayDate = new Date();
 
     const DEFAULT_DROPDOWNLIST_VALUE = { 
         value : "",
         text : "Selecciona una opción" 
     };
 
-    // const NOT_STARTED       = "Not Started";
-    // const STARTED           = "Started";
-    // const PICKING           = "Picking";
-    // const PICKED            = "Picked";
-    // const WAIT_FOR_MERGE    = "Wait for Merge";
-    // const CHECK_STARTED     = "Check Started";
-    // const CHECKED           = "Checked";
-    // const COMPLETED         = "Completed";
-    // const OPEN_RETURN       = "Open Return";
-    // const RETURNED          = "Returned";
-
-
-    // class DestinoPUP {
-    //     titulo              = "Tarragona";
-    //     value               = "TARRAGONA";
-    //     address             = [];
-    //     carrier             = [];
-    //     cutOffTime          = "19:45";
-    //     windowServiceQty    = 2;
-    //     windowService       = [];
-    
-    // }
-
-    const CUT_OFF_TIME = new Map();
-    CUT_OFF_TIME.set("DIAGONAL", "06:30");
-    CUT_OFF_TIME.set("SANT_PERE", "20:00");
-    CUT_OFF_TIME.set("TARRAGONA", "19:45");
-
-    const WINDOW_SERVICE = new Map();
-    // WINDOW_SERVICE.set("DIAGONAL_ONE", []);
-    // WINDOW_SERVICE.set("DIAGONAL_TWO", []);
-    WINDOW_SERVICE.set("SANT_PERE_ONE", ["10:00-13:00", "13:00-16:00"]);
-    WINDOW_SERVICE.set("SANT_PERE_TWO", ["16:00-19:00", "19:00-21:00"]);
-    WINDOW_SERVICE.set("TARRAGONA_ONE", ["10:00-13:00", "13:00-17:00"]);
-    WINDOW_SERVICE.set("TARRAGONA_TWO", ["17:00-19:00", "19:00-21:00"]);
+    const NOT_STARTED       = "Not Started";
+    const STARTED           = "Started";
+    const PICKING           = "Picking";
+    const PICKED            = "Picked";
+    const WAIT_FOR_MERGE    = "Wait for Merge";
+    const CHECK_STARTED     = "Check Started";
+    const CHECKED           = "Checked";
+    const COMPLETED         = "Completed";
+    const OPEN_RETURN       = "Open Return";
+    const RETURNED          = "Returned";
 
     // *********************************************************
-    
     class PickOrder {
-        constructor(pickId, packages, weight, volume, orderedQty, pickArea, actualOrderStatus, cancelled, notHandedOut ) {
+        constructor(pickId, packages, weight, volume, pickArea, actualOrderStatus ) {
             this.pickArea       = pickArea;
             this.pickId         = pickId;
             this.packages       = Number (packages.replace(',', '.'));
             this.weight         = Number (weight.replace(',', '.'));
             this.volume         = Number (volume.replace(',', '.'));
-            this.orderedQty     = Number (orderedQty.replace(',', '.'));
             this.actualOrderStatus = actualOrderStatus;
-            this.cancelled      = cancelled;
-            this.notHandedOut  = notHandedOut;
         }
     }
 
@@ -165,7 +116,6 @@
                 }
             });
         }
-
     }
 
     // *********************************************************
@@ -176,13 +126,13 @@
     // Event Listeners 
     fileSelector.addEventListener('change', openFile); 
     processDataB.addEventListener('click', processData);
-    printDocumentationB.addEventListener('click', printDocument);
+    printDocumentationB.addEventListener('click', showPanelPrint);
     cutOffTimeSelector.addEventListener('change', loadServiceWindowOptions);
+    frameOkB.addEventListener('click', printDocument);
 
     frameCancelB.addEventListener('click', () => { 
         panel.style.display = "none";
     });
-
 
     // *********************************************************
     // Function to load the options into the drop down list "CUT OFF TIME" and "SERVICE_WINDOW". 
@@ -204,28 +154,27 @@
 
     // *********************************************************
     function loadConfigurationPUP() {
+        // Function to load the destination ("CUT_OFF_TIME") options into the drop down list selector 
 
-        if(typeof(arrayData) === "undefined") {
+        if(typeof(configData) === "undefined") {
             console.log("No fue posible cargar la configuración inicial.");
             alert("No fue posible cargar la configuración inicial.");
             // exit();
         }
 
-        arrayData.forEach( (destination) => {
+        configData.forEach( (destination) => {
             loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
         } );
     }
 
     // *********************************************************
+    // Function to find a destination ("CUT_OFF_TIME") from a "pupId" given
     function findObjectPUP (value) {
-        return arrayData.find( obj => { return obj.pupId === value});
+        return configData.find( obj => { return obj.pupId === value});
     }
 
-
-
-
     // *********************************************************
-    // *********************************************************
+    // Function to load the "SERVICE_WINDOW" options into the drop down list selector.
     function loadServiceWindowOptions () {
 
         cleanOptionsScrollDown(serviceWindowSelector);
@@ -243,14 +192,14 @@
     
     // *********************************************************
     // Function to validate a given date
-    function validateDate() {
-        const date = selectedDate.valueAsDate;
+    function validateDate(inputDate) {
+        const date = inputDate.valueAsDate;
         if(!date ){
             console.log("La fecha seleccionada es inválida.");
             alert("La fecha seleccionada es inválida.");
             return false;
         } 
-        return selectedDate.value;
+        return inputDate.value;
     }
 
     // *********************************************************
@@ -303,7 +252,6 @@
     // *********************************************************
     // Verify the valid structure of data readed from the file based on the headers of info
     function validateContent(arrayRow) {
-
         if (arrayRow[0].trim() == "ISELL_ORDER_NUMBER" && 
             arrayRow[1].trim() == "PICK_ID" && 
             arrayRow[3].trim() == "ORDER_TYPE" && 
@@ -335,15 +283,11 @@
         /* 
             ISELL_ORDER_NUMBER
             PICK_ID
-            ORDER_TYPE
             PACKAGES
             WEIGHT
             VOLUME
-            ORDERED_QTY
             PICK_AREA
             ACTUAL_ORDER_STATUS
-            * CANCELLED
-            * NOT_HANDED_OUT
             CUT_OFF_DATE
             CUT_OFF_TIME
             SERVICE_WINDOW
@@ -354,15 +298,11 @@
             const order = [];
                 order.push(row[0].trim());
                 order.push(row[1].trim());
-                order.push(row[3].trim());
                 order.push(row[5].trim());
                 order.push(row[6].trim());
                 order.push(row[7].trim());
-                order.push(row[8].trim());
                 order.push(row[12].trim());
                 order.push(row[13].trim());
-                order.push(row[23].trim());
-                order.push(row[24].trim());
                 order.push(row[38].trim());
                 order.push(row[39].trim());
                 order.push(row[42].trim());
@@ -374,7 +314,9 @@
     // *********************************************************
     // Check and remove all elements with "Order Type" different that "PUP"
     function filterOrderTypeOnlyPUP(dataArray) {
-        return dataArray.filter( (row) => { return row[2] == "PUP" } );
+
+        return dataArray.filter( (row) => { 
+            return row[3].trim() === "PUP" } );
     }
 
     // *********************************************************
@@ -399,8 +341,10 @@
         dataFileArray = deleteInvalidFinalLines(dataFileArray, dataFileArray[0].length);
         // Remove the headers from the loaded info
         dataFileArray.shift();
-        dataFileArray = filterColumns(dataFileArray);
-        contentOriginal = filterOrderTypeOnlyPUP(dataFileArray);
+
+        dataFileArray = filterOrderTypeOnlyPUP(dataFileArray);
+
+        contentOriginal = filterColumns(dataFileArray);
         
         selectedDate.disabled = false;
         selectedDate.classList.remove("disable");
@@ -416,86 +360,17 @@
     }
 
     // *********************************************************
-    // function to obtain all values of "CUT_OFF_TIME"  
-    // function getCutOffTimeValues(dataArray) {
-    //     const cutOffTimeValues = new Set();
-    //     const optionsDestination = [];
-
-    //     dataArray.forEach( (row) => { cutOffTimeValues.add(row[12]) });
-    //     cutOffTimeValues.forEach( (item) => {optionsDestination.push(item) });
-    //     optionsDestination.sort();
-    //     return optionsDestination;
-    // }
-
-    // *********************************************************
-    // Given an Array of "CUT_OFF_TIME" elements load those into the Dropdown list "Destination" 
-    // function visualizeCutOffTimeOptions (dataArray) {
-    //     cleanOptionsScrollDown(cutOffTimeSelector);
-
-    //     // Get options from the file data.
-    //     const optionsCutOffTime = getCutOffTimeValues(dataArray);
-    //     optionsCutOffTime.unshift("");
-
-    //     addOptionsScrollDown(cutOffTimeSelector, optionsCutOffTime);
-
-    //     cutOffTimeSelector.disabled = false;
-    //     cutOffTimeSelector.classList.remove("disable");
-    //     return optionsCutOffTime;
-    // }
-
-    // *********************************************************
-    // Function to get the "SERVICE_WINDOW" values for a "CUT_OFF_TIME" value
-    // function visualizeServiceWindowOptions (){
-    //     serviceWindowSelector.disabled = false;
-    //     serviceWindowSelector.classList.remove("disable");
-
-    //     let content = dataFilterByDate(contentOriginal );
-        
-        // if(!content) {
-        //     // if the date is invalid, return and do nothing.
-        //     return;
-        // }
-
-        // content = dataFilterByCutOffTime(content, this.value);
-        
-        // let serviceWindowOptions = getServiceWindowValues(content);
-
-    //     console.log("SERVICE WINDOW OPTIONS ", serviceWindowOptions);
-
-
-    //     showContent(content);
-
-    // }
-
-    // *********************************************************
-    // function addOptionsScrollDown(scrollDownControl, optionsArray) {
-    //         optionsArray.forEach( (element) => {
-    //         const option = document.createElement("option");
-    //         option.value = option.text = element;
-    //         scrollDownControl.appendChild(option);
-    //     });
-    // }       
-    // // *********************************************************
-    // function cleanOptionsScrollDown(scrollDownControl ) {
-    //     // Function to clean a given scroll down control options
-    //     while(scrollDownControl.options.length > 0) {
-    //         scrollDownControl.removeChild(scrollDownControl.firstElementChild);
-    //     }
-    // }
-
-
-    // *********************************************************
     // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
     function bindOrdersPUP_FromArray(arrayData) {
         const dataMap = new Map();
         arrayData.forEach( (row) => {
-            // (pickArea, pickId, packages, weight, volume, orderedQty, actualOrderStatus, cancelled, notHandedOut )
-            let pickTask = new PickOrder(row[1], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]);
+            // (pickId, packages, weight, volume, pickArea, actualOrderStatus ) {
+            let pickTask = new PickOrder(row[1], row[2], row[3], row[4], row[5], row[6]);
+
             if(dataMap.has(row[0])) {
-                console.log("Isell duplicado: ", row[0]);
                 dataMap.get(row[0]).addPickOrder(pickTask);
             } else {
-                let order = new OrderPUP(row[0], row[11], row[12], row[13], pickTask);
+                let order = new OrderPUP(row[0], row[7], row[8], row[9], pickTask);
                 dataMap.set(row[0], order);
             }
         });
@@ -505,18 +380,40 @@
     // *********************************************************
     function processData() {
 
-        const dateCutOffDate = validateDate();
+        const dateCutOffDate = validateDate(selectedDate);
         if(!dateCutOffDate) {
             return;
         }
-        let content = dataFilterByDate(contentOriginal, dateCutOffDate);
 
-        const cutOffTime = cutOffTimeSelector.value;
-        content = dataFilterByCutOffTime(content, CUT_OFF_TIME.get(cutOffTime));
+        // Find the object from the selected "CUT_OFF_TIME" option
+        const cutOffTimeObj = findObjectPUP(cutOffTimeSelector.value);
+        if(!cutOffTimeObj) {
+            console.log("No se ha seleccionado un destino (CUT OFF TIME)");
+            alert("No se ha seleccionado un destino (CUT OFF TIME)");
+            return;
+        }
+
+        // Find the object selected in the "SERVICE_WINDOW" selector
+        const windowServiceObject = cutOffTimeObj.windowService.find( service => { return service.serviceCode === serviceWindowSelector.value });
+        if(!windowServiceObject) {
+            console.log('No se ha seleccionado un "Service Window" válido.');
+            alert('No se ha seleccionado un "Service Window" válido.');
+            return;
+        }        
         
-        const windowServiceSelection = WINDOW_SERVICE.get(cutOffTime + serviceWindowSelector.value)
-        // console.log("valor concatenado : ", windowServiceSelection );
-        content = dataFilterByServiceWindow(content, windowServiceSelection );
+        // Save info for later. Will use it on view
+        windowServiceObj = windowServiceObject;
+
+        // filter by date
+        let content = dataFilterByDate(contentOriginal, dateCutOffDate);
+        // console.log("filtrado por fecha: ", content);
+
+        // Data filtered by "CUT OFF TIME"
+        content = dataFilterByCutOffTime(content, cutOffTimeObj.cutOffTime); 
+        // console.log("Filtrado por cut off time: ", content);
+        
+        content = dataFilterByServiceWindow(content, windowServiceObject.serviceValues );
+        // console.log("filter by service window: ", content);
 
         // Bind orders with the same "ISELL_ORDER_NUMBER"
         const dataMap = bindOrdersPUP_FromArray(content);
@@ -533,10 +430,14 @@
 
         const fecha = new Date(dateCutOffDate);
         document.getElementById("resume-cut-off-date").innerText = fecha.toLocaleDateString();
-        document.getElementById("resume-cut-off-time").innerText = cutOffTime;
-        document.getElementById("resume-service-window").innerText = windowServiceSelection;
+        document.getElementById("resume-cut-off-time").innerText = cutOffTimeObj.title + " (" + cutOffTimeObj.cutOffTime + ")";
+        document.getElementById("resume-service-window").innerText = windowServiceObject.serviceName + " (" + windowServiceObject.serviceValues + ")"
 
+        frameDestination.innerText = cutOffTimeObj.title + " - " + windowServiceObject.serviceName;
 
+        setAddressTransportDocument(document.getElementById("sender-address"), cutOffTimeObj.senderAddress);
+        setAddressTransportDocument(document.getElementById("consignee-address"), cutOffTimeObj.consigneeAddress);
+        setAddressTransportDocument(document.getElementById("carrier-address"), cutOffTimeObj.carrierAddress);
 
         showContent(dataMap);
     }
@@ -544,46 +445,76 @@
     // *********************************************************
     // Function fo filter the data set by date
     function dataFilterByDate(dataArray, textDate) {
-        return dataArray.filter( (row) => { return row[11] == textDate });
+        return dataArray.filter( (row) => { return row[7] === textDate });
     }
     
     // *********************************************************
     // Function to filter data by "CUT_OFF_TIME" value selected
     function dataFilterByCutOffTime(dataArray, selection) {
-        return dataArray.filter( (row) => { return row[12] === selection });
+        return dataArray.filter( (row) => { return row[8] === selection });
     }
     
     // *********************************************************
     function dataFilterByServiceWindow(dataArray, windowServiceArrayOptions) {
-
-        console.log("Valor de window service: ", windowServiceArrayOptions);
         return dataArray.filter( row => {
-            return windowServiceArrayOptions.includes(row[13]); 
+            return windowServiceArrayOptions.includes(row[9]); 
         });
     }
 
     // *********************************************************
+    function showPanelPrint(){
+        panel.style.display = "flex";
+        frameShippingDate.value = "----------";
+    }
+
+    // *********************************************************
     function printDocument() {
+
+        // document.getElementById("cabecero").style.display = "block";
+
+        const shippingDateValue = validateDate(frameShippingDate);
+        if(!shippingDateValue) { 
+            return;
+        }
+        
+        const shippingDate = new Date(shippingDateValue);
+        document.getElementById("transport-document-number").innerText = windowServiceObj.documentTransport_A + 
+                                                                            shippingDate.toLocaleDateString() +
+                                                                            windowServiceObj.documentTransport_B; 
+        document.getElementById("transport-document-loading-date").innerText = shippingDate.toLocaleDateString();
+        document.getElementById("transport-document-receipt-date").innerText = shippingDate.toLocaleDateString();
+
+        panel.style.display = "none";
+
         window.print();
     }
 
+    // *********************************************************
+    function setAddressTransportDocument(parentNode, addressArray) {
 
-
-
-
-
+        cleanChildNodes(parentNode);
+        const firstLine = document.createElement("p");
+        const strongLine = document.createElement("strong");
+        strongLine.innerText = addressArray[0];
+        firstLine.appendChild(strongLine);
+        parentNode.appendChild(firstLine);
+        
+        for (let i = 1; i < addressArray.length; i++) {
+            const element = addressArray[i];
+            const line = document.createElement("p");
+            line.innerText = element;
+            parentNode.appendChild(line);
+        }
+    }
 
     // *********************************************************
-    // function to obtain all values of "SERVICE_WINDOW"  
-    // function getServiceWindowValues(dataArray) {
-    //     const serviceWindow = new Set();
-    //     const options = [];
-
-    //     dataArray.forEach( (row) => { serviceWindow.add(row[13]) });
-    //     serviceWindow.forEach( (item) => {options.push(item) });
-    //     options.sort();
-    //     return options;
-    // }
+    // Function to clean their HTML DOM element child nodes 
+    function cleanChildNodes(parentNode) {
+        if(parentNode.childNodes.length > 0 ) {
+            parentNode.lastChild.remove();
+            cleanChildNodes(parentNode);
+        }
+    }
 
     // *********************************************************
     // Function to round a value for better presentation
@@ -649,7 +580,10 @@
     
     // *********************************************************
     function cleanVariablesAndVisual() {
+        console.log("Limpiando variables y visuales");
         content = contentOriginal = [];
+        windowServiceObj = {};
+        loadConfigurationPUP();
         document.getElementById("upload-file-b").innerText = "Subir archivo...";
         showContent(content);
     }

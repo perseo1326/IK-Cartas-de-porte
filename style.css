@@ -31,7 +31,7 @@ body {
 }
 
 div.panel {
-    /* display: flex; */
+    /* display: flex; // activado con JS */
     display: none;
     position: absolute;
     top: 0px;
@@ -283,7 +283,7 @@ table tbody#data-body tr.totales {
 body.page-a4 {
     /* width: 21cm; */
     /* height: 29.7cm; */
-    border: 0.5px dotted black;
+    /* border: 0.5px dotted black; */
 }
 
 table tbody#transport-document-info tr td.title {

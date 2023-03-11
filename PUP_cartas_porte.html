@@ -22,9 +22,11 @@
                 </div>
                 <div class="frame-content">
                     <div class="margen-bajo-05">
-                        <p class="">Destino: <span id="frame-destination">Tarragona - Primera Furgo</span></p>
+                        <p class="">Destino: <span id="frame-destination"></span></p>
                         <label for="">Seleccionar fecha de envío:</label>
-                        <input type="date" id="frame-shipping-date" class="custom-button">
+                        <div class="container">
+                            <input type="date" id="frame-shipping-date" class="custom-button centrar">
+                        </div>
                     </div>
                     <div class="container">
                         <input type="button" id="frame-ok-b" class="custom-button" value="Continuar">
@@ -64,9 +66,6 @@
                     <div class="ancho-100 margen-izq-1">
                         <select id="destino-cut-off-time" name="destinos" class="custom-button disable" disabled>
                             <option value="" >Selecciona una opción </option>
-                            <!-- <option value="DIAGONAL">Diagonal</option> -->
-                            <!-- <option value="SANT_PERE">Sant Pere</option> -->
-                            <!-- <option value="TARRAGONA">Tarragona</option> -->
                         </select>
                     </div>
                 </div>
@@ -77,8 +76,6 @@
                     <div class="ancho-100 margen-izq-1">
                         <select id="service-window" name="" class="custom-button disable" disabled>
                             <option value="" >Selecciona una opción</option>
-                            <!-- <option value="_ONE">Primera Furgo</option> -->
-                            <!-- <option value="_TWO">Segunda Furgo</option> -->
                         </select>
                     </div>
                 </div>
@@ -101,7 +98,7 @@
             </div>
         </div>
 
-        <div class="show-print">
+        <div id="cabecero" class="show-print">
             <!-- Container for the whole document header -->
             <table>
                 <tbody id="transport-document-info">
@@ -116,39 +113,24 @@
                         <td>Fecha de entrega / Date of receipt</td>
                     </tr>
                     <tr>
-                        <td class="value">406SP 06/03/2023 SANT PERE (FURGO 1)</td>
-                        <td class="value">06/03/2023</td>
-                        <td class="value">06/03/2023</td>
+                        <td id="transport-document-number" class="value"></td>
+                        <td id="transport-document-loading-date" class="value"></td>
+                        <td id="transport-document-receipt-date" class="value"></td>
                     </tr>
                     <tr>
                         <td class="">Remitente / Sender</td>
                         <td colspan="2">No. de precinto</td>
                     </tr>
                     <tr>
-                        <td>
-                            <p><strong>Ikea Gran Via 406</strong></p>
-                            <p>Gran Via de l'Hospitalet 115-133</p>
-                            <p>Hospitalet de Llobregat 08908</p>
-                            <p>Barcelona, Espanya</p>
-                        </td>
+                        <td id="sender-address"></td>
                     </tr>
                     <tr>
                         <td>Destinario / Consignee</td>
                         <td colspan="2">Transportista / Carrier</td>
                     </tr>
                     <tr>
-                        <td>
-                            <p><strong>Ikea St Pere Planning Studio</strong></p>
-                            <p>Rambla del Garraf s/n, Parc d'Oci Les Roquetes Local 10-B2</p>
-                            <p>El Mas d'en Serra, 08812</p>
-                            <p>Barcelona, Espanya</p>
-                        </td>
-                        <td colspan="2">
-                            <p><strong>SAMA Logística Aplicada SL</strong></p>
-                            <p>Gran Via de l'Hospitalet 115-133</p>
-                            <p>Hospitalet de Llobregat 08908</p>
-                            <p>Barcelona, Espanya</p>
-                        </td>
+                        <td id="consignee-address"></td>
+                        <td id="carrier-address" colspan="2"></td>
                     </tr>
                     <tr>
                         <td>Número de albarán / Invoice number</td>
@@ -169,7 +151,7 @@
             </table>
         </div>
 
-        <div id="resume" class="resume no-visible">
+        <div id="resume" class="resume no-visible hide-print">
             <p>Fecha (CUT OFF DATE): <span id="resume-cut-off-date"></span></p>
             <p>Destino (CUT OFF TIME): <span id="resume-cut-off-time"></span></p>
             <p>Service Window: <span id="resume-service-window"></span></p> 
