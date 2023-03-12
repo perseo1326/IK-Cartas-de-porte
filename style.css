@@ -193,39 +193,6 @@ div.report-info {
     margin-bottom: 0.5rem;
 }
 
-/*
-div.loading-frame {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-/*    backdrop-filter: blur(5px);
-    /* background-color: hsla(210, 4%, 20%, 0.5); */
-/* 
-}
-
-div.loading-frame div.loading {
-	position: relative;
-	background-color: var(--first-color);
-    color: var(--second-color);
-    text-align: center;
-    max-width: 40%;
-    margin : auto;
-    top: 50%;
-	padding: 2rem ;
-    border-radius: 5px;
-    transform: translate(-0%, -50%);
-    -webkit-transform: translate(-0%, -50%);
-}
-
-div.loading p {
-    margin: auto;
-    font-weight: bold;
-    font-size: larger;
-}
-
 /* ***** TABLE DATA STYLES ***** */
 
 strong {
@@ -314,10 +281,6 @@ table tbody#transport-document-info tr td.value {
     font-size:small;
 }
 
-table tbody#transport-document-info tr td p {
-    /* font-size: small; */
-}
-
 table tbody#transport-document-info tr td p.note {
     font-size: var(--doc-font);
     text-align: justify;
@@ -395,12 +358,6 @@ div p.footer-page {
         border-bottom: none;
     }
 
-    /* table tbody#data-body tr td p.text-print-overflow-hidden {
-        overflow: hidden;
-        max-height: 1rem;
-        display: block;
-    } */
-
     p.version {
         print-color-adjust: exact;
         -webkit-print-color-adjust:exact;
@@ -408,8 +365,3 @@ div p.footer-page {
 }
 
 /* ***** PRINTABLE STYLES ENDS ***** */
-
-/*
-.unstyle {
-    all: unset;
-}
