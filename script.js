@@ -37,7 +37,7 @@
     const fileReader = new FileReader();
     let contentOriginal = [];
     let windowServiceObj = {};
-    const todayDate = new Date();
+    const todayDate = new Date("2023-02-25");
 
     const DEFAULT_DROPDOWNLIST_VALUE = { 
         value : "",
@@ -362,6 +362,7 @@
     // *********************************************************
     // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
     function bindOrdersPUP_FromArray(arrayData) {
+        // debugger;
         const dataMap = new Map();
         arrayData.forEach( (row) => {
             // (pickId, packages, weight, volume, pickArea, actualOrderStatus ) {

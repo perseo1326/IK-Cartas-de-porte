@@ -5,6 +5,9 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 1.1:
+    * Reducción del tamaño de fuente en la sección de la cabecera de información al momento de imprimir el documento.
+
 ### Versión 1.0:
     * Creación de las cartas de porte para cada uno de los destinos y flujos de mercancias.
     * Creación y modelado de las estructuras de datos para los diferentes destinos y sus datos, para posterior personalización.
