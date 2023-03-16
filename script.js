@@ -33,11 +33,15 @@
     const frameOkB = document.getElementById("frame-ok-b");
     const frameCancelB = document.getElementById("frame-cancel-b");
     const tableBody = document.getElementById("data-body");
+    const addCommentsB = document.getElementById("add-comments-b");
+    const commentsContainer = document.getElementById("comments-container");
+    const commentsText = document.getElementById("comments-text");
+    const comments = document.getElementById("comments");
 
-    const fileReader = new FileReader();
+    let fileReader = new FileReader();
     let contentOriginal = [];
     let windowServiceObj = {};
-    const todayDate = new Date("2023-02-25");
+    let todayDate = "";
 
     const DEFAULT_DROPDOWNLIST_VALUE = { 
         value : "",
@@ -119,20 +123,67 @@
     }
 
     // *********************************************************
-    selectedDate.valueAsDate = todayDate;
-    loadConfigurationPUP();
-
-    // *********************************************************
     // Event Listeners 
     fileSelector.addEventListener('change', openFile); 
     processDataB.addEventListener('click', processData);
     printDocumentationB.addEventListener('click', showPanelPrint);
     cutOffTimeSelector.addEventListener('change', loadServiceWindowOptions);
     frameOkB.addEventListener('click', printDocument);
+    commentsText.addEventListener('change', setComments);
+
+    addCommentsB.addEventListener('click', () => {
+        if (commentsContainer.classList.contains("no-visible")) {
+            commentsContainer.classList.remove("no-visible");
+            addCommentsB.value = "Ocultar comentarios";
+        } else {
+            commentsContainer.classList.add("no-visible");
+            addCommentsB.value = "Añadir comentarios";            
+        }
+        commentsText.focus();
+        console.log("elemento: ", commentsText);
+    });
 
     frameCancelB.addEventListener('click', () => { 
         panel.style.display = "none";
     });
+
+    // *********************************************************
+    // Function to initialize the variables and environment 
+    function initializePage() {
+        console.log("Inicializando los valores por defecto de la página.")
+
+        fileReader = new FileReader();
+        document.getElementById("upload-file-b").innerText = "Subir archivo...";
+        contentOriginal = [];
+        windowServiceObj = {};
+        todayDate = new Date();
+        selectedDate.valueAsDate = todayDate;
+        commentsText.value = "";
+        showProcessValues(null, "", "", "", "");
+        showContent(contentOriginal);
+        
+        selectedDate.disabled = true;
+        selectedDate.classList.add("disable");
+        
+        cutOffTimeSelector.disabled = true;
+        cutOffTimeSelector.classList.add("disable");
+
+        serviceWindowSelector.disabled = true;
+        serviceWindowSelector.classList.add("disable");
+
+        processDataB.disabled = true;
+        processDataB.classList.add("disable");
+
+        printDocumentationB.disabled = true;
+        printDocumentationB.classList.add("disable");
+
+        addCommentsB.disabled = true;
+        addCommentsB.classList.add("disable");
+
+        commentsContainer.classList.add("no-visible");
+
+        loadConfigurationPUP();
+    }
 
     // *********************************************************
     // Function to load the options into the drop down list "CUT OFF TIME" and "SERVICE_WINDOW". 
@@ -155,6 +206,9 @@
     // *********************************************************
     function loadConfigurationPUP() {
         // Function to load the destination ("CUT_OFF_TIME") options into the drop down list selector 
+
+        cleanChildNodes(cutOffTimeSelector);
+        loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
 
         if(typeof(configData) === "undefined") {
             console.log("No fue posible cargar la configuración inicial.");
@@ -223,6 +277,7 @@
     // *********************************************************
     function openFile(evento) {
         console.clear();
+        initializePage();
         let file = evento.target.files[0];
 
         file = verifyFileExist(file);
@@ -322,7 +377,7 @@
     // *********************************************************
     function loadFile() {
         if (!fileReader.result) {
-            cleanVariablesAndVisual();
+            initializePage();
             console.log("El contenido del archivo no pudo ser leido.");
             alert("El contenido del archivo no pudo ser leido.");
             return;
@@ -332,7 +387,7 @@
         // Validate the format of the file and data
         if(!validateContent(dataFileArray[0])) {
             // Delete any info into the variables to avoid further errors
-            cleanVariablesAndVisual();
+            initializePage();
             console.log("El archivo NO contiene información válida.");
             alert("El archivo NO contiene información válida.");
             return;
@@ -362,10 +417,9 @@
     // *********************************************************
     // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
     function bindOrdersPUP_FromArray(arrayData) {
-        // debugger;
         const dataMap = new Map();
         arrayData.forEach( (row) => {
-            // (pickId, packages, weight, volume, pickArea, actualOrderStatus ) {
+            // (pickId, packages, weight, volume, pickArea, actualOrderStatus )
             let pickTask = new PickOrder(row[1], row[2], row[3], row[4], row[5], row[6]);
 
             if(dataMap.has(row[0])) {
@@ -427,12 +481,17 @@
         printDocumentationB.disabled = false;
         printDocumentationB.classList.remove("disable");
 
+        addCommentsB.disabled = false;
+        addCommentsB.classList.remove("disable");
+
         document.getElementById("resume").classList.remove("no-visible");
 
         const fecha = new Date(dateCutOffDate);
-        document.getElementById("resume-cut-off-date").innerText = fecha.toLocaleDateString();
-        document.getElementById("resume-cut-off-time").innerText = cutOffTimeObj.title + " (" + cutOffTimeObj.cutOffTime + ")";
-        document.getElementById("resume-service-window").innerText = windowServiceObject.serviceName + " (" + windowServiceObject.serviceValues + ")"
+        showProcessValues(fecha, 
+                            cutOffTimeObj.title, 
+                            cutOffTimeObj.cutOffTime, 
+                            windowServiceObject.serviceName, 
+                            windowServiceObject.serviceValues );
 
         frameDestination.innerText = cutOffTimeObj.title + " - " + windowServiceObject.serviceName;
 
@@ -440,7 +499,22 @@
         setAddressTransportDocument(document.getElementById("consignee-address"), cutOffTimeObj.consigneeAddress);
         setAddressTransportDocument(document.getElementById("carrier-address"), cutOffTimeObj.carrierAddress);
 
+        commentsText.value = "";
+        commentsContainer.classList.add("no-visible");
+        addCommentsB.value = "Añadir comentarios";
+
         showContent(dataMap);
+    }
+
+    // *********************************************************
+    function showProcessValues (dateCutOffDate, title, timeCutOffTime, serviceName, serviceValues ) {
+        if(dateCutOffDate) {
+            document.getElementById("resume-cut-off-date").innerText = dateCutOffDate.toLocaleDateString();
+        } else {
+            document.getElementById("resume-cut-off-date").innerText = "";
+        }
+        document.getElementById("resume-cut-off-time").innerText = title + " (" + timeCutOffTime + ")";
+        document.getElementById("resume-service-window").innerText = serviceName + " (" + serviceValues + ")";
     }
 
     // *********************************************************
@@ -471,8 +545,6 @@
     // *********************************************************
     function printDocument() {
 
-        // document.getElementById("cabecero").style.display = "block";
-
         const shippingDateValue = validateDate(frameShippingDate);
         if(!shippingDateValue) { 
             return;
@@ -487,6 +559,8 @@
 
         panel.style.display = "none";
 
+        comments.innerText = commentsText.value;
+        
         window.print();
     }
 
@@ -524,6 +598,12 @@
         value = Math.round(value); 
         return (value / 100);
     }
+    
+    // *********************************************************
+    function setComments() {
+        comments.innerText = commentsText.value;
+    }
+
     // *********************************************************
     function showContent(data) {
         // Clean and initialize values for the table data view
@@ -547,6 +627,14 @@
             dataTableBody += "<td>";
             dataTableBody += value.isellOrderNumber;
             dataTableBody += "</td>";
+/*
+            dataTableBody += "<td>";
+            dataTableBody += "75689";
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            dataTableBody += "Markethall";
+            dataTableBody += "</td>";
+*/
             dataTableBody += "<td class='hide-print'>";
             dataTableBody += value.status;
             dataTableBody += "</td>";
@@ -579,12 +667,3 @@
         tableBody.innerHTML += dataTableBody;
     }
     
-    // *********************************************************
-    function cleanVariablesAndVisual() {
-        console.log("Limpiando variables y visuales");
-        content = contentOriginal = [];
-        windowServiceObj = {};
-        loadConfigurationPUP();
-        document.getElementById("upload-file-b").innerText = "Subir archivo...";
-        showContent(content);
-    }

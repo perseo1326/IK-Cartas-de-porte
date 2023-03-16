@@ -19,7 +19,6 @@
 
 body {
     background-color: var(--background);
-    padding: 0.5rem;
 }
 
 .back1 {
@@ -139,6 +138,7 @@ div p.version {
 }
 
 .custom-button {
+    /* min-width: 14rem; */
     border: 1px solid var(--first-color);
     border-radius: 4px;
 	background-color: var(--first-color);
@@ -203,6 +203,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     border: 2px solid var(--first-color);
+    overflow: auto;
 }
 
 thead tr th {
@@ -266,12 +267,11 @@ table tbody#transport-document-info tr td.page-number {
 
 table tbody#transport-document-info tr td h3 {
     text-align: right;
-    padding: 0.5rem;
 }
 
 table tbody#transport-document-info tr td {
     font-size: calc( var(--doc-font) + 2px);
-    padding: 0.2rem;
+    padding: 2px;
     border: 1px solid black;
 }
 
@@ -297,19 +297,38 @@ table tbody#transport-document-info tr td.text-top-left {
 }
 
 .blank-space {
-    height: 3rem;
+    height: 2.5rem;
 }
 
 .blank-space-big {
     height: 4rem;
 }
 
+/* ***** COMMENTS TABLE STYLES ***** */
+
+div#comments-container table {
+    border: none;
+}
+
+tbody#comments-table tr td textarea {
+    border: 2px solid var(--first-color);
+    outline: none;
+    text-align: justify;
+    background-color: var(--second-color);
+    padding: 3px 0.3rem;
+    width: 100%;
+}
+
 /* ***** FOOTER TABLE STYLES ***** */
 
 table tbody#footer-table tr td {
-    font-size: var(--doc-font);
+    font-size: calc( 2px + var(--doc-font));
     padding: 0.2rem;
     border: 1px solid black;
+}
+
+table tbody#footer-table tr td p {
+    font-size: calc( 4px + var(--doc-font));
 }
 
 div p.footer-page {

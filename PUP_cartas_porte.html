@@ -93,7 +93,7 @@
             <div class="ancho-50 inline">
                 <label for="">6. Imprimir Documentación</label>
                 <div class="ancho-100 margen-izq-1">
-                    <input type="button" id="print-documentation-b" class="custom-button disable" value="Imprimir Documentación" disabled>
+                    <input type="button" id="print-documentation-b" class="custom-button disable" value="Imprimir documentación" disabled>
                 </div>
             </div>
         </div>
@@ -157,7 +157,7 @@
             <p>Service Window: <span id="resume-service-window"></span></p> 
         </div>
 
-        <div>
+        <div class="">
             
             <!-- Table with data -->
             <table class="print-hide-borders">
@@ -175,7 +175,29 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="hide-print">
+            <div class="ancho-100">
+                <label for="">7. Añadir Comentarios, Notas</label>
+                <div class="ancho-100 margen-izq-1">
+                    <input type="button" id="add-comments-b" class="custom-button disable" value="Añadir comentarios" disabled >
+                </div>
+            </div>
             
+            <div id="comments-container" class="no-visible ">
+                <table class="">
+                    <tbody id="comments-table">
+                        <tr>
+                            <td>
+                                <textarea name="comments-text" id="comments-text" cols="" rows="4"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                
+        </div>
+
         <div class="show-print">
             <!-- Footer table -->
             <table>
@@ -184,7 +206,9 @@
                         <td class="centrar" colspan="3">Observaciones de la expedición / Shipping remarks</td>
                     </tr>
                     <tr>
-                        <td class="blank-space" colspan="3"></td>
+                        <td class="blank-space" colspan="3">
+                            <p id="comments"></p>
+                        </td>
                     </tr>
                     <tr>
                         <td>Firma y sello Expedidor</td>
