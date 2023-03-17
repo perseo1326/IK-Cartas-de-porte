@@ -68,8 +68,11 @@ div.panel div.frame div.frame-content div p span {
     color: var(--first-color);
 }
 
+body {
+    padding: 0 0.4rem;
+}
+
 div.container-column {
-    padding: 0 0.5rem;
     display: flex;
     flex-direction: column;
 }
@@ -133,7 +136,7 @@ label {
 div p.version {
     text-align: right;
     padding: 0.3rem 1rem;
-    font-size: var(--doc-font);
+    font-size: calc( 2px + var(--doc-font));
     color: gray;
 }
 
@@ -209,7 +212,11 @@ table {
 thead tr th {
     padding: 0.1rem;
     border-bottom: 2px solid var(--first-color);
-    border: 2px solid red;
+}
+
+thead tr.cabecera th.invert-colors {
+    background-color: var(--second-color);
+    color: var(--first-color);
 }
 
 thead tr th.ordinal {
@@ -229,25 +236,72 @@ table tbody#data-body tr td {
     min-width: 5rem;
     max-height: 1rem;
 }
+/* 
+table tbody#data-body tr td input[type='text'] {
+    all: unset;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: 1px solid red;
+} */
 
-/* table tbody#data-body tr:nth-last-of-type(2n+0) { */
-table tbody#data-body tr.centrar td.pick-id {
-    border-bottom: transparent;
+table tbody#data-body tr td.isell.isell-focus {
+    /* background-color: red; */
+} 
+
+
+table tbody#data-body tr td input[type='text']:focus {
+    background-color: #ffdb01;
 }
 
-table tbody#data-body tr.centrar.fila td.pick-status {
+table tbody#data-body tr td.container-column {
+    border: 1px solid gray;
+}
+
+table tbody#data-body tr:nth-last-of-type(2n+0) {
     background-color: lightgray;
 }
 
-table tbody#data-body tr.fila {
-    background-color: lightgray;
+table tbody#data-body tr.centrar td p.pick-id {
+    /* background-color: red; */
+    /* border: 1px solid black; */
 }
 
-/* table tbody#data-body tr:hover { */
-/* table tbody#data-body tr:hover,  */
-table tbody#data-body tr.centrar:hover  {
-    /* background-color: var(--second-color); */
-    background-color: red;
+
+table tbody#data-body tr.centrar td p.pick-status.not-started  {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+table tbody#data-body tr.centrar td p.pick-status.started,
+table tbody#data-body tr.centrar td p.pick-status.picking, 
+table tbody#data-body tr.centrar td p.pick-status.picked  {
+    background-color: orange;
+}
+
+table tbody#data-body tr.centrar td p.pick-status.wait-for-merge  {
+    background-color: lightsalmon;
+}
+
+table tbody#data-body tr.centrar td p.pick-status.check-started  {
+    background-color: rgb(255, 255, 0);
+}
+
+table tbody#data-body tr.centrar td p.pick-status.checked  {
+    background-color: rgb(191, 255, 0);
+}
+
+table tbody#data-body tr.centrar td p.pick-status.completed  {
+    background-color: lightgreen
+}
+
+table tbody#data-body tr.centrar td p.pick-status.open-return,  
+table tbody#data-body tr.centrar td p.pick-status.returned  {
+    background-color: transparent;
+}
+
+table tbody#data-body tr:hover {
+    background-color: var(--second-color);
 }
 
 .cabecera {
@@ -402,3 +456,12 @@ div p.footer-page {
 }
 
 /* ***** PRINTABLE STYLES ENDS ***** */
+
+/* .unstyle {
+    all: unset;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: 1px solid red;
+} */

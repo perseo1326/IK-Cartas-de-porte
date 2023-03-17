@@ -12,8 +12,6 @@
         ORDERED_QTY
         PICK_AREA
         ACTUAL_ORDER_STATUS
-        * CANCELLED
-        * NOT_HANDED_OUT
         CUT_OFF_DATE
         CUT_OFF_TIME
         SERVICE_WINDOW
@@ -45,9 +43,10 @@
 
     const DEFAULT_DROPDOWNLIST_VALUE = { 
         value : "",
-        text : "Selecciona una opción" 
+        text : "Selecciona una opción..." 
     };
 
+    // const NOT_STARTED       = { value: "Not Started", color: "#red" } ;
     const NOT_STARTED       = "Not Started";
     const STARTED           = "Started";
     const PICKING           = "Picking";
@@ -130,6 +129,10 @@
     cutOffTimeSelector.addEventListener('change', loadServiceWindowOptions);
     frameOkB.addEventListener('click', printDocument);
     commentsText.addEventListener('change', setComments);
+    // tableBody.addEventListener('click', setFocusIsell);
+    // tableBody.addEventListener('focusout', setFocusOutIsell);
+
+    // let isellCell = "";
 
     addCommentsB.addEventListener('click', () => {
         if (commentsContainer.classList.contains("no-visible")) {
@@ -146,6 +149,23 @@
     frameCancelB.addEventListener('click', () => { 
         panel.style.display = "none";
     });
+
+    // *********************************************************
+    function setFocusOutIsell(evento) {
+
+    }
+
+    // *********************************************************
+    function setFocusIsell(evento) {
+        const elemento = evento.srcElement;
+        console.log("Elemento: ", elemento);
+        if(elemento.localName === "td" && elemento.className.includes("isell") ){
+            elemento.classList.add("isell-focus");
+            elemento.id = "isellFocus";
+            isellCell = elemento;
+            isellCell.addEventListener('focusout', () => { console.log("focus out ", this)});
+        }
+    }
 
     // *********************************************************
     // Function to initialize the variables and environment 
@@ -417,7 +437,6 @@
     // *********************************************************
     // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
     function bindOrdersPUP_FromArray(arrayData) {
-        // debugger;
         const dataMap = new Map();
         arrayData.forEach( (row) => {
             // (pickId, packages, weight, volume, pickArea, actualOrderStatus )
@@ -620,60 +639,78 @@
         data.forEach( (value, key) => {
 
             const isReturned = (value.status === RETURNED) ? "warning-row" : "";
-            const rowStyle = ((count % 2) === 0 ) ? "fila" : "" ;
-
-            dataTableBody += "<tr class='centrar " + rowStyle + isReturned + "'>";
-            dataTableBody += "<td rowspan='2'>";
+            dataTableBody += "<tr class='centrar " + isReturned + "'>";
+            dataTableBody += "<td>";
             dataTableBody += count;
             dataTableBody += "</td>";
-            dataTableBody += "<td rowspan='2'>";
+            dataTableBody += "<td class='isell' >";
+            // dataTableBody += "<div class='back2 ' onclick='xx(this)'>";
+            // dataTableBody += "<input type='text' class='unstyle' value='";
+            // dataTableBody += value.isellOrderNumber + "' readonly />";
             dataTableBody += value.isellOrderNumber;
-            dataTableBody += "</td>";
-            
-            dataTableBody += "<td class='pick-id'>";
-            dataTableBody += showPickIdValue(value.pickOrder.get("Markethall"));
-            dataTableBody += "</td>";
-            dataTableBody += "<td class='pick-id'>";
-            dataTableBody += showPickIdValue(value.pickOrder.get("Self Serve"));
-            dataTableBody += "</td>";
-            dataTableBody += "<td class='pick-id'>";
-            dataTableBody += showPickIdValue(value.pickOrder.get("Full Serve internal"));
+            // dataTableBody += "</div>";
             dataTableBody += "</td>";
 
-            dataTableBody += "<td rowspan='2'>";
+            dataTableBody += "<td class='container-column hide-print'>";
+            dataTableBody += "<p class='pick-id'>";
+            dataTableBody += showPickIdValue(value.pickOrder.get("Markethall"));
+            dataTableBody += "</p>";
+
+            let status = showPickOrderStatusValue(value.pickOrder.get("Markethall"));
+            dataTableBody += "<p class='pick-status ";
+            dataTableBody += getStatusCssClass(status) + "'>";
+            dataTableBody += status; 
+            dataTableBody += "</p>";
+            dataTableBody += "</td>";
+
+            dataTableBody += "<td class='container-column hide-print'>";
+            dataTableBody += "<p class='pick-id'>";
+            dataTableBody += showPickIdValue(value.pickOrder.get("Self Serve"));
+            dataTableBody += "</p>";
+
+            status = showPickOrderStatusValue(value.pickOrder.get("Self Serve"));
+            dataTableBody += "<p class='pick-status ";
+            dataTableBody += getStatusCssClass(status) + "'>";
+            dataTableBody += status;
+            dataTableBody += "</p>";
+            dataTableBody += "</td>";
+
+            dataTableBody += "<td class='container-column hide-print'>";
+            dataTableBody += "<p class='pick-id'>";
+            dataTableBody += showPickIdValue(value.pickOrder.get("Full Serve internal"));
+            dataTableBody += "</p>";
+
+            status = showPickOrderStatusValue(value.pickOrder.get("Full Serve internal"));
+            dataTableBody += "<p class='pick-status ";
+            dataTableBody += getStatusCssClass(status) + "'>";
+            dataTableBody += status;
+            dataTableBody += "</p>";
+            dataTableBody += "</td>";
+
+            dataTableBody += "<td>";
             let temp = roundValue(value.totalPackages);
             totalPakagesShipment += temp;
             dataTableBody += temp;
             dataTableBody += "</td>";
-            dataTableBody += "<td rowspan='2'>";
+            dataTableBody += "<td>";
             temp = roundValue(value.totalWeight);
             totalWeightShipment += temp,
             dataTableBody += temp;
             dataTableBody += "</td>";
-            dataTableBody += "<td rowspan='2'>";
+            dataTableBody += "<td>";
             temp = roundValue(value.totalVolume );
             totalVolumeShipment += temp;
             dataTableBody += temp;
             dataTableBody += "</td>";
-
-            dataTableBody += "<tr class='centrar " + rowStyle + "'>";
-            dataTableBody += "<td class='pick-status'>";
-            dataTableBody += showPickOrderStatusValue(value.pickOrder.get("Markethall"));
-            dataTableBody += "</td>";
-            dataTableBody += "<td class='pick-status'>";
-            dataTableBody += showPickOrderStatusValue(value.pickOrder.get("Self Serve"));
-            dataTableBody += "</td>";
-            dataTableBody += "<td class='pick-status'>";
-            dataTableBody += showPickOrderStatusValue(value.pickOrder.get("Full Serve internal"));
-            dataTableBody += "</td>";
-            dataTableBody += "</tr>";
 
             count++;
         });
 
         dataTableBody += "<tr class='centrar totales'>";
         dataTableBody += "<td class='hide-print'></td>"
-        dataTableBody += "<td colspan='4'>Totales</td>";
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td colspan='2'>Totales</td>";
         dataTableBody += "<td>" + roundValue(totalPakagesShipment) + " bultos</td>";
         dataTableBody += "<td>" + roundValue(totalWeightShipment) + " Kgs</td>";
         dataTableBody += "<td>" + roundValue(totalVolumeShipment) + " m<sup>3</sup></td>";
@@ -698,7 +735,51 @@
             return "-";
         }
     }
+    
+    // *********************************************************
+    function getStatusCssClass(status) {
+        let color = "";
+        switch (status) {
+            case NOT_STARTED:
+                color = "not-started";
+                break;
+            case STARTED:
+                color = "started";
+                break;
+            case PICKING:
+                color = "picking";
+                break;
+            case PICKED:
+                color = "picked";
+                break;
+            case WAIT_FOR_MERGE:
+                color = "wait-for-merge";
+                break;
+            case CHECK_STARTED:
+                color = "check-started";
+                break;
+            case CHECKED:
+                color = "checked";
+                break;
+            case COMPLETED:
+                color = "completed";
+                break;
+            case OPEN_RETURN:
+                color = "open-return";
+                break;
+            case RETURNED:
+                color = "returned";
+                break;
+            default:
+                color = "";
+        }
+        return color;
+    }
 
-
+    // *********************************************************
+    function xx(elemento) {
+        // console.log("Elemento clcik: ", elemento);
+        // elemento.classList.add("back1");
+    }
 
 
