@@ -163,13 +163,19 @@
             <table class="print-hide-borders">
                 <thead>
                     <tr class="cabecera">
-                        <th class="centrar ordinal">No.</th>
-                        <th class="isell">Isell</th>
-                        <th class="hide-print">Estado</th>
-                        <th class="">No. Paquetes</th>
-                        <th class="">Peso (Kg)</th>
-                        <th class="">Volumen (m<sup>3</sup>)</th>
+                        <th class="centrar ordinal" rowspan="2">No.</th>
+                        <th class="isell" rowspan="2">Isell</th>
+                        <th class="hide-print" colspan="3">Pick Area</th>
+                        <th class="" rowspan="2">No. Paquetes</th>
+                        <th class="" rowspan="2">Peso (Kg)</th>
+                        <th class="" rowspan="2">Volumen (m<sup>3</sup>)</th>
                     </tr>
+                    <tr class="cabecera">
+                        <th>Markethall</th>
+                        <th>Self Serve</th>
+                        <th>Full Serve</th>
+                    </tr>
+                    
                 </thead>
                 <tbody id="data-body">
                 </tbody>

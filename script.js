@@ -156,7 +156,7 @@
         document.getElementById("upload-file-b").innerText = "Subir archivo...";
         contentOriginal = [];
         windowServiceObj = {};
-        todayDate = new Date();
+        todayDate = new Date("2023-02-25");
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
@@ -417,6 +417,7 @@
     // *********************************************************
     // function to join different orders with same "ISELL_NUMBER" in one "OrderPUP" object.
     function bindOrdersPUP_FromArray(arrayData) {
+        // debugger;
         const dataMap = new Map();
         arrayData.forEach( (row) => {
             // (pickId, packages, weight, volume, pickArea, actualOrderStatus )
@@ -619,47 +620,60 @@
         data.forEach( (value, key) => {
 
             const isReturned = (value.status === RETURNED) ? "warning-row" : "";
+            const rowStyle = ((count % 2) === 0 ) ? "fila" : "" ;
 
-            dataTableBody += "<tr class='centrar " + isReturned + "'>";
-            dataTableBody += "<td>";
+            dataTableBody += "<tr class='centrar " + rowStyle + isReturned + "'>";
+            dataTableBody += "<td rowspan='2'>";
             dataTableBody += count;
             dataTableBody += "</td>";
-            dataTableBody += "<td>";
+            dataTableBody += "<td rowspan='2'>";
             dataTableBody += value.isellOrderNumber;
             dataTableBody += "</td>";
-/*
-            dataTableBody += "<td>";
-            dataTableBody += "75689";
+            
+            dataTableBody += "<td class='pick-id'>";
+            dataTableBody += showPickIdValue(value.pickOrder.get("Markethall"));
             dataTableBody += "</td>";
-            dataTableBody += "<td>";
-            dataTableBody += "Markethall";
+            dataTableBody += "<td class='pick-id'>";
+            dataTableBody += showPickIdValue(value.pickOrder.get("Self Serve"));
             dataTableBody += "</td>";
-*/
-            dataTableBody += "<td class='hide-print'>";
-            dataTableBody += value.status;
+            dataTableBody += "<td class='pick-id'>";
+            dataTableBody += showPickIdValue(value.pickOrder.get("Full Serve internal"));
             dataTableBody += "</td>";
-            dataTableBody += "<td>";
+
+            dataTableBody += "<td rowspan='2'>";
             let temp = roundValue(value.totalPackages);
             totalPakagesShipment += temp;
             dataTableBody += temp;
             dataTableBody += "</td>";
-            dataTableBody += "<td>";
+            dataTableBody += "<td rowspan='2'>";
             temp = roundValue(value.totalWeight);
             totalWeightShipment += temp,
             dataTableBody += temp;
             dataTableBody += "</td>";
-            dataTableBody += "<td>";
+            dataTableBody += "<td rowspan='2'>";
             temp = roundValue(value.totalVolume );
             totalVolumeShipment += temp;
             dataTableBody += temp;
             dataTableBody += "</td>";
+
+            dataTableBody += "<tr class='centrar " + rowStyle + "'>";
+            dataTableBody += "<td class='pick-status'>";
+            dataTableBody += showPickOrderStatusValue(value.pickOrder.get("Markethall"));
+            dataTableBody += "</td>";
+            dataTableBody += "<td class='pick-status'>";
+            dataTableBody += showPickOrderStatusValue(value.pickOrder.get("Self Serve"));
+            dataTableBody += "</td>";
+            dataTableBody += "<td class='pick-status'>";
+            dataTableBody += showPickOrderStatusValue(value.pickOrder.get("Full Serve internal"));
+            dataTableBody += "</td>";
+            dataTableBody += "</tr>";
 
             count++;
         });
 
         dataTableBody += "<tr class='centrar totales'>";
         dataTableBody += "<td class='hide-print'></td>"
-        dataTableBody += "<td colspan='2'>Totales</td>";
+        dataTableBody += "<td colspan='4'>Totales</td>";
         dataTableBody += "<td>" + roundValue(totalPakagesShipment) + " bultos</td>";
         dataTableBody += "<td>" + roundValue(totalWeightShipment) + " Kgs</td>";
         dataTableBody += "<td>" + roundValue(totalVolumeShipment) + " m<sup>3</sup></td>";
@@ -667,3 +681,24 @@
         tableBody.innerHTML += dataTableBody;
     }
     
+    // *********************************************************
+    function showPickIdValue(objPickOrder) {
+        if (objPickOrder) {
+            return objPickOrder.pickId;
+        } else {
+            return "-";
+        }
+    }
+
+    // *********************************************************
+    function showPickOrderStatusValue(objPickOrder) {
+        if (objPickOrder) {
+            return objPickOrder.actualOrderStatus;
+        } else {
+            return "-";
+        }
+    }
+
+
+
+

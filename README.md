@@ -5,6 +5,9 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 1.2:
+    * Agregadas las columnas de los "Pick Areas" (Markethall, Self Service, Full Service Internal) mostrando el id de cada pick order y su estado (diseño en versión de tablas). Funcional pero con fallos en la visualizacion de las filas de la tabla de datos.
+    
 ### Versión 1.1:
     * Reducción del tamaño de fuente en la sección de la cabecera de información al momento de imprimir el documento.
     * Agregada la función de notas al final del documento en un panel especial para ello. 

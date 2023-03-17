@@ -209,6 +209,7 @@ table {
 thead tr th {
     padding: 0.1rem;
     border-bottom: 2px solid var(--first-color);
+    border: 2px solid red;
 }
 
 thead tr th.ordinal {
@@ -229,12 +230,24 @@ table tbody#data-body tr td {
     max-height: 1rem;
 }
 
-table tbody#data-body tr:nth-last-of-type(2n+0) {
+/* table tbody#data-body tr:nth-last-of-type(2n+0) { */
+table tbody#data-body tr.centrar td.pick-id {
+    border-bottom: transparent;
+}
+
+table tbody#data-body tr.centrar.fila td.pick-status {
     background-color: lightgray;
 }
 
-table tbody#data-body tr:hover {
-    background-color: var(--second-color);
+table tbody#data-body tr.fila {
+    background-color: lightgray;
+}
+
+/* table tbody#data-body tr:hover { */
+/* table tbody#data-body tr:hover,  */
+table tbody#data-body tr.centrar:hover  {
+    /* background-color: var(--second-color); */
+    background-color: red;
 }
 
 .cabecera {
