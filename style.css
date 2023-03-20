@@ -454,7 +454,7 @@ div p.footer-page {
     }
     
     table tbody#data-body tr td {
-        font-size: calc(5px + var(--doc-font) );
+        font-size: calc(6px + var(--doc-font) );
         background-color: transparent;
     }
 
