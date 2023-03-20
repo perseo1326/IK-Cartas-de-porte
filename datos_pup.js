@@ -18,9 +18,11 @@ const configData =
             "Spain"
         ],
         carrierAddress : [
-            "ABIAN SERVICE", 
-            "Tel: 931161444", 
-            "Email: opsbarcelona@abianservice.com"
+            "ADER Taxicomercial.com", 
+            "Avinguda Gran Via, 16-20, 4A", 
+            "08902, L'Hospitalet de Llobregat", 
+            "comunicacion@aderonline.com"
+            // http://www.taxicomercial.com/es/servicios-centrales.aspx
         ],
         windowService : [ 
             { 
@@ -64,10 +66,10 @@ const configData =
             "Barcelona, Espanya"
         ],	
         carrierAddress : [
-            "SAMA Logística Aplicada SL", 
-            "Gran Via de l'Hospitalet 115-133", 
-            "Hospitalet de Llobregat 08908", 
-            "Barcelona, Espanya"
+            "ADER Taxicomercial.com", 
+            "Avinguda Gran Via, 16-20, 4A", 
+            "08902, L'Hospitalet de Llobregat", 
+            "comunicacion@aderonline.com"
         ],
         windowService : [ 
             { 
@@ -104,10 +106,10 @@ const configData =
             "Tarragona, Espanya"
         ],
         carrierAddress : [
-            "SAMA Logística Aplicada SL", 
-            "Gran Via de l'Hospitalet 115-133", 
-            "Hospitalet de Llobregat 08908", 
-            "Barcelona, Espanya"
+            "ADER Taxicomercial.com", 
+            "Avinguda Gran Via, 16-20, 4A", 
+            "08902, L'Hospitalet de Llobregat", 
+            "comunicacion@aderonline.com"
         ],
         windowService : [ 
             { 

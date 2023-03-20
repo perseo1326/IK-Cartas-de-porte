@@ -157,14 +157,14 @@
 
     // *********************************************************
     function setFocusIsell(evento) {
-        const elemento = evento.srcElement;
-        console.log("Elemento: ", elemento);
-        if(elemento.localName === "td" && elemento.className.includes("isell") ){
-            elemento.classList.add("isell-focus");
-            elemento.id = "isellFocus";
-            isellCell = elemento;
-            isellCell.addEventListener('focusout', () => { console.log("focus out ", this)});
-        }
+        // const elemento = evento.srcElement;
+        // console.log("Elemento: ", elemento);
+        // if(elemento.localName === "td" && elemento.className.includes("isell") ){
+        //     elemento.classList.add("isell-focus");
+        //     elemento.id = "isellFocus";
+        //     isellCell = elemento;
+        //     isellCell.addEventListener('focusout', () => { console.log("focus out ", this)});
+        // }
     }
 
     // *********************************************************
@@ -634,90 +634,33 @@
         let totalWeightShipment = 0;
         let totalVolumeShipment = 0;
         
-        console.log("Data en showContent ", data);
-
+        // console.log("Data en showContent ", data);
+        
+        // fill rows with data
         data.forEach( (value, key) => {
-
-            const isReturned = (value.status === RETURNED) ? "warning-row" : "";
-            dataTableBody += "<tr class='centrar " + isReturned + "'>";
-            dataTableBody += "<td>";
-            dataTableBody += count;
-            dataTableBody += "</td>";
-            dataTableBody += "<td class='isell' >";
-            // dataTableBody += "<div class='back2 ' onclick='xx(this)'>";
-            // dataTableBody += "<input type='text' class='unstyle' value='";
-            // dataTableBody += value.isellOrderNumber + "' readonly />";
-            dataTableBody += value.isellOrderNumber;
-            // dataTableBody += "</div>";
-            dataTableBody += "</td>";
-
-            dataTableBody += "<td class='container-column hide-print'>";
-            dataTableBody += "<p class='pick-id'>";
-            dataTableBody += showPickIdValue(value.pickOrder.get("Markethall"));
-            dataTableBody += "</p>";
-
-            let status = showPickOrderStatusValue(value.pickOrder.get("Markethall"));
-            dataTableBody += "<p class='pick-status ";
-            dataTableBody += getStatusCssClass(status) + "'>";
-            dataTableBody += status; 
-            dataTableBody += "</p>";
-            dataTableBody += "</td>";
-
-            dataTableBody += "<td class='container-column hide-print'>";
-            dataTableBody += "<p class='pick-id'>";
-            dataTableBody += showPickIdValue(value.pickOrder.get("Self Serve"));
-            dataTableBody += "</p>";
-
-            status = showPickOrderStatusValue(value.pickOrder.get("Self Serve"));
-            dataTableBody += "<p class='pick-status ";
-            dataTableBody += getStatusCssClass(status) + "'>";
-            dataTableBody += status;
-            dataTableBody += "</p>";
-            dataTableBody += "</td>";
-
-            dataTableBody += "<td class='container-column hide-print'>";
-            dataTableBody += "<p class='pick-id'>";
-            dataTableBody += showPickIdValue(value.pickOrder.get("Full Serve internal"));
-            dataTableBody += "</p>";
-
-            status = showPickOrderStatusValue(value.pickOrder.get("Full Serve internal"));
-            dataTableBody += "<p class='pick-status ";
-            dataTableBody += getStatusCssClass(status) + "'>";
-            dataTableBody += status;
-            dataTableBody += "</p>";
-            dataTableBody += "</td>";
-
-            dataTableBody += "<td>";
-            let temp = roundValue(value.totalPackages);
-            totalPakagesShipment += temp;
-            dataTableBody += temp;
-            dataTableBody += "</td>";
-            dataTableBody += "<td>";
-            temp = roundValue(value.totalWeight);
-            totalWeightShipment += temp,
-            dataTableBody += temp;
-            dataTableBody += "</td>";
-            dataTableBody += "<td>";
-            temp = roundValue(value.totalVolume );
-            totalVolumeShipment += temp;
-            dataTableBody += temp;
-            dataTableBody += "</td>";
-
+            dataTableBody += drawRow(value, count);
             count++;
         });
+        
+        // fill with empty rows
+        let emptyPickTask = new PickOrder("-", "0", "0", "0", "-", "-");
+        let emptyOrder = new OrderPUP( "-", "-", "-", "-", emptyPickTask);
+        for(let i = data.size + 1; i < 36; i++ ) {
+            dataTableBody += drawRow(emptyOrder, i);
+        }
 
-        dataTableBody += "<tr class='centrar totales'>";
-        dataTableBody += "<td class='hide-print'></td>"
-        dataTableBody += "<td class='hide-print'></td>"
-        dataTableBody += "<td class='hide-print'></td>"
-        dataTableBody += "<td colspan='2'>Totales</td>";
-        dataTableBody += "<td>" + roundValue(totalPakagesShipment) + " bultos</td>";
-        dataTableBody += "<td>" + roundValue(totalWeightShipment) + " Kgs</td>";
-        dataTableBody += "<td>" + roundValue(totalVolumeShipment) + " m<sup>3</sup></td>";
+        // get the totals for "Packages", "Kgs" and "Volume"
+        data.forEach( (value, key ) => {
+            totalPakagesShipment += value.totalPackages;
+            totalWeightShipment += value.totalWeight;
+            totalVolumeShipment += value.totalVolume;
+        });
+
+        dataTableBody += drawTotalsTable(totalPakagesShipment, totalWeightShipment, totalVolumeShipment);
 
         tableBody.innerHTML += dataTableBody;
     }
-    
+
     // *********************************************************
     function showPickIdValue(objPickOrder) {
         if (objPickOrder) {
@@ -777,9 +720,88 @@
     }
 
     // *********************************************************
-    function xx(elemento) {
-        // console.log("Elemento clcik: ", elemento);
-        // elemento.classList.add("back1");
+    function drawRow(value, count) {
+
+        // console.log("VALOR: ", value);
+        let dataTableBody = "";
+
+        const isReturned = (value.status === RETURNED) ? "warning-row" : "";
+        dataTableBody += "<tr class='centrar " + isReturned + "'>";
+        dataTableBody += "<td>";
+        dataTableBody += count;
+        dataTableBody += "</td>";
+        dataTableBody += "<td class='isell' >";
+        // dataTableBody += "<div class='back2 ' onclick='xx(this)'>";
+        // dataTableBody += "<input type='text' class='unstyle' value='";
+        // dataTableBody += value.isellOrderNumber + "' readonly />";
+        dataTableBody += value.isellOrderNumber;
+        // dataTableBody += "</div>";
+        dataTableBody += "</td>";
+
+        dataTableBody += "<td class='container-column hide-print'>";
+        dataTableBody += "<p class='pick-id'>";
+        dataTableBody += showPickIdValue(value.pickOrder.get("Markethall"));
+        dataTableBody += "</p>";
+
+        let status = showPickOrderStatusValue(value.pickOrder.get("Markethall"));
+        dataTableBody += "<p class='pick-status ";
+        dataTableBody += getStatusCssClass(status) + "'>";
+        dataTableBody += status; 
+        dataTableBody += "</p>";
+        dataTableBody += "</td>";
+
+        dataTableBody += "<td class='container-column hide-print'>";
+        dataTableBody += "<p class='pick-id'>";
+        dataTableBody += showPickIdValue(value.pickOrder.get("Self Serve"));
+        dataTableBody += "</p>";
+
+        status = showPickOrderStatusValue(value.pickOrder.get("Self Serve"));
+        dataTableBody += "<p class='pick-status ";
+        dataTableBody += getStatusCssClass(status) + "'>";
+        dataTableBody += status;
+        dataTableBody += "</p>";
+        dataTableBody += "</td>";
+
+        dataTableBody += "<td class='container-column hide-print'>";
+        dataTableBody += "<p class='pick-id'>";
+        dataTableBody += showPickIdValue(value.pickOrder.get("Full Serve internal"));
+        dataTableBody += "</p>";
+
+        status = showPickOrderStatusValue(value.pickOrder.get("Full Serve internal"));
+        dataTableBody += "<p class='pick-status ";
+        dataTableBody += getStatusCssClass(status) + "'>";
+        dataTableBody += status;
+        dataTableBody += "</p>";
+        dataTableBody += "</td>";
+
+        dataTableBody += "<td>";
+        dataTableBody += roundValue(value.totalPackages);
+        dataTableBody += "</td>";
+        dataTableBody += "<td>";
+        dataTableBody += roundValue(value.totalWeight);
+        dataTableBody += "</td>";
+        dataTableBody += "<td>";
+        dataTableBody += roundValue(value.totalVolume );
+        dataTableBody += "</td>";
+
+        return dataTableBody;
+    }
+    
+    // *********************************************************
+    // Draw the bottom totals of the data table
+    function drawTotalsTable (totalPackages, totalWeight, totalVolume ) {
+        let dataTableBody = ""; 
+        dataTableBody += "<tr class='centrar totales'>";
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td colspan='2'>Totales</td>";
+        dataTableBody += "<td>" + roundValue(totalPackages) + " bultos</td>";
+        dataTableBody += "<td>" + roundValue(totalWeight) + " Kgs</td>";
+        dataTableBody += "<td>" + roundValue(totalVolume) + " m<sup>3</sup></td>";
+
+        return dataTableBody;
     }
 
+    // *********************************************************
 

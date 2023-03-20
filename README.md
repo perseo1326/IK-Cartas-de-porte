@@ -5,6 +5,10 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 1.4:
+    * Actualización de la dirección y la razón social del transportista para cada uno de los destinos.
+    * Ajustes en los tamaños de letra y espacios para optimizar la impresión del documento.
+
 ### Versión 1.3:
     * Mejora en la visualizacion del pick task añadiendo colores según el estado de la pick task.
     

@@ -21,14 +21,6 @@ body {
     background-color: var(--background);
 }
 
-.back1 {
-    background-color: aqua;
-}
-
-.back2 {
-    background-color: orange;
-}
-
 div.panel {
     /* display: flex; // activado con JS */
     display: none;
@@ -109,10 +101,6 @@ div.container-column {
     width: 50%;
 }
 
-.ancho-60 {
-    width: 60%;
-}
-
 .margen-bajo-05 {
     margin-bottom: 0.5rem;
 }
@@ -135,8 +123,8 @@ label {
 
 div p.version {
     text-align: right;
-    padding: 0.3rem 1rem;
-    font-size: calc( 2px + var(--doc-font));
+    padding: 0 1rem;
+    font-size: var(--doc-font);
     color: gray;
 }
 
@@ -214,6 +202,11 @@ thead tr th {
     border-bottom: 2px solid var(--first-color);
 }
 
+thead tr th sup, 
+tbody#data-body tr td sup {
+    font-size: calc(2px + var(--doc-font) );
+}
+
 thead tr.cabecera th.invert-colors {
     background-color: var(--second-color);
     color: var(--first-color);
@@ -262,12 +255,6 @@ table tbody#data-body tr td.container-column {
 table tbody#data-body tr:nth-last-of-type(2n+0) {
     background-color: lightgray;
 }
-
-table tbody#data-body tr.centrar td p.pick-id {
-    /* background-color: red; */
-    /* border: 1px solid black; */
-}
-
 
 table tbody#data-body tr.centrar td p.pick-status.not-started  {
     background-color: rgba(255, 0, 0, 0.5);
@@ -321,6 +308,18 @@ body.page-a4 {
     /* border: 0.5px dotted black; */
 }
 
+table tbody#transport-document-info tr td:nth-child(1) {
+    width: 50%;
+}
+
+table tbody#transport-document-info tr td:nth-child(2) {
+    width: 25%;
+}
+
+table tbody#transport-document-info tr td:nth-child(3) {
+    width: 25%;
+}
+
 table tbody#transport-document-info tr td.document-title {
     border-right: 1px solid transparent;
 }
@@ -333,16 +332,17 @@ table tbody#transport-document-info tr td.page-number {
 }
 
 table tbody#transport-document-info tr td h3 {
-    text-align: right;
+    text-align: center;
 }
 
 table tbody#transport-document-info tr td {
-    font-size: calc( var(--doc-font) + 2px);
-    padding: 2px;
+    font-size: calc( var(--doc-font) + 1px);
+    padding: 1px;
     border: 1px solid black;
 }
 
 table tbody#transport-document-info tr td.value {
+    font-size: calc( var(--doc-font) + 4px);
     text-align: center;
     font-size:small;
 }
@@ -364,11 +364,11 @@ table tbody#transport-document-info tr td.text-top-left {
 }
 
 .blank-space {
-    height: 2.5rem;
+    height: 2rem;
 }
 
 .blank-space-big {
-    height: 4rem;
+    height: 3rem;
 }
 
 /* ***** COMMENTS TABLE STYLES ***** */
@@ -401,7 +401,6 @@ table tbody#footer-table tr td p {
 div p.footer-page {
     font-size: var(--doc-font);
     font-style: italic;
-    text-align: right;
 }
 /* ***** TABLE STYLES ENDS ***** */
 
@@ -414,12 +413,6 @@ div p.footer-page {
         --background: transparent;
         --first-color: black;
         --second-color: black;
-        /* --warning-color: rgba(255, 165, 0, 1); */
-        /* --doc-font: 8px; */
-        /* padding: 0; */
-        /* margin: 0; */
-        /* font-size: 8px; */
-        /* box-sizing: border-box; */
     }
     body, html {
         background-color: transparent !important;
@@ -440,7 +433,13 @@ div p.footer-page {
         background-color: rgb(170, 167, 167);
     }
 
+    thead tr th {
+        padding: 0 2px;
+        font-size: calc(7px + var(--doc-font) );
+    }
+    
     table tbody#data-body tr td {
+        font-size: calc(6px + var(--doc-font) );
         background-color: transparent;
     }
 
