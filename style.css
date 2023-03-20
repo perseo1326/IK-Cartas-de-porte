@@ -344,7 +344,6 @@ table tbody#transport-document-info tr td {
 table tbody#transport-document-info tr td.value {
     font-size: calc( var(--doc-font) + 4px);
     text-align: center;
-    font-size:small;
 }
 
 table tbody#transport-document-info tr td p, 
@@ -386,6 +385,14 @@ tbody#comments-table tr td textarea {
     width: 100%;
 }
 
+tbody#comments-table tr td textarea p {
+    display: block;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
 /* ***** FOOTER TABLE STYLES ***** */
 
 table tbody#footer-table tr td {
@@ -414,9 +421,17 @@ div p.footer-page {
         --first-color: black;
         --second-color: black;
     }
+
     body, html {
         background-color: transparent !important;
         color: black !important;
+        padding: 0;
+    }
+    
+    body.page-a4 {
+        width: 21cm;
+        height: 29.7cm;
+        border-bottom: 0.5px dotted black;
     }
 
     .hide-print {
@@ -439,7 +454,7 @@ div p.footer-page {
     }
     
     table tbody#data-body tr td {
-        font-size: calc(6px + var(--doc-font) );
+        font-size: calc(5px + var(--doc-font) );
         background-color: transparent;
     }
 
