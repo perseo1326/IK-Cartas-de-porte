@@ -91,7 +91,7 @@ const configData =
 
     {
         pupId : "TARRAGONA",
-        title : "Taragona",
+        title : "Tarragona",
         cutOffTime : "19:45",
         senderAddress : [ 
             "IKEA Gran Via 406", 

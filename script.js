@@ -40,6 +40,9 @@
     let contentOriginal = [];
     let windowServiceObj = {};
     let todayDate = "";
+    // variable to hold the basic name for the printed document
+    let printDocumentTitle = "";
+
 
     const DEFAULT_DROPDOWNLIST_VALUE = { 
         value : "",
@@ -170,13 +173,15 @@
     // *********************************************************
     // Function to initialize the variables and environment 
     function initializePage() {
-        console.log("Inicializando los valores por defecto de la página.")
+        console.log("Inicializando los valores por defecto de la página.");
+
+        document.title = printDocumentTitle = "PUP_Carta_Porte";
 
         fileReader = new FileReader();
         document.getElementById("upload-file-b").innerText = "Subir archivo...";
         contentOriginal = [];
         windowServiceObj = {};
-        todayDate = new Date("2023-02-25");
+        todayDate = new Date("2023-03-23");
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
@@ -524,6 +529,8 @@
         addCommentsB.value = "Añadir comentarios";
 
         showContent(dataMap);
+
+        printDocumentTitle = "PUP_Carta_Porte_" + cutOffTimeObj.title + "_" + windowServiceObject.serviceName;
     }
 
     // *********************************************************
@@ -581,6 +588,9 @@
 
         comments.innerText = commentsText.value;
         
+        // Set document title for printing purpose
+        document.title = printDocumentTitle + "(" + shippingDateValue + ")";
+
         window.print();
     }
 
