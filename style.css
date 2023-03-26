@@ -6,11 +6,22 @@
     --second-color: #ffdb01;
     --warning-color: rgba(255, 165, 0, 1);
     --doc-font: 8px;
+    --A4-width: 21cm;
+    --A4-height: 29.7cm;
+
     padding: 0;
     margin: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     box-sizing: border-box;
+}
+
+.back1 {
+    background-color: red;
+}
+
+.back2 {
+    background-color: aquamarine;
 }
 
 .warning {
@@ -93,9 +104,9 @@ div.container-column {
     margin-left: 1rem;
 }
 
-.ancho-100 {
+/* .ancho-100 {
     width: 100%;
-}
+} */
 
 .ancho-50 {
     width: 50%;
@@ -302,12 +313,6 @@ table tbody#data-body tr.totales {
 
 /* ***** TABLE DOCUMENT HEADER STYLES  ***** */
 
-body.page-a4 {
-    /* width: 21cm; */
-    /* height: 29.7cm; */
-    /* border: 0.5px dotted black; */
-}
-
 table tbody#transport-document-info tr td:nth-child(1) {
     width: 50%;
 }
@@ -405,10 +410,16 @@ table tbody#footer-table tr td p {
     font-size: calc( 4px + var(--doc-font));
 }
 
+div.footer-version {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 div p.footer-page {
     font-size: var(--doc-font);
     font-style: italic;
 }
+
 /* ***** TABLE STYLES ENDS ***** */
 
 
@@ -428,9 +439,9 @@ div p.footer-page {
         padding: 0;
     }
     
-    body.page-a4 {
-        width: 21cm;
-        height: 29.7cm;
+    body.print-page-size {
+        width: var(--A4-width);
+        height: var(--A4-height);
         border-bottom: 0.5px dotted black;
     }
 

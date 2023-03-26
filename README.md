@@ -5,6 +5,12 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 1.6:
+    * Adición de la visualización de la hora del archivo de datos junto al nombre del mismo en el botón de "Subir archivo...".
+    * Ajuste en la creación del nombre de archivo al momento de imprimir o generar una copia en formato PDF.
+    * Correción de la visualización de la sección con el número de versión, en modo vista en pantalla y modo impresión. 
+    * Movido el botón "Comentarios" hacia la parte superior junto con los demás botones.
+
 ### Versión 1.5:
     * Mejora al sugerir el nombre del documento al momento de imprimir (guardar) en formato PDF según los datos seleccionados previamente (CUT OFF TIME, SERVICE WINDOW y fecha de entrega).
 

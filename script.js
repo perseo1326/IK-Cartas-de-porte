@@ -175,7 +175,7 @@
     function initializePage() {
         console.log("Inicializando los valores por defecto de la página.");
 
-        document.title = printDocumentTitle = "PUP_Carta_Porte";
+        document.title = printDocumentTitle = "PUP Carta Porte";
 
         fileReader = new FileReader();
         document.getElementById("upload-file-b").innerText = "Subir archivo...";
@@ -304,14 +304,15 @@
         console.clear();
         initializePage();
         let file = evento.target.files[0];
+        const fileDate = new Date(file.lastModified);
 
         file = verifyFileExist(file);
         if(!file) {            
             return;
         }
 
+        document.getElementById("upload-file-b").innerText = file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
         fileReader.readAsText(file, "windows-1252");
-        document.getElementById("upload-file-b").innerText = file.name;
         fileReader.onload = loadFile;
     }
     
@@ -530,7 +531,7 @@
 
         showContent(dataMap);
 
-        printDocumentTitle = "PUP_Carta_Porte_" + cutOffTimeObj.title + "_" + windowServiceObject.serviceName;
+        printDocumentTitle = windowServiceObject.serviceName + "_" + cutOffTimeObj.title;
     }
 
     // *********************************************************
@@ -589,7 +590,7 @@
         comments.innerText = commentsText.value;
         
         // Set document title for printing purpose
-        document.title = printDocumentTitle + "(" + shippingDateValue + ")";
+        document.title = shippingDateValue + "_" + printDocumentTitle;
 
         window.print();
     }
