@@ -644,6 +644,10 @@
         let totalPakagesShipment = 0;
         let totalWeightShipment = 0;
         let totalVolumeShipment = 0;
+
+        let totalMarkethallOrders = 0;
+        let totalSelfServiceOrders = 0;
+        let totalFullInternalOrders = 0;
         
         // console.log("Data en showContent ", data);
         
@@ -661,11 +665,17 @@
         }
 
         // get the totals for "Packages", "Kgs" and "Volume"
+        // get total orders by sales method (Markethall, self service, full internal)
         data.forEach( (value, key ) => {
             totalPakagesShipment += value.totalPackages;
             totalWeightShipment += value.totalWeight;
             totalVolumeShipment += value.totalVolume;
+            (value.pickOrder.has("Markethall")) ? totalMarkethallOrders++ : false;
+            (value.pickOrder.has("Self Serve")) ? totalSelfServiceOrders++ : false;
+            (value.pickOrder.has("Full Serve internal")) ? totalFullInternalOrders++ : false;
         });
+
+        dataTableBody += drawTotalOrders(totalMarkethallOrders, totalSelfServiceOrders, totalFullInternalOrders);
 
         dataTableBody += drawTotalsTable(totalPakagesShipment, totalWeightShipment, totalVolumeShipment);
 
@@ -732,10 +742,7 @@
 
     // *********************************************************
     function drawRow(value, count) {
-
-        // console.log("VALOR: ", value);
         let dataTableBody = "";
-
         const isReturned = (value.status === RETURNED) ? "warning-row" : "";
         dataTableBody += "<tr class='centrar " + isReturned + "'>";
         dataTableBody += "<td>";
@@ -798,6 +805,28 @@
         return dataTableBody;
     }
     
+    // *********************************************************
+    // Draw the total orders by sales method (Markethall, Self Service, Full Internal)
+    function drawTotalOrders (totalMarket, totalSelfService, totalFullInternal) {
+        let dataTableBody = ""; 
+        dataTableBody += "<tr class='centrar totales hide-print'>";
+        dataTableBody += "<td colspan='2'>Total de pedidos</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalMarket;
+        dataTableBody += "</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalSelfService;
+        dataTableBody += "</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalFullInternal;
+        dataTableBody += "</td>";
+        dataTableBody += "<td colspan='3'>";
+        dataTableBody += totalMarket + totalSelfService + totalFullInternal;
+        dataTableBody += "</td>";
+        dataTableBody += "</tr>";
+
+        return dataTableBody;
+    }
     // *********************************************************
     // Draw the bottom totals of the data table
     function drawTotalsTable (totalPackages, totalWeight, totalVolume ) {

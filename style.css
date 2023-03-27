@@ -240,6 +240,11 @@ table tbody#data-body tr td {
     min-width: 5rem;
     max-height: 1rem;
 }
+
+table tbody#data-body tr td.total-orders {
+    border: 1px solid gray;
+}
+
 /* 
 table tbody#data-body tr td input[type='text'] {
     all: unset;
