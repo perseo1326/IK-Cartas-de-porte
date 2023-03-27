@@ -181,7 +181,7 @@
         document.getElementById("upload-file-b").innerText = "Subir archivo...";
         contentOriginal = [];
         windowServiceObj = {};
-        todayDate = new Date("2023-03-23");
+        todayDate = new Date();
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
