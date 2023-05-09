@@ -1,0 +1,497 @@
+
+
+*, *:after, *:before {
+    --background: white;
+    --first-color: #0057a4;
+    --second-color: #ffdb01;
+    --warning-color: rgba(255, 165, 0, 1);
+    --doc-font: 8px;
+    --A4-width: 21cm;
+    --A4-height: 29.7cm;
+
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.back1 {
+    background-color: red;
+}
+
+.back2 {
+    background-color: aquamarine;
+}
+
+.warning {
+    background-color: var(--warning-color);
+}
+
+body {
+    background-color: var(--background);
+}
+
+div.panel {
+    /* display: flex; // activado con JS */
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+div.panel div.frame {
+    margin: auto;
+    width: 40%;
+    background-color: whitesmoke;
+    border-radius: 4px;
+}
+
+div.panel div.frame div.frame-title h3 {
+    background-color: var(--first-color);
+    color: var(--second-color);
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+div.panel div.frame div.frame-content {
+    padding: 0.5rem;
+}
+
+div.panel div.frame div.frame-content div p span {
+    text-decoration: underline;
+    display: inline-block;
+    margin-bottom: 0.3rem;
+    color: var(--first-color);
+}
+
+body {
+    padding: 0 0.4rem;
+}
+
+div.container-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+}
+
+.no-visible {
+    display: none;
+}
+
+.show-print{
+    display: none;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.margen-alto-05 {
+    margin-top: 0.5rem;
+}
+
+.margen-izq-1 {
+    margin-left: 1rem;
+}
+
+/* .ancho-100 {
+    width: 100%;
+} */
+
+.ancho-50 {
+    width: 50%;
+}
+
+.margen-bajo-05 {
+    margin-bottom: 0.5rem;
+}
+
+.margen-bajo-1 {
+    margin-bottom: 1rem;
+}
+
+.centrar {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+label {
+    display: inline-block;
+}
+
+div p.version {
+    text-align: right;
+    padding: 0 1rem;
+    font-size: var(--doc-font);
+    color: gray;
+}
+
+.custom-button {
+    /* min-width: 14rem; */
+    border: 1px solid var(--first-color);
+    border-radius: 4px;
+	background-color: var(--first-color);
+	color: var(--second-color);
+	cursor: pointer;
+	font-size: 1rem;
+	margin: 0.3rem auto;
+	padding: 0.3rem 0.6rem;
+	text-align: center;
+}
+
+.custom-button:hover {
+    background-color: var(--second-color);
+    color: var(--first-color);
+    border: 1px solid var(--first-color);
+}
+
+.disable {
+    background-color: lightgray;
+    color: black;
+    cursor: not-allowed;
+}
+
+.disable:hover {
+    background-color: lightgray;
+    color: orangered;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+div.resume {
+    border: 2px solid var(--first-color);
+}
+
+div.resume p {
+    padding: 0 1rem 0.2rem 1rem;
+}
+
+div.resume p span {
+    color: var(--first-color);
+    font-weight: bold;
+}
+
+div.resume p:hover {
+    background-color: #ffdb01;
+}
+
+div.report-info {
+    background-color: #ffdb01;
+    margin-bottom: 0.5rem;
+}
+
+/* ***** TABLE DATA STYLES ***** */
+
+strong {
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid var(--first-color);
+    overflow: auto;
+}
+
+thead tr th {
+    padding: 0.1rem;
+    border-bottom: 2px solid var(--first-color);
+}
+
+thead tr th sup, 
+tbody#data-body tr td sup {
+    font-size: calc(2px + var(--doc-font) );
+}
+
+thead tr.cabecera th.invert-colors {
+    background-color: var(--second-color);
+    color: var(--first-color);
+}
+
+thead tr th.ordinal {
+    width: 4rem;
+}
+
+thead tr th.isell {
+    width: 20%;
+}
+
+table tbody#data-body tr.warning-row {
+    background-color: orange !important;
+}
+
+table tbody#data-body tr td {
+    border-bottom: 1px solid gray;
+    min-width: 5rem;
+    max-height: 1rem;
+}
+
+table tbody#data-body tr td.total-orders {
+    border: 1px solid gray;
+}
+
+/* 
+table tbody#data-body tr td input[type='text'] {
+    all: unset;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: 1px solid red;
+} */
+
+table tbody#data-body tr td.isell.isell-focus {
+    /* background-color: red; */
+} 
+
+
+table tbody#data-body tr td input[type='text']:focus {
+    background-color: #ffdb01;
+}
+
+table tbody#data-body tr td.container-column {
+    border: 1px solid gray;
+}
+
+table tbody#data-body tr:nth-last-of-type(2n+0) {
+    background-color: lightgray;
+}
+
+table tbody#data-body tr.centrar td p.pick-status.not-started  {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+table tbody#data-body tr.centrar td p.pick-status.started,
+table tbody#data-body tr.centrar td p.pick-status.picking, 
+table tbody#data-body tr.centrar td p.pick-status.picked  {
+    background-color: orange;
+}
+
+table tbody#data-body tr.centrar td p.pick-status.wait-for-merge  {
+    background-color: lightsalmon;
+}
+
+table tbody#data-body tr.centrar td p.pick-status.check-started  {
+    background-color: rgb(255, 255, 0);
+}
+
+table tbody#data-body tr.centrar td p.pick-status.checked  {
+    background-color: rgb(191, 255, 0);
+}
+
+table tbody#data-body tr.centrar td p.pick-status.completed  {
+    background-color: lightgreen
+}
+
+table tbody#data-body tr.centrar td p.pick-status.open-return,  
+table tbody#data-body tr.centrar td p.pick-status.returned  {
+    background-color: transparent;
+}
+
+table tbody#data-body tr:hover {
+    background-color: var(--second-color);
+}
+
+.cabecera {
+    background-color: var(--first-color);
+    color: var(--second-color);
+}
+
+table tbody#data-body tr.totales {
+    font-weight: bolder;
+}
+
+/* ***** TABLE DOCUMENT HEADER STYLES  ***** */
+
+table tbody#transport-document-info tr td:nth-child(1) {
+    width: 50%;
+}
+
+table tbody#transport-document-info tr td:nth-child(2) {
+    width: 25%;
+}
+
+table tbody#transport-document-info tr td:nth-child(3) {
+    width: 25%;
+}
+
+table tbody#transport-document-info tr td.document-title {
+    border-right: 1px solid transparent;
+}
+
+table tbody#transport-document-info tr td.page-number {
+    font-size: var(--doc-font);
+    text-align: right;
+    padding: 0 0.5rem;
+    vertical-align: top;
+}
+
+table tbody#transport-document-info tr td h3 {
+    text-align: center;
+}
+
+table tbody#transport-document-info tr td {
+    font-size: calc( var(--doc-font) + 1px);
+    padding: 1px;
+    border: 1px solid black;
+}
+
+table tbody#transport-document-info tr td.value {
+    font-size: calc( var(--doc-font) + 4px);
+    text-align: center;
+}
+
+table tbody#transport-document-info tr td p, 
+table tbody#transport-document-info tr td p strong {
+    font-size: var(--doc-font);
+}
+
+
+table tbody#transport-document-info tr td p.note {
+    font-size: var(--doc-font);
+    text-align: justify;
+}
+
+table tbody#transport-document-info tr td.text-top-left {
+    text-align: left;
+    vertical-align: text-top;
+}
+
+.blank-space {
+    height: 2rem;
+}
+
+.blank-space-big {
+    height: 3rem;
+}
+
+/* ***** COMMENTS TABLE STYLES ***** */
+
+div#comments-container table {
+    border: none;
+}
+
+tbody#comments-table tr td textarea {
+    border: 2px solid var(--first-color);
+    outline: none;
+    text-align: justify;
+    background-color: var(--second-color);
+    padding: 3px 0.3rem;
+    width: 100%;
+}
+
+tbody#comments-table tr td textarea p {
+    display: block;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+/* ***** FOOTER TABLE STYLES ***** */
+
+table tbody#footer-table tr td {
+    font-size: calc( 2px + var(--doc-font));
+    padding: 0.2rem;
+    border: 1px solid black;
+}
+
+table tbody#footer-table tr td p {
+    font-size: calc( 4px + var(--doc-font));
+}
+
+div.footer-version {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+div p.footer-page {
+    font-size: var(--doc-font);
+    font-style: italic;
+}
+
+/* ***** TABLE STYLES ENDS ***** */
+
+
+/* ***** PRINTABLE STYLES ***** */
+
+@media print {
+
+    *, *:after, *:before {
+        --background: transparent;
+        --first-color: black;
+        --second-color: black;
+    }
+
+    body, html {
+        background-color: transparent !important;
+        color: black !important;
+        padding: 0;
+    }
+    
+    body.print-page-size {
+        width: var(--A4-width);
+        height: var(--A4-height);
+        border-bottom: 0.5px dotted black;
+    }
+
+    .hide-print {
+        display: none !important;
+    }
+
+    .show-print {
+        display: block;
+    }
+
+    .cabecera {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust:exact;
+        background-color: rgb(170, 167, 167);
+    }
+
+    thead tr th {
+        padding: 0 2px;
+        font-size: calc(7px + var(--doc-font) );
+    }
+    
+    table tbody#data-body tr td {
+        font-size: calc(6px + var(--doc-font) );
+        background-color: transparent;
+    }
+
+    table.print-hide-borders {
+        border-top: none;
+        border-bottom: none;
+    }
+
+    p.version {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust:exact;
+    }
+}
+
+/* ***** PRINTABLE STYLES ENDS ***** */
+
+/* .unstyle {
+    all: unset;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: 1px solid red;
+} */
