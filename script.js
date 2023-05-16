@@ -235,7 +235,7 @@
             return;
         }
         
-        console.log("DataArray length: ", dataArray.length);
+        // console.log("DataArray length: ", dataArray.length);
         dataArray = filterOrderTypeOnlyPUP(dataArray);
         console.log("filterOrderTypeOnlyPUP ********", dataArray);
 
@@ -258,7 +258,7 @@
     // Verify the valid structure of data readed from the file based on the headers of info
     function validateContent(arrayRow) {
 
-        console.log("VAlidate Content, arrayRow: ", arrayRow);
+        // console.log("VAlidate Content, arrayRow: ", arrayRow);
 
         try {
             if(arrayRow.length <= 0 ) {
@@ -316,7 +316,13 @@
         windowServiceObj = windowServiceObject;
 
         // filter by date
+        console.log("Content Original antes filter fecha: ", contentOriginal.length);
         let content = dataFilterByDate(contentOriginal, dateCutOffDate);
+
+        console.log("Content: ", content);
+
+        content.forEach( row => { console.log("Fecha: ", row.CUT_OFF_DATE )});
+
         console.log("filtrado por fecha: ", content);
 
         // Data filtered by "CUT OFF TIME"
@@ -368,8 +374,7 @@
     // Function fo filter the data set by date
     function dataFilterByDate(dataArray, textDate) {
         console.log("dataFilterByDate: ", dataArray[0]);
-        return dataArray.filter( (row) => { return row.CUT_OFF_DATE.trim() === '' });
-        // return dataArray.filter( (row) => { return row[7] === textDate });
+        return dataArray.filter( (row) => { return row.CUT_OFF_DATE.trim() === textDate });
     }
 
     // *********************************************************

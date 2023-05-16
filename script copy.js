@@ -256,6 +256,9 @@
     // Function to load the "SERVICE_WINDOW" options into the drop down list selector.
     function loadServiceWindowOptions () {
 
+        console.log("THIS: ", this);
+
+        debugger;
         cleanOptionsScrollDown(serviceWindowSelector);
         loadOptionsDropDownListView(serviceWindowSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
         
