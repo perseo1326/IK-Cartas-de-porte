@@ -4,7 +4,7 @@ const configData =
     {
         pupId : "DIAGONAL",
         title : "Diagonal",
-        cutOffTime : "20:15",
+        cutOffTime : "20:15:00",
         senderAddress : [ 
             "IKEA Gran Via 406", 
             "Gran Via de l'Hospitalet 115-133", 
@@ -52,7 +52,7 @@ const configData =
     {
         pupId : "SANT_PERE",
         title : "Sant Pere",
-        cutOffTime : "20:00",
+        cutOffTime : "20:00:00",
         senderAddress : [
             "IKEA Gran Via 406", 
             "Gran Via de l'Hospitalet 115-133", 
@@ -77,14 +77,14 @@ const configData =
                 serviceCode : "FURGO_ONE",
                 documentTransport_A : "406SP ",
                 documentTransport_B : " SANT PERE (FURGO 1)",        
-                serviceValues : ["10:00-13:00", "13:00-16:00"] 
+                serviceValues : ["08:00:00-11:00:00", "11:00:00-14:00:00", "14:00:00-17:00:00"] 
             }, 
             { 
                 serviceName : "Segunda Furgo",
                 serviceCode : "FURGO_TWO",
                 documentTransport_A : "406SP ",
                 documentTransport_B : " SANT PERE (FURGO 2)",        
-                serviceValues : ["16:00-19:00", "19:00-21:00"] 
+                serviceValues : ["17:00:00-19:00:00"] 
             }
         ]
     }, 
@@ -92,7 +92,7 @@ const configData =
     {
         pupId : "TARRAGONA",
         title : "Tarragona",
-        cutOffTime : "19:45",
+        cutOffTime : "19:45:00",
         senderAddress : [ 
             "IKEA Gran Via 406", 
             "Gran Via de l'Hospitalet 115-133", 
@@ -117,14 +117,14 @@ const configData =
                 serviceCode : "FURGO_ONE",
                 documentTransport_A : "406TGN ",
                 documentTransport_B : " FURGO 1",        
-                serviceValues : ["10:00-13:00", "13:00-17:00"] 
+                serviceValues : ["08:00:00-11:00:00", "11:00:00-15:00:00", "15:00:00-17:00:00"] 
             }, 
             { 
                 serviceName : "Segunda Furgo", 
                 serviceCode : "FURGO_TWO",
                 documentTransport_A : "406TGN ",
                 documentTransport_B : " FURGO 2",        
-                serviceValues : ["17:00-19:00", "19:00-21:00"] 
+                serviceValues : ["17:00:00-19:00:00"] 
             }
         ]
     }   

@@ -10,9 +10,78 @@
     const cutOffTimeSelector = document.getElementById("destino-cut-off-time");
     const serviceWindowSelector = document.getElementById("service-window");
     const processDataB = document.getElementById("process-data");
+    const printDocumentationB = document.getElementById("print-documentation-b");
+    const addCommentsB = document.getElementById("add-comments-b");
+    const frameDestination = document.getElementById("frame-destination");
+    const commentsText = document.getElementById("comments-text");
+    const commentsContainer = document.getElementById("comments-container");
+    const frameShippingDate = document.getElementById("frame-shipping-date");
+    const frameOkB = document.getElementById("frame-ok-b");
+    const frameCancelB = document.getElementById("frame-cancel-b");
 
     const tableBody = document.getElementById("data-body");
 
+    // *********************************************************
+    class Order {
+        constructor(isell, cutOffDate, cutOffTime, serviceWindow){
+            this.isell          = isell.trim();
+            this.cutOffDate     = cutOffDate.trim();
+            this.cutOffTime     = cutOffTime.trim();
+            this.serviceWindow  = serviceWindow.trim();
+            this.totalPackages  = 0;
+            this.totalVolume    = 0;
+            this.totalWeight    = 0;
+            
+            this.pickArea       = new Map([
+                [MARKET_HALL, []],
+                [SELF_SERVICE, []], 
+                [WAREHOUSE, []]
+            ]);
+        }
+
+        addProduct(row){
+            // Product constructor(articleName, articleNumber, packages, weight, volume, quantity, pickArea ) {
+            let product = new Product(row.ARTICLE_NAME, row.ARTICLE_NUMBER, row.PACKAGES, row.WEIGHT, row.VOLUME_ORDERED, row.ORDERED_QTY);
+            this.pickArea.get(row.PICK_AREA).push(product);
+        }
+
+        calculateTotals(){
+            let order = this;
+            this.pickArea.forEach( function(area){
+                // console.log("Area: ", area);
+                area.forEach(function(product){
+                    // console.log("PRODUCTO: ", product);
+                    order.totalPackages += product.packages;
+                    order.totalVolume += product.volume;
+                    order.totalWeight += product.weight;
+                });
+            });
+            // console.log("Totales orden: ", order);
+        }
+
+        containPickArea(area){
+            let order = this;
+            // console.log("containPickArea: ", order.pickArea.get(area));
+            if(order.pickArea.get(area).length < 1 ){
+                return "";
+            }
+            return "X";
+        }
+    }
+
+    class Product {
+        constructor(articleName, articleNumber, packages, weight, volume, quantity ) {
+            // this.articleName    = articleName.trim() !== undefined ? articleName.trim() : "X";
+            this.articleName    = articleName.trim();
+            this.articleNumber  = articleNumber.trim();
+            this.packages       = Number (packages.trim().replace(',', '.'));
+            this.weight         = Number (weight.trim().replace(',', '.'));
+            this.volume         = Number (volume.trim().replace(',', '.'));
+            this.quantity       = Number (quantity.trim().replace(',', '.'));
+        }
+    }
+
+    // *********************************************************
 
     let fileReader = new FileReader();
 
@@ -24,6 +93,9 @@
 
     const WORKING_SHEET = "DATA";
     const ORDER_TYPE_DATA = "PICKUP_POINT";
+    const MARKET_HALL = "MARKETHALL";
+    const SELF_SERVICE = "SELFSERVE";
+    const WAREHOUSE = "FULLSERVE_INTERNAL";
 
     const DEFAULT_DROPDOWNLIST_VALUE = { 
         value : "",
@@ -35,7 +107,29 @@
     fileSelector.addEventListener('change', openFile); 
     cutOffTimeSelector.addEventListener('change', loadServiceWindowOptions);
     processDataB.addEventListener('click', processData);
+    printDocumentationB.addEventListener('click', showPanelPrint);
+    frameOkB.addEventListener('click', printDocument);
 
+    addCommentsB.addEventListener('click', () => {
+        if (commentsContainer.classList.contains("no-visible")) {
+            commentsContainer.classList.remove("no-visible");
+            addCommentsB.value = "Ocultar comentarios";
+        } else {
+            commentsContainer.classList.add("no-visible");
+            addCommentsB.value = "Añadir comentarios";            
+        }
+        commentsText.focus();
+        // console.log("elemento: ", commentsText);
+    });
+
+    frameCancelB.addEventListener('click', () => { 
+        panel.style.display = "none";
+    });
+
+
+
+
+    
     // *********************************************************
     // Function to validate a given date
     function validateDate(inputDate) {
@@ -50,12 +144,12 @@
     
     // *********************************************************
     // Show message "File not valid!"
-    function fileNotValid(message = "Archivo vacio o sin formato correcto.") { 
-        console.log(message);
-        initializePage();
-        alert(message);
-        return false;
-    }
+    // function fileNotValid(message = "Archivo vacio o sin formato correcto.") { 
+    //     console.log(message);
+    //     initializePage();
+    //     alert(message);
+    //     return false;
+    // }
 
     // *********************************************************
     function openFile(evento) {
@@ -86,12 +180,12 @@
         fileReader = new FileReader();
         document.getElementById("upload-file-b").innerText = "Subir archivo...";
         contentOriginal = [];
-        // windowServiceObj = {};
-        todayDate = new Date();
+        windowServiceObj = {};
+        todayDate = new Date("2023-05-11");
         selectedDate.valueAsDate = todayDate;
-        // commentsText.value = "";
-        // showProcessValues(null, "", "", "", "");
-        // showContent(contentOriginal);
+        commentsText.value = "";
+        showProcessValues(null, "", "", "", "");
+        showContent(contentOriginal);
         
         selectedDate.disabled = true;
         selectedDate.classList.add("disable");
@@ -105,13 +199,13 @@
         processDataB.disabled = true;
         processDataB.classList.add("disable");
 
-        // printDocumentationB.disabled = true;
-        // printDocumentationB.classList.add("disable");
+        printDocumentationB.disabled = true;
+        printDocumentationB.classList.add("disable");
 
-        // addCommentsB.disabled = true;
-        // addCommentsB.classList.add("disable");
+        addCommentsB.disabled = true;
+        addCommentsB.classList.add("disable");
 
-        // commentsContainer.classList.add("no-visible");
+        commentsContainer.classList.add("no-visible");
 
         loadConfigurationPUP();
     }
@@ -126,7 +220,7 @@
         if(typeof(configData) === "undefined") {
             console.log("No fue posible cargar la configuración inicial.");
             alert("No fue posible cargar la configuración inicial.");
-            // exit();
+            // TODO: retornar un obj Eror ?
         }
 
         configData.forEach( (destination) => {
@@ -171,17 +265,17 @@
     }
 
     // *********************************************************
-    // Function to find a destination ("CUT_OFF_TIME") from a "pupId" given
-    function findObjectPUP (value) {
-        return configData.find( obj => { return obj.pupId === value});
-    }
-
-    // *********************************************************
     function cleanOptionsScrollDown(dropDownListSelector) {
         if(dropDownListSelector.options.length > 0) {
             dropDownListSelector.remove(0);
             cleanOptionsScrollDown(dropDownListSelector);
         }
+    }
+
+    // *********************************************************
+    // Function to find a destination ("CUT_OFF_TIME") from a "pupId" given
+    function findObjectPUP (value) {
+        return configData.find( obj => { return obj.pupId === value});
     }
 
     // *********************************************************
@@ -316,26 +410,25 @@
         windowServiceObj = windowServiceObject;
 
         // filter by date
-        console.log("Content Original antes filter fecha: ", contentOriginal.length);
+        // console.log("Content Original antes filter fecha: ", contentOriginal.length);
         let content = dataFilterByDate(contentOriginal, dateCutOffDate);
 
-        console.log("Content: ", content);
+        // console.log("Content: despues de filtrar x fecha", content.length);
 
-        content.forEach( row => { console.log("Fecha: ", row.CUT_OFF_DATE )});
+        content.forEach( row => { console.log("Comprobacion de Fecha: ", row.CUT_OFF_DATE )});
 
-        console.log("filtrado por fecha: ", content);
-
+        
         // Data filtered by "CUT OFF TIME"
         content = dataFilterByCutOffTime(content, cutOffTimeObj.cutOffTime); 
         // console.log("Filtrado por cut off time: ", content);
         
         content = dataFilterByServiceWindow(content, windowServiceObject.serviceValues );
-        // console.log("filter by service window: ", content);
+        console.log("filter by service window: ", content);
 
         // Bind orders with the same "ISELL_ORDER_NUMBER"
         const dataMap = bindOrdersPUP_FromArray(content);
 
-        // Calculate the totals for each "OrderPUP" 
+        // Calculate the totals for each "Order" 
         dataMap.forEach( function(value, key){
             value.calculateTotals();
         });
@@ -373,22 +466,257 @@
     // *********************************************************
     // Function fo filter the data set by date
     function dataFilterByDate(dataArray, textDate) {
-        console.log("dataFilterByDate: ", dataArray[0]);
-        return dataArray.filter( (row) => { return row.CUT_OFF_DATE.trim() === textDate });
+        return dataArray.filter( (row) => { 
+            return row.CUT_OFF_DATE.trim() === textDate });
+    }
+    
+    // *********************************************************
+    // Function to filter data by "CUT_OFF_TIME" value selected
+    function dataFilterByCutOffTime(dataArray, selection) {
+        // console.log("CUT_OFF_TIME, Array datos: ", selection, dataArray[0]);
+        return dataArray.filter( (row) => { return row.CUT_OFF_TIME.trim() === selection });
     }
 
     // *********************************************************
-    function showContent(data) {
+    function dataFilterByServiceWindow(dataArray, windowServiceArrayOptions) {
+        // console.log("Dentro de SERVICE WINDOW filter.....", windowServiceArrayOptions, dataArray);
+        return dataArray.filter( row => {
+            return windowServiceArrayOptions.includes(row.SERVICE_WINDOW.trim()); 
+        });
+    }
 
-        console.log("Show Content: ", data);
+    // *********************************************************
+    // function to join different orders with same "ISELL_NUMBER" in one "Order" object.
+    function bindOrdersPUP_FromArray(arrayData) {
+        const dataMap = new Map();
+        arrayData.forEach( (row) => {
+            // console.log("FILA Producto: ", row);
+
+            if(!dataMap.has(row.ISELL_ORDER_NUMBER)) {
+                // Order constructor(isell, cutOffDate, cutOffTime, serviceWindow){
+                let order = new Order(row.ISELL_ORDER_NUMBER, row.CUT_OFF_DATE, row.CUT_OFF_TIME, row.SERVICE_WINDOW);
+                dataMap.set(row.ISELL_ORDER_NUMBER, order);
+            }
+                
+            let objeto = dataMap.get(row.ISELL_ORDER_NUMBER);    
+            // console.log("Objeto: ", objeto);
+
+            objeto.addProduct(row);
+        });
+        console.log("MAPA: ", dataMap);
+        return dataMap;
+    }
+
+
+
+
+
+
+    // *********************************************************
+    function showProcessValues (dateCutOffDate, title, timeCutOffTime, serviceName, serviceValues ) {
+        if(dateCutOffDate) {
+            document.getElementById("resume-cut-off-date").innerText = dateCutOffDate.toLocaleDateString();
+        } else {
+            document.getElementById("resume-cut-off-date").innerText = "";
+        }
+        document.getElementById("resume-cut-off-time").innerText = title + " (" + timeCutOffTime + ")";
+        document.getElementById("resume-service-window").innerText = serviceName + " (" + serviceValues + ")";
+    }
+
+    // *********************************************************
+    function setAddressTransportDocument(parentNode, addressArray) {
+
+        cleanChildNodes(parentNode);
+        const firstLine = document.createElement("p");
+        const strongLine = document.createElement("strong");
+        strongLine.innerText = addressArray[0];
+        firstLine.appendChild(strongLine);
+        parentNode.appendChild(firstLine);
+        
+        for (let i = 1; i < addressArray.length; i++) {
+            const element = addressArray[i];
+            const line = document.createElement("p");
+            line.innerText = element;
+            parentNode.appendChild(line);
+        }
+    }
+
+    // *********************************************************
+    function showPanelPrint(){
+        panel.style.display = "flex";
+        frameShippingDate.value = "----------";
+    }
+
+    // *********************************************************
+    function printDocument() {
+
+        const shippingDateValue = validateDate(frameShippingDate);
+        if(!shippingDateValue) { 
+            return;
+        }
+        
+        const shippingDate = new Date(shippingDateValue);
+        document.getElementById("transport-document-number").innerText = windowServiceObj.documentTransport_A + 
+                                                                            shippingDate.toLocaleDateString() +
+                                                                            windowServiceObj.documentTransport_B; 
+        document.getElementById("transport-document-loading-date").innerText = shippingDate.toLocaleDateString();
+        document.getElementById("transport-document-receipt-date").innerText = shippingDate.toLocaleDateString();
+
+        panel.style.display = "none";
+
+        comments.innerText = commentsText.value;
+        
+        // Set document title for printing purpose
+        document.title = shippingDateValue + "_" + printDocumentTitle;
+
+        window.print();
+    }
+
+
+    // *********************************************************
+    function showContent(data) {
         // Clean and initialize values for the table data view
         tableBody.innerHTML = "";
         let dataTableBody = "";
+        let count = 1;
+        let totalPakagesShipment = 0;
+        let totalWeightShipment = 0;
+        let totalVolumeShipment = 0;
 
+        let totalMarkethallOrders = 0;
+        let totalSelfServiceOrders = 0;
+        let totalFullInternalOrders = 0;
+                
+        // fill rows with data
+        data.forEach( (value, key) => {
+            dataTableBody += drawRow(value, count);
+            count++;
+        });
+        
+        // fill with empty rows
+        // let emptyPickTask = new PickOrder("-", "0", "0", "0", "-", "-");
+        // let emptyOrder = new OrderPUP( "-", "-", "-", "-", emptyPickTask);
+        // for(let i = data.size + 1; i < 36; i++ ) {
+        //     dataTableBody += drawRow(emptyOrder, i);
+        // }
 
-        dataTableBody = data;
+        // console.log("Fila valor: ", value);
+
+        // get the totals for "Packages", "Kgs" and "Volume"
+        // get total orders by sales method (Markethall, self service, full internal)
+        data.forEach( (value, key ) => {
+            totalPakagesShipment += value.totalPackages;
+            totalWeightShipment += value.totalWeight;
+            totalVolumeShipment += value.totalVolume;
+            (value.containPickArea(MARKET_HALL) === "X") ? totalMarkethallOrders++ : false;
+            (value.containPickArea(SELF_SERVICE) === "X") ? totalSelfServiceOrders++ : false;
+            (value.containPickArea(WAREHOUSE) === "X") ? totalFullInternalOrders++ : false;
+        });
+
+        dataTableBody += drawTotalOrders(totalMarkethallOrders, totalSelfServiceOrders, totalFullInternalOrders);
+        dataTableBody += drawTotalsTable(totalPakagesShipment, totalWeightShipment, totalVolumeShipment);
 
         tableBody.innerHTML += dataTableBody;
     }
+
+    // *********************************************************
+    function drawRow(value, count) {
+        let dataTableBody = "";
+        // console.log("Dibujar fila valor: ", value);
+        dataTableBody += "<tr class='centrar'>"
+        dataTableBody += "<td>";
+        dataTableBody += count;
+        dataTableBody += "</td>";
+        dataTableBody += "<td class='isell' >";
+        // dataTableBody += "<div class='back2 ' onclick='xx(this)'>";
+        // dataTableBody += "<input type='text' class='unstyle' value='";
+        // dataTableBody += value.isellOrderNumber + "' readonly />";
+        dataTableBody += value.isell;
+        // dataTableBody += "</div>";
+        dataTableBody += "</td>";
+
+        // ********
+        dataTableBody += "<td class='container-column hide-print'>";
+        dataTableBody += "<p class='pick-id'>";
+        dataTableBody += value.containPickArea(MARKET_HALL);
+        dataTableBody += "</p>";
+        dataTableBody += "</td>";
+
+        dataTableBody += "<td class='container-column hide-print'>";
+        dataTableBody += "<p class='pick-id'>";
+        dataTableBody += value.containPickArea(SELF_SERVICE);
+        dataTableBody += "</p>";
+        dataTableBody += "</td>";
+
+        dataTableBody += "<td class='container-column hide-print'>";
+        dataTableBody += "<p class='pick-id'>";
+        dataTableBody += value.containPickArea(WAREHOUSE);
+        dataTableBody += "</p>";
+        dataTableBody += "</td>";
+
+        // *******
+
+        dataTableBody += "<td>";
+        dataTableBody += roundValue(value.totalPackages);
+        dataTableBody += "</td>";
+        dataTableBody += "<td>";
+        dataTableBody += roundValue(value.totalWeight);
+        dataTableBody += "</td>";
+        dataTableBody += "<td>";
+        dataTableBody += roundValue(value.totalVolume );
+        dataTableBody += "</td>";
+
+        return dataTableBody;
+    }
+
+    // *********************************************************
+    // Draw the total orders by sales method (Markethall, Self Service, Full Internal)
+    function drawTotalOrders (totalMarket, totalSelfService, totalFullInternal) {
+        let dataTableBody = ""; 
+        dataTableBody += "<tr class='centrar totales hide-print'>";
+        dataTableBody += "<td colspan='2'>Total de pedidos</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalMarket;
+        dataTableBody += "</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalSelfService;
+        dataTableBody += "</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalFullInternal;
+        dataTableBody += "</td>";
+        dataTableBody += "<td colspan='3'>";
+        dataTableBody += totalMarket + totalSelfService + totalFullInternal;
+        dataTableBody += "</td>";
+        dataTableBody += "</tr>";
+
+        return dataTableBody;
+    }
+
+    // *********************************************************
+    // Draw the bottom totals of the data table
+    function drawTotalsTable (totalPackages, totalWeight, totalVolume ) {
+        let dataTableBody = ""; 
+        dataTableBody += "<tr class='centrar totales'>";
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td colspan='2'>Totales</td>";
+        dataTableBody += "<td>" + roundValue(totalPackages) + " bultos</td>";
+        dataTableBody += "<td>" + roundValue(totalWeight) + " Kgs</td>";
+        dataTableBody += "<td>" + roundValue(totalVolume) + " m<sup>3</sup></td>";
+
+        return dataTableBody;
+    }
+
+
+
+    // *********************************************************
+    // Function to round a value for better presentation
+    function roundValue(value) {
+        value *= 100;
+        value = Math.round(value); 
+        return (value / 100);
+    }
+
 
 })();
