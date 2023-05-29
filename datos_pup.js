@@ -30,21 +30,21 @@ const configData =
                 serviceCode : "FURGO_ONE",
                 documentTransport_A : "406PUPT-",
                 documentTransport_B : "(Furgo 1)",        
-                serviceValues : ["10:00-12:00", "12:00-15:00"] 
+                serviceValues : ["08:00:00-10:00:00", "10:00:00-13:00:00"] 
             }, 
             { 
                 serviceName : "Segunda Furgo", 
                 serviceCode : "FURGO_TWO",
                 documentTransport_A : "406PUPT-",
                 documentTransport_B : "(Furgo 2)",        
-                serviceValues : ["15:00-18:00"] 
+                serviceValues : ["13:00:00-16:00:00"] 
             }, 
             { 
                 serviceName : "Tercera Furgo", 
                 serviceCode : "FURGO_THREE",
                 documentTransport_A : "406PUPT-",
                 documentTransport_B : "(Furgo 3)",        
-                serviceValues : ["18:00-21:00"] 
+                serviceValues : ["16:00:00-19:00:00"] 
             }
         ]
     }, 
