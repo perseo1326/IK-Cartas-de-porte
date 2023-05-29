@@ -71,10 +71,11 @@
 
     class Product {
         constructor(articleName, articleNumber, packages, weight, volume, quantity ) {
-            // this.articleName    = articleName.trim() !== undefined ? articleName.trim() : "X";
-            this.articleName    = articleName.trim();
+            // this.articleName    = articleName.trim();
+            this.articleName    = articleName === undefined ? "X" : articleName.trim();
             this.articleNumber  = articleNumber.trim();
-            this.packages       = Number (packages.trim().replace(',', '.'));
+            // this.packages       = Number (packages.trim().replace(',', '.'));
+            this.packages       = packages === undefined ? "0" : Number (packages.trim().replace(',', '.'));
             this.weight         = Number (weight.trim().replace(',', '.'));
             this.volume         = Number (volume.trim().replace(',', '.'));
             this.quantity       = Number (quantity.trim().replace(',', '.'));
@@ -181,7 +182,7 @@
         document.getElementById("upload-file-b").innerText = "Subir archivo...";
         contentOriginal = [];
         windowServiceObj = {};
-        todayDate = new Date("2023-05-11");
+        todayDate = new Date("2023-05-25");
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
@@ -490,7 +491,7 @@
     function bindOrdersPUP_FromArray(arrayData) {
         const dataMap = new Map();
         arrayData.forEach( (row) => {
-            // console.log("FILA Producto: ", row);
+            console.log("FILA Producto: Packages: ", row.PACKAGES, " Articles: ", row.ARTICLES);
 
             if(!dataMap.has(row.ISELL_ORDER_NUMBER)) {
                 // Order constructor(isell, cutOffDate, cutOffTime, serviceWindow){
@@ -504,6 +505,7 @@
             objeto.addProduct(row);
         });
         console.log("MAPA: ", dataMap);
+        // debugger
         return dataMap;
     }
 
@@ -579,7 +581,7 @@
         tableBody.innerHTML = "";
         let dataTableBody = "";
         let count = 1;
-        let totalPakagesShipment = 0;
+        let totalPackagesShipment = 0;
         let totalWeightShipment = 0;
         let totalVolumeShipment = 0;
 
@@ -605,7 +607,7 @@
         // get the totals for "Packages", "Kgs" and "Volume"
         // get total orders by sales method (Markethall, self service, full internal)
         data.forEach( (value, key ) => {
-            totalPakagesShipment += value.totalPackages;
+            totalPackagesShipment += value.totalPackages;
             totalWeightShipment += value.totalWeight;
             totalVolumeShipment += value.totalVolume;
             (value.containPickArea(MARKET_HALL) === "X") ? totalMarkethallOrders++ : false;
@@ -614,7 +616,7 @@
         });
 
         dataTableBody += drawTotalOrders(totalMarkethallOrders, totalSelfServiceOrders, totalFullInternalOrders);
-        dataTableBody += drawTotalsTable(totalPakagesShipment, totalWeightShipment, totalVolumeShipment);
+        dataTableBody += drawTotalsTable(totalPackagesShipment, totalWeightShipment, totalVolumeShipment);
 
         tableBody.innerHTML += dataTableBody;
     }
