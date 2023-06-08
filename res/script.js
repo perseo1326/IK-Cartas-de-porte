@@ -47,13 +47,15 @@
 
         calculateTotals(){
             let order = this;
-            this.pickArea.forEach( function(area){
+            // console.log("VAlor de la ORDEN (Objeto): ", this);
+            order.pickArea.forEach( function(area){
                 // console.log("Area: ", area);
                 area.forEach(function(product){
                     // console.log("PRODUCTO: ", product);
-                    order.totalPackages += product.packages;
-                    order.totalVolume += product.volume;
-                    order.totalWeight += product.weight;
+                    // order.totalPackages += product.packages;     // Exist X = 0 -> ERROR!
+                    order.totalPackages += product.orderedQty;
+                    order.totalVolume += (product.volume * product.orderedQty);
+                    order.totalWeight += (product.weight * product.orderedQty);
                 });
             });
             // console.log("Totales orden: ", order);
@@ -70,7 +72,7 @@
     }
 
     class Product {
-        constructor(articleName, articleNumber, packages, weight, volume, quantity ) {
+        constructor(articleName, articleNumber, packages, weight, volume, orderedQty) {
             // this.articleName    = articleName.trim();
             this.articleName    = articleName === undefined ? "X" : articleName.trim();
             this.articleNumber  = articleNumber.trim();
@@ -78,7 +80,7 @@
             this.packages       = packages === undefined ? "0" : Number (packages.trim().replace(',', '.'));
             this.weight         = Number (weight.trim().replace(',', '.'));
             this.volume         = Number (volume.trim().replace(',', '.'));
-            this.quantity       = Number (quantity.trim().replace(',', '.'));
+            this.orderedQty       = Number (orderedQty.trim().replace(',', '.'));
         }
     }
 
@@ -182,7 +184,8 @@
         document.getElementById("upload-file-b").innerText = "Subir archivo...";
         contentOriginal = [];
         windowServiceObj = {};
-        todayDate = new Date("2023-05-25");
+        // TODO: cambiar fecha manual
+        todayDate = new Date();
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
@@ -491,7 +494,7 @@
     function bindOrdersPUP_FromArray(arrayData) {
         const dataMap = new Map();
         arrayData.forEach( (row) => {
-            console.log("FILA Producto: Packages: ", row.PACKAGES, " Articles: ", row.ARTICLES);
+            // console.log("FILA Producto: Packages: ", row.PACKAGES, " Articles: ", row.ARTICLES);
 
             if(!dataMap.has(row.ISELL_ORDER_NUMBER)) {
                 // Order constructor(isell, cutOffDate, cutOffTime, serviceWindow){
@@ -505,7 +508,6 @@
             objeto.addProduct(row);
         });
         console.log("MAPA: ", dataMap);
-        // debugger
         return dataMap;
     }
 
@@ -596,13 +598,10 @@
         });
         
         // fill with empty rows
-        // let emptyPickTask = new PickOrder("-", "0", "0", "0", "-", "-");
-        // let emptyOrder = new OrderPUP( "-", "-", "-", "-", emptyPickTask);
-        // for(let i = data.size + 1; i < 36; i++ ) {
-        //     dataTableBody += drawRow(emptyOrder, i);
-        // }
-
-        // console.log("Fila valor: ", value);
+        let emptyOrder = new Order("-", "-", "-", "-");
+        for(let i = data.size + 1; i < 36; i++ ) {
+            dataTableBody += drawRow(emptyOrder, i);
+        }
 
         // get the totals for "Packages", "Kgs" and "Volume"
         // get total orders by sales method (Markethall, self service, full internal)

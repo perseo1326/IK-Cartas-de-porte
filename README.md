@@ -5,6 +5,16 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 2.1:
+
+* Corrección del cálculo de las sumatorias de peso y volúmen por pedido.
+* Ajuste visual al rellenar con filas vacias la tabla cuerpo del documento para mejorar la presentación en modo impreso.
+
+### Versión 2.0:
+
+* Cambio total en la fuente de datos (reporte OPITA_PS obtenido mediante el software GADD). 
+* Construcción nueva en un 80% para ajustar tanto la interfaz como el análisis de la información proveniente de la nueva fuente de datos.
+
 ### Versión 1.6:
     * Adición de la visualización de la hora del archivo de datos junto al nombre del mismo en el botón de "Subir archivo...".
     * Ajuste en la creación del nombre de archivo al momento de imprimir o generar una copia en formato PDF.
