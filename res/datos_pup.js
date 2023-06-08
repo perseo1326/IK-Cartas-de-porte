@@ -77,14 +77,14 @@ const configData =
                 serviceCode : "FURGO_ONE",
                 documentTransport_A : "406SP ",
                 documentTransport_B : " SANT PERE (FURGO 1)",        
-                serviceValues : ["08:00:00-11:00:00", "11:00:00-14:00:00", "14:00:00-17:00:00"] 
+                serviceValues : ["08:00:00-11:00:00", "11:00:00-14:00:00"] 
             }, 
             { 
                 serviceName : "Segunda Furgo",
                 serviceCode : "FURGO_TWO",
                 documentTransport_A : "406SP ",
                 documentTransport_B : " SANT PERE (FURGO 2)",        
-                serviceValues : ["17:00:00-19:00:00"] 
+                serviceValues : ["14:00:00-17:00:00", "17:00:00-19:00:00"] 
             }
         ]
     }, 
@@ -117,14 +117,14 @@ const configData =
                 serviceCode : "FURGO_ONE",
                 documentTransport_A : "406TGN ",
                 documentTransport_B : " FURGO 1",        
-                serviceValues : ["08:00:00-11:00:00", "11:00:00-15:00:00", "15:00:00-17:00:00"] 
+                serviceValues : ["08:00:00-11:00:00", "11:00:00-15:00:00"] 
             }, 
             { 
                 serviceName : "Segunda Furgo", 
                 serviceCode : "FURGO_TWO",
                 documentTransport_A : "406TGN ",
                 documentTransport_B : " FURGO 2",        
-                serviceValues : ["17:00:00-19:00:00"] 
+                serviceValues : ["15:00:00-17:00:00", "17:00:00-19:00:00"] 
             }
         ]
     }   

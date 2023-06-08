@@ -7,6 +7,7 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ### Versión 2.1:
 
+* Modificación de los "Service Window" en la configuración para la separación de furgo uno y dos.
 * Corrección del cálculo de las sumatorias de peso y volúmen por pedido.
 * Ajuste visual al rellenar con filas vacias la tabla cuerpo del documento para mejorar la presentación en modo impreso.
 
