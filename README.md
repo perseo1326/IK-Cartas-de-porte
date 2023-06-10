@@ -5,6 +5,11 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 2.1.1:
+
+* Modificación en la carga de los scripts y recursos adicionales, al ponerlos en ubicaciones remotas y no locales.
+* Visualización mas clara del número de versión en el titulo de la aplicación.
+
 ### Versión 2.1:
 
 * Modificación de los "Service Window" en la configuración para la separación de furgo uno y dos.

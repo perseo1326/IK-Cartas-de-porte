@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="autor" content="https://github.com/perseo1326" />
     <title>PUP Cartas de Porte</title>
+    <link rel="shortcut icon" href="./cartas_porte_PUP_src/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./res/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="./cartas_porte_PUP_src/styles.css" />
+    <!-- <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script> -->
+    <script src="./cartas_porte_PUP_src/xlsx.full.min.js"></script>
     <style>
 
     </style>
@@ -41,7 +43,7 @@
         </div>
 
         <div class="hide-print margen-bajo-1">
-            <h1 class="centrar">Cartas de Porte Pick Up Points </h1>
+            <h1 class="centrar">Cartas de Porte Pick Up Points <span class="version-titulo" id="version-titulo"></span></h1>
         </div>
 
         <!-- Cabecera seleccion de info -->
@@ -237,14 +239,14 @@
         </div>
         <div class="footer-version margen-bajo-05">
             <!-- Version de la aplicacion -->
-            <p class="version ancho-50">Versión 2.1 - (https://github.com/perseo1326)</p>
+            <p id="version-footer" class="version ancho-50"></p>
             <p class="show-print footer-page ancho-50">Imprimir 3 copias: 1 Consignatario, 1 transportista y 1 receptor.</p>
         </div>
 
     <script>
 
     </script>
-    <script src="./res/datos_pup.js"></script>
-    <script src="./res/script.js"></script>
+    <script src="./cartas_porte_PUP_src/datos_pup.js"></script>
+    <script src="./cartas_porte_PUP_src/script.js"></script>
 </body>
 </html>

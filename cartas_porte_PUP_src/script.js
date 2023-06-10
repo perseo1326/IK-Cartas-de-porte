@@ -94,6 +94,7 @@
     // variable to hold the basic name for the printed document
     let printDocumentTitle = "";
 
+    const VERSION = "2.1.1";
     const WORKING_SHEET = "DATA";
     const ORDER_TYPE_DATA = "PICKUP_POINT";
     const MARKET_HALL = "MARKETHALL";
@@ -129,10 +130,15 @@
         panel.style.display = "none";
     });
 
+    window.onload = function(){
+        console.log("Versión: ", VERSION);
+        document.getElementById("version-titulo").innerText = "(v" + VERSION + ")";
+        document.getElementById("version-footer").innerText = "Versión " + VERSION + " - (https://github.com/perseo1326)";
+    }
 
 
 
-    
+
     // *********************************************************
     // Function to validate a given date
     function validateDate(inputDate) {
@@ -177,6 +183,7 @@
     // Function to initialize the variables and environment 
     function initializePage() {
         console.log("Inicializando los valores por defecto de la página.");
+
 
         document.title = printDocumentTitle = "PUP's Cartas de Porte 2.0";
 

@@ -135,8 +135,12 @@ label {
 div p.version {
     text-align: right;
     padding: 0 1rem;
-    font-size: var(--doc-font);
+    font-size: calc(var(--doc-font) * 1.75);
     color: gray;
+}
+
+div h1 span.version-titulo {
+    font-size: 1em;
 }
 
 .custom-button {
