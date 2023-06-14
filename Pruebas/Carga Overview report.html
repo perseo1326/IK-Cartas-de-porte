@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="autor" content="https://github.com/perseo1326" />
+    <title>Carga Overview report</title>
+    <!-- <link rel="shortcut icon" href="./cartas_porte_PUP_src/favicon.ico" type="image/x-icon"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./prueba-styles.css" />
+    <!-- <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script> -->
+    <!-- <script src="./cartas_porte_PUP_src/xlsx.full.min.js"></script> -->
+    <style>
+
+    </style>
+
+</head>
+<body class="print-page-size">
+    <div class="container-column">
+        <!-- Panel  -->
+        <div id="panel" class="panel">
+            <div class="frame">
+                <div class="frame-title">
+                    <h3>Fecha de envío</h3>
+                </div>
+                <div class="frame-content">
+                    <div class="margen-bajo-05">
+                        <p class="">Destino: <span id="frame-destination"></span></p>
+                        <label for="">Seleccionar fecha de envío:</label>
+                        <div class="container">
+                            <input type="date" id="frame-shipping-date" class="custom-button centrar">
+                        </div>
+                    </div>
+                    <div class="container">
+                        <input type="button" id="frame-ok-b" class="custom-button" value="Continuar">
+                        <input type="button" id="frame-cancel-b" class="custom-button" value="Cancelar">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hide-print margen-bajo-1">
+            <h1 class="centrar">Pruebas lectura reporte overview.csv <span class="version-titulo" id="version-titulo"></span></h1>
+        </div>
+
+        <!-- Cabecera seleccion de info -->
+        <div class="hide-print margen-bajo-05">
+            <!-- File selection -->
+            <div class="">
+                <label class="" for="">1. Seleccionar archivo de datos:</label>
+                <div class="margen-izq-1">
+                    <label class="custom-button" id="upload-file-b" for="file-input" >Subir archivo...</label>
+                    <input type="file" class="" id="file-input" value="" />
+                </div>
+            </div>
+
+            <!-- Date selection -->
+            <div class="">
+                <label class="" for="">2. Fecha (CUT OFF DATE):</label>
+                <div class="margen-izq-1">
+                    <input type="date" id="selected-date" class="custom-button disable" disabled>
+                </div>
+            </div>
+
+            <div class="container">
+                <!-- destino -->
+                <div class="ancho-50 inline">
+                    <label for="">3. Seleccione el destino (CUT OFF TIME):</label>
+                    <div class="margen-izq-1">
+                        <select id="destino-cut-off-time" name="destinos" class="custom-button disable" disabled>
+                            <option value="" >Selecciona una opción </option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- window service furgo No. -->
+                <div class="ancho-50 inline">
+                    <label for="">4. Seleccione el Service Window:</label>
+                    <div class="margen-izq-1">
+                        <select id="service-window" name="" class="custom-button disable" disabled>
+                            <option value="" >Selecciona una opción</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process info -->
+            <div class="ancho-50 inline">
+                <label for="">5. Analizar información</label>
+                <div class="margen-izq-1">
+                    <input type="button" id="process-data" class="custom-button disable" value="Procesar información" disabled />
+                </div>
+            </div>
+
+            <!-- Print documents -->
+            <div class="ancho-50 inline">
+                <label for="">6. Imprimir Documentación</label>
+                <div class="margen-izq-1">
+                    <input type="button" id="print-documentation-b" class="custom-button disable" value="Imprimir documentación" disabled>
+                </div>
+            </div>
+
+            <!-- Add comments -->
+            <div class="">
+                <label for="">7. Añadir Comentarios, Notas</label>
+                <div class="margen-izq-1">
+                    <input type="button" id="add-comments-b" class="custom-button disable" value="Añadir comentarios" disabled >
+                </div>
+            </div>
+        </div>
+
+        <div id="cabecero" class="show-print">
+            <!-- Container for the whole document header -->
+            <table>
+                <tbody id="transport-document-info">
+                    <tr>
+                        <td class="document-title" colspan="2">
+                            <h3>Carta de Porte / Transport Document</h3></td>
+                        <td class="page-number">Página 1 de 1<br>Page 1 of 1</td>
+                    </tr>
+                    <tr>
+                        <td>No. Carta de porte / Transport document number</td>
+                        <td>Fecha de carga / Date of loading</td>
+                        <td>Fecha de entrega / Date of receipt</td>
+                    </tr>
+                    <tr>
+                        <td id="transport-document-number" class="value"></td>
+                        <td id="transport-document-loading-date" class="value"></td>
+                        <td id="transport-document-receipt-date" class="value"></td>
+                    </tr>
+                    <tr>
+                        <td class="">Remitente / Sender</td>
+                        <td colspan="2">No. de precinto</td>
+                    </tr>
+                    <tr>
+                        <td id="sender-address"></td>
+                    </tr>
+                    <tr>
+                        <td>Destinario / Consignee</td>
+                        <td colspan="2">Transportista / Carrier</td>
+                    </tr>
+                    <tr>
+                        <td id="consignee-address"></td>
+                        <td id="carrier-address" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>Número de albarán / Invoice number</td>
+                        <td colspan="2">Matrícula Vehículo / Trailer registration</td>
+                    </tr>
+                    <tr>
+                        <td class="blank-space"></td>
+                        <td class="blank-space" colspan="2"></td>
+                    </tr>
+                    <tr class="">
+                        <td colspan="2">
+                            <p class="note">El conductor, mediante su firma declara que durante las operaciones de carga se ha seguido una relación de comprobaciones relativa a la carga de las mercancías peligrosas, habiendo iniciado el transporte cumpliendo con todos los requisitos exigibles por el ADR.</p>
+                            <p class="note">The driver, by signing states that during the loading a dangerous goods check-list has been completed, initiating transport in compliance with all applicable requirements of the ADR.</p>
+                        </td>
+                        <td class="text-top-left" >Firma del conductor / Driver's signature</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="resume" class="resume no-visible hide-print">
+            <p>Fecha (CUT OFF DATE): <span id="resume-cut-off-date"></span></p>
+            <p>Destino (CUT OFF TIME): <span id="resume-cut-off-time"></span></p>
+            <p>Service Window: <span id="resume-service-window"></span></p> 
+        </div>
+
+        <div class="">
+            <!-- Table with data -->
+            <table class="print-hide-borders">
+                <thead>
+                    <tr class="cabecera">
+                        <th class="centrar ordinal" rowspan="2">No.</th>
+                        <th class="isell" rowspan="2">Isell</th>
+                        <th class="hide-print" colspan="3">Pick Area</th>
+                        <th class="" rowspan="2">No. Paquetes</th>
+                        <th class="" rowspan="2">Peso (Kg)</th>
+                        <th class="" rowspan="2">Volumen (m<sup>3</sup>)</th>
+                    </tr>
+                    <tr class="cabecera hide-print">
+                        <th class="invert-colors">Markethall</th>
+                        <th class="invert-colors">Self Serve</th>
+                        <th class="invert-colors">Full Serve</th>
+                    </tr>
+                    
+                </thead>
+                <tbody id="data-body">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Comments space -->
+        <div class="hide-print">
+            <div id="comments-container" class="no-visible">
+                <table class="">
+                    <tbody id="comments-table">
+                        <tr>
+                            <td>
+                                <textarea name="comments-text" id="comments-text" cols="" rows="4"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                
+        </div>
+
+        <div class="show-print">
+            <!-- Footer table -->
+            <table>
+                <tbody id="footer-table">
+                    <tr>
+                        <td class="centrar" colspan="3">Observaciones de la expedición / Shipping remarks</td>
+                    </tr>
+                    <tr>
+                        <td class="blank-space" colspan="3">
+                            <p id="comments"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Firma y sello Expedidor</td>
+                        <td>Firma y sello Transportista</td>
+                        <td>Firma y sello Destinatario</td>
+                    </tr>
+                    <tr>
+                        <td class="blank-space-big"></td>
+                        <td class="blank-space-big"></td>
+                        <td class="blank-space-big"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="footer-version margen-bajo-05">
+            <!-- Version de la aplicacion -->
+            <p id="version-footer" class="version ancho-50"></p>
+            <p class="show-print footer-page ancho-50">Imprimir 3 copias: 1 Consignatario, 1 transportista y 1 receptor.</p>
+        </div>
+
+    <script>
+
+    </script>
+
+    <script src="./openFileCSV.js"></script>
+    <script src="./prueba.js"></script>
+        
+</body>
+</html>
