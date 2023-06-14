@@ -5,6 +5,10 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 3.0:
+
+* Debido a la inconsistencia del reporte tomado como fuente de datos para el análisis de la información (historical report), se deben hacer cambios en las fuentes de datos, lo cual desencadena un cambio radical en la lógica de negocio planteada. Por lo tanto ahora como fuente de datos se necesitarán tres informes los cuáles se deben combinar para obtener una información confiable. 
+
 ### Versión 2.1.1:
 
 * Modificación en la carga de los scripts y recursos adicionales, al ponerlos en ubicaciones remotas y no locales.
