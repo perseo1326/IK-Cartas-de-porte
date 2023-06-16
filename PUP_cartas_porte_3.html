@@ -53,8 +53,27 @@
             <div class="">
                 <label class="" for="">1. Seleccionar archivo de datos:</label>
                 <div class="margen-izq-1">
-                    <label class="custom-button" id="upload-file-b" for="file-input" >Subir archivo...</label>
-                    <input type="file" class="" id="file-input" value="" />
+                    <label class="custom-button" id="upload-file-b-overview" for="file-input-overview" >Subir archivo 'overview.csv'...</label>
+                    <input type="file" class="" id="file-input-overview" value="" />
+                </div>
+
+                <div class="margen-izq-1">
+                    <label class="custom-button" id="upload-file-b-by-order-status" for="file-input-by-order-status" >Subir archivo 'By Order Status'...</label>
+                    <input type="file" class="" id="file-input-by-order-status" value="" />
+                </div>
+
+                <div class="margen-izq-1">
+                    <label class="custom-button" id="upload-file-b-historical" for="file-input-historical" >Subir archivo 'Historical'...</label>
+                    <input type="file" class="" id="file-input-historical" value="" />
+                </div>
+
+            </div>
+            
+            <!-- Load files -->
+            <div class="">
+                <label class="" for="">2. Analizar archivos:</label>
+                <div class="margen-izq-1">
+                    <input type="button" class="custom-button" id="loadFiles" value="Cargar archivos" />
                 </div>
             </div>
 
@@ -179,6 +198,7 @@
                     <tr class="cabecera">
                         <th class="centrar ordinal" rowspan="2">No.</th>
                         <th class="isell" rowspan="2">Isell</th>
+                        <th class="centrar" rowspan="2" >Estado</th>
                         <th class="hide-print" colspan="3">Pick Area</th>
                         <th class="" rowspan="2">No. Paquetes</th>
                         <th class="" rowspan="2">Peso (Kg)</th>
@@ -247,6 +267,10 @@
     <script>
 
     </script>
+    <script src="./cartas_porte_PUP_src/overviewFunctions.js"></script>
+    <script src="./cartas_porte_PUP_src/excelReportsFunctions.js"></script>
+    <script src="./cartas_porte_PUP_src/commons.js"></script>
+    <script src="./cartas_porte_PUP_src/viewFunctions.js"></script>
     <!-- <script src="https://iweof.sharepoint.com/:u:/r/teams/o365g_all_retes406/Shared%20Documents/!!LOGISTICA/!OUTFLOW/CMP%27s/cartas_porte_PUP_src/datos_pup.js?csf=1&web=1&e=9DFXne"></script> -->
     <script src="./cartas_porte_PUP_src/datos_pup.js"></script>
     <!-- <script src="https://iweof.sharepoint.com/:u:/r/teams/o365g_all_retes406/Shared%20Documents/!!LOGISTICA/!OUTFLOW/CMP%27s/cartas_porte_PUP_src/script.js?csf=1&web=1&e=rMKBFM"></script> -->
