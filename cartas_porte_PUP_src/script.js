@@ -1,11 +1,16 @@
 
+'use strict';
+
     // *********************************************************
     // Variables y constantes
 
     const fileSelectorOverview = document.getElementById('file-input-overview');
+    const uploadFileOverviewButton = document.getElementById("upload-file-b-overview");
     const fileSelectorByStatus = document.getElementById('file-input-by-order-status');
+    const uploadFileByStatus = document.getElementById("upload-file-b-by-order-status");
     const fileSelectorHistorical = document.getElementById('file-input-historical');
-            const loadFilesButton = document.getElementById("loadFiles");
+    const uploadFileHistorical = document.getElementById("upload-file-b-historical");
+            // const loadFilesButton = document.getElementById("loadFiles");
 
     const selectedDate = document.getElementById("selected-date");
     const cutOffTimeSelector = document.getElementById("destino-cut-off-time");
@@ -29,10 +34,11 @@
     const filesArray = [undefined, undefined, undefined];
     
     // data structure for containing all the info combined
-    let isellsOverviewMap = new Map();
+    let isellsOverviewMapComplet = new Map();
+    let isellsMap = new Map();
 
     // let contentOriginal = [];
-    // let windowServiceObj = {};
+    let windowServiceObj = {};
     let todayDate = "";
     // variable to hold the basic name for the printed document
     let printDocumentTitle = "";
@@ -69,12 +75,11 @@
     fileSelectorOverview.addEventListener('change', openFile); 
     fileSelectorByStatus.addEventListener('change', openFile);
     fileSelectorHistorical.addEventListener('change', openFile);
-        loadFilesButton.addEventListener('click', XXX);
 
     // selectedDate.addEventListener('change', cleanFiles);
     cutOffTimeSelector.addEventListener('change', loadServiceWindowOptions);
 
-    // processDataB.addEventListener('click', processData);
+    processDataB.addEventListener('click', processData);
     // printDocumentationB.addEventListener('click', showPanelPrint);
     // frameOkB.addEventListener('click', printDocument);
 
@@ -105,8 +110,8 @@
     // *********************************************************
     function openFile(evento) {
         
-        let file = evento.target.files[0];
         try {
+            let file = evento.target.files[0];
             let fileDate = undefined;
             switch (evento.target.id) {
 
@@ -114,120 +119,240 @@
                 case 'file-input-overview':
                     let fileCSV = new TextFileOpen(file);
                     fileDate = new Date(file.lastModified);
-                    // console.log("Case Overview: ", fileCSV.file);  
-                    filesArray[0] = fileCSV;
-                    document.getElementById("upload-file-b-overview").innerText = fileCSV.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
+                    uploadFileOverviewButton.innerText = fileCSV.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
                     // Load data from file
                     let fileReaderOverview = new FileReader();
-                    fileReaderOverview.readAsText(filesArray[0].file, "windows-1252");
+                    fileReaderOverview.readAsText(fileCSV.file, "windows-1252");
                     fileReaderOverview.onload = function() {
-                        filesArray[0].contentFile = this.result;
+                        try {
+                            // process and clean info from the file
+                            let arrayDataClean = readOverviewFileCSV(fileCSV.file, this.result);
+                            isellsOverviewMapComplet = mappingArrayDataCSV(arrayDataClean);
 
-                        // process and clean info from the file
-                        let arrayDataClean = ReadOverviewFileCSV();
-                        isellsOverviewMap = mappingArrayDataCSV(arrayDataClean);
+                            console.log("isellsOverviewMapComplet: ", isellsOverviewMapComplet);
+    
+                            // showContent(isellsOverviewMap); 
+                            
+                            showSelectionButton();
+                            console.log("Carga Overview \"" + fileCSV.file.name + "\" Finalizada!");
 
-                        showContent(isellsOverviewMap); 
+                        } catch (error) {
+                            console.log("ERROR:", error);
+                            alert(error.message);
+                            window.onload();
+                            uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
+                            return;
+                        }
                     };
-
-                    showSelectionButton();
-                    console.log("Carga Overview \"" + filesArray[0].file.name + "\" Finalizada!");
                     break;
 
                 // case file 'By Order Status'
-                case 'file-input-by-order-status':                    
+                case 'file-input-by-order-status':            
                     let fileStatus = new ExcelFileOpen(file);
                     fileDate = new Date(file.lastModified);
-                    // console.log("Case By Status: ", fileStatus);
-                    filesArray[1] = fileStatus;
-                    document.getElementById("upload-file-b-by-order-status").innerText = file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
-                    let fileReaderByStatus = new FileReader();
-                    fileReaderByStatus.readAsArrayBuffer(filesArray[1].file);
-                    fileReaderByStatus.onload = async function(){
-                        let buffer = this.result;
-                        let workbook = await XLSX.read(buffer);
-                        filesArray[1].contentFile = await XLSX.utils.sheet_to_row_object_array(workbook.Sheets[WORKING_SHEET]);
+                    uploadFileByStatus.innerText = fileStatus.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
-                        // process and clean info from the file
-                        // let arrayDataClean = ReadOverviewFileCSV();
-                        // isellsOverviewMap = mappingArrayDataCSV(arrayDataClean);
+                    loadReportsExcel(fileStatus, uploadFileByStatus);
 
-
-                        
-                        console.log("Carga By Status Finalizada!", filesArray[1].contentFile);
-                    };
                     break;
 
                 // case file 'Historical'
                 case 'file-input-historical':
                     let fileHistorical = new ExcelFileOpen(file);
                     fileDate = new Date(file.lastModified);
-                    // console.log("Case Historical: ", fileHistorical);
-                    filesArray[2] = fileHistorical;
-                    document.getElementById("upload-file-b-historical").innerText = file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
-                    let fileReaderHistorical = new FileReader();
-                    fileReaderHistorical.readAsArrayBuffer(filesArray[2].file);
-                    fileReaderHistorical.onload = async function(){
-                        let buffer = this.result;
-                        let workbook = await XLSX.read(buffer);
-                        filesArray[2].contentFile = await XLSX.utils.sheet_to_row_object_array(workbook.Sheets[WORKING_SHEET]);
-                    };
-                    console.log("Carga Historical Finalizada!");
+                    uploadFileHistorical.innerText = fileHistorical.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
+
+                    loadReportsExcel(fileHistorical, uploadFileHistorical);
+
                     break;
             }
 
         } catch (error) {
             console.log("ERROR:openFile: ", error);
             alert(error.message);
-            return;
+            // return;
         }
-
     }
 
     // *********************************************************
-    function ReadOverviewFileCSV() {
+    function readOverviewFileCSV(file, fileData) {
 
         let overviewDataArray = [];
 
         // verificar tipo de archivo
-        if(filesArray[0] === undefined || !filesArray[0].file.name.toLowerCase().endsWith('.csv')){
-            alert("El archivo No 1: 'Overview.csv' NO es válido");
-            console.log("El archivo No 1: 'Overview.csv' NO es válido");
-            return;
+        if(file === undefined || !file.name.toLowerCase().endsWith('.csv')){
+            throw new Error("El archivo \"" + file.name + "\" NO es válido.")
         }
 
-        // if(filesArray[1] === undefined || (!filesArray[1].file.name.toLowerCase().endsWith(".xlsx") && filesArray[1].file.type === EXCEL_MIME_TYPE) ) {
-        //     alert("El archivo No. 2: 'By Order Status.xlsx' NO es válido");
-        //     console.log("El archivo No. 2: 'By Order Status.xlsx' NO es válido");
-        //     return;
-        // }
-
-        // if(filesArray[2] === undefined || (!filesArray[2].file.name.toLowerCase().endsWith(".xlsx") && filesArray[2].file.type === EXCEL_MIME_TYPE) ) {
-        //     alert("El archivo No. 3: 'Historical... .xlsx' NO es válido");
-        //     console.log("El archivo No. 3: 'Historical... .xlsx' NO es válido");
-        //     return;
-        // }
-
-        overviewDataArray = loadOverviewFileCSV(filesArray[0].contentFile);
-        console.log("Overview Data CARGADO: ", overviewDataArray);
+        overviewDataArray = loadOverviewFileCSV(fileData);
+        console.log("loadOverviewFileCSV Data CARGADO: ", overviewDataArray);
 
         overviewDataArray = filterOnlyPUP_FileCSV(overviewDataArray);
-        console.log("Overview Data 'filterOnlyPUP_FileCSV': ", overviewDataArray);
+        console.log("filterOnlyPUP_FileCSV Data: ", overviewDataArray);
 
         return overviewDataArray;
     }
 
+    // *********************************************************
+    function loadReportsExcel (excelFile, button){
+        // let fileStatus = new ExcelFileOpen(file);
 
-    function XXX() {
-        console.log("Funcion XXX!!");
+        let fileReader = new FileReader();
+        fileReader.readAsArrayBuffer(excelFile.file);
+        fileReader.onload =  function(){
+            try {
+                let buffer = this.result;
+                let workbook =  XLSX.read(buffer);
+                let contentFile =  XLSX.utils.sheet_to_row_object_array(workbook.Sheets[WORKING_SHEET]);
+
+                // process and clean info from the file
+                let arrayExcelClean = readReportsExcel(excelFile.file, contentFile);
+                console.log("Carga \"" + excelFile.file.name + "\" Finalizada!", arrayExcelClean); 
+                
+            } catch (error) {
+                console.log("ERROR:", error);
+                alert(error.message);
+                window.onload();
+                button.innerText = "Subir archivo 'By Order Status'...";
+                return;
+            }
+        };
+    }
+    
+
+    // *********************************************************
+    // USER EVENT - PROCESS DATA!!
+    // *********************************************************
+    function processData() {
+        try {
+            const dateCutOffDate = validateDate(selectedDate);
+
+            // Find the object from the selected "CUT_OFF_TIME" option
+            const cutOffTimeObj = findObjectPUP(cutOffTimeSelector.value);
+            if(!cutOffTimeObj) {
+                console.log("WARNING:processData: No se ha seleccionado un destino (CUT OFF TIME)");
+                throw new Error("No se ha seleccionado un destino (CUT OFF TIME)");
+            }
+
+            // Find the object selected in the "SERVICE_WINDOW" selector
+            const windowServiceObject = cutOffTimeObj.windowService.find( service => { return service.serviceCode === serviceWindowSelector.value });
+            if(!windowServiceObject) {
+                console.log('WARNING:processData: No se ha seleccionado un "Service Window" válido.');
+                throw new Error('No se ha seleccionado un "Service Window" válido.');
+            }        
+            
+            // Save info for later. Will use it on view
+            windowServiceObj = windowServiceObject;
+
+            // filter by date
+            console.log("Antes filter fecha: ", isellsOverviewMapComplet.size);
+            let isellsMap = dataFilterByDate(isellsOverviewMapComplet, dateCutOffDate);
+
+            console.log("Despues de filtrar x fecha", isellsMap);
+
+            // Data filtered by "CUT OFF TIME"
+            isellsMap = dataFilterByCutOffTime(isellsMap, cutOffTimeObj.cutOffTime); 
+            console.log("Filtrado por cut off time: ", isellsMap);
+            
+            isellsMap = dataFilterByServiceWindow(isellsMap, windowServiceObject.serviceValues );
+            console.log("filter by service window: ", isellsMap);
+
+            // Bind orders with the same "ISELL_ORDER_NUMBER"
+            // const dataMap = bindOrdersPUP_FromArray(content);
+
+            // Calculate the totals for each "Order" 
+            // dataMap.forEach( function(value, key){
+            //     value.calculateTotals();
+            // });
+
+            printDocumentationB.disabled = false;
+            printDocumentationB.classList.remove("disable");
+
+            addCommentsB.disabled = false;
+            addCommentsB.classList.remove("disable");
+
+            document.getElementById("resume").classList.remove("no-visible");
+
+            const fecha = new Date(dateCutOffDate);
+            showProcessValues(fecha, 
+                                cutOffTimeObj.title, 
+                                cutOffTimeObj.cutOffTime, 
+                                windowServiceObject.serviceName, 
+                                windowServiceObject.serviceValues );
+
+            frameDestination.innerText = cutOffTimeObj.title + " - " + windowServiceObject.serviceName;
+
+            setAddressTransportDocument(document.getElementById("sender-address"), cutOffTimeObj.senderAddress);
+            setAddressTransportDocument(document.getElementById("consignee-address"), cutOffTimeObj.consigneeAddress);
+            setAddressTransportDocument(document.getElementById("carrier-address"), cutOffTimeObj.carrierAddress);
+
+            commentsText.value = "";
+            commentsContainer.classList.add("no-visible");
+            addCommentsB.value = "Añadir comentarios";
+
+            showContent(isellsMap);
+
+            printDocumentTitle = windowServiceObject.serviceName + "_" + cutOffTimeObj.title;
+
+        } catch (error) {
+            console.log("ERROR:", error);
+            alert(error.message);
+            return;
+        }
+
     }
 
 
+    // *********************************************************
+    // Function fo filter the data set by date
+    function dataFilterByDate(dataMap, textDate) {
+    
+        let data = new Map();
+        dataMap.forEach( (value, key) => {
+            // console.log("dataFilterByDate: ", value, key);
+            // console.log("** ", value.cut_off_date);
 
+            if(value.cut_off_date === textDate){
+                data.set(key, value);
+            }
+        });
+        return data;
+    }
 
+    // *********************************************************
+    // Function to filter data by "CUT_OFF_TIME" value selected
+    function dataFilterByCutOffTime(dataMap, selection) {
+        // console.log("CUT_OFF_TIME, MAPA datos: ", selection, dataMap);
+
+        let data = new Map();
+        dataMap.forEach( (value, key) => {    
+            // console.log("dataFilterByCutOffTime: ", value, key);
+            // console.log("**KEY**: ", value.cut_off_time);
+            if(value.cut_off_time === selection){
+                data.set(key, value);
+            }
+        });
+        return data;
+    }
+
+    // *********************************************************
+    function dataFilterByServiceWindow(dataMap, windowServiceArrayOptions) {
+        
+        // console.log("Dentro de SERVICE WINDOW filter.....", windowServiceArrayOptions, dataMap);
+        let data = new Map();
+
+        dataMap.forEach( (value, key) => {
+            // console.log("VALOR: ", windowServiceArrayOptions.includes(value[SERVICE_FROM]));
+            if(windowServiceArrayOptions.includes(value[SERVICE_FROM])){
+                data.set(key, value);
+                console.log("VAlor de VALUE: ", value);
+            }
+        });
+        return data;
+    }
 
 
 

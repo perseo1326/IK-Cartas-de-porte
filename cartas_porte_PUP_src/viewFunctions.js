@@ -107,6 +107,23 @@
     }
 
 
+    // *********************************************************
+    function setAddressTransportDocument(parentNode, addressArray) {
+
+        cleanChildNodes(parentNode);
+        const firstLine = document.createElement("p");
+        const strongLine = document.createElement("strong");
+        strongLine.innerText = addressArray[0];
+        firstLine.appendChild(strongLine);
+        parentNode.appendChild(firstLine);
+        
+        for (let i = 1; i < addressArray.length; i++) {
+            const element = addressArray[i];
+            const line = document.createElement("p");
+            line.innerText = element;
+            parentNode.appendChild(line);
+        }
+    }
 
     
 

@@ -56,7 +56,7 @@ class TextFileOpen {
                 if(headlines[index] === CUT_OFF_DATE_TIME) {
                     let array = element.split(' ');
                     objeto[CUT_OFF_DATE] = array[0];
-                    objeto[CUT_OFF_TIME] = ( array[1] + ":00");
+                    objeto[CUT_OFF_TIME] = ( array[1]);
                 } else {
                     objeto[headlines[index]] = element;
                 }
@@ -71,11 +71,14 @@ class TextFileOpen {
     // *********************************************************
     function mappingArrayDataCSV(arrayData) {
 
-        // console.log("mappingArrayDataCSV: ", arrayData);
+        // console.log("mappingArrayDataCSV: ", arrayData[2]);
 
         let dataMap = new Map();
-        arrayData.forEach( row => { // console.log("ISELL: ", row[SALES_REF]); 
-            dataMap.set( row[SALES_REF], row ) } );
+        arrayData.forEach( row => {  
+            // console.log("ORDER: ", row[CUT_OFF_DATE_TIME]);
+            let orderObj = new Order(row);
+            dataMap.set( row[SALES_REF], orderObj ); 
+        } );
         return dataMap;
     }
 
