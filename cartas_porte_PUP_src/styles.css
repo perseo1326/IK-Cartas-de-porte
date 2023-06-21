@@ -228,7 +228,7 @@ thead tr.cabecera th.invert-colors {
 }
 
 thead tr th.ordinal {
-    width: 4rem;
+    width: 2rem;
 }
 
 thead tr th.isell {
@@ -249,24 +249,9 @@ table tbody#data-body tr td.total-orders {
     border: 1px solid gray;
 }
 
-/* 
-table tbody#data-body tr td input[type='text'] {
-    all: unset;
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    border: 1px solid red;
-} */
-
 table tbody#data-body tr td.isell.isell-focus {
     /* background-color: red; */
 } 
-
-
-table tbody#data-body tr td input[type='text']:focus {
-    background-color: #ffdb01;
-}
 
 table tbody#data-body tr td.container-column {
     border: 1px solid gray;
@@ -276,35 +261,38 @@ table tbody#data-body tr:nth-last-of-type(2n+0) {
     background-color: lightgray;
 }
 
-table tbody#data-body tr.centrar td p.pick-status.not-started  {
+/* table tbody#tata-body tr td.no-info { */
+table tbody#data-body td.no-info {
     background-color: rgba(255, 0, 0, 0.5);
 }
 
-table tbody#data-body tr.centrar td p.pick-status.started,
-table tbody#data-body tr.centrar td p.pick-status.picking, 
-table tbody#data-body tr.centrar td p.pick-status.picked  {
+table tbody#data-body tr.centrar td.status-not-started  {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+table tbody#data-body tr.centrar td.status-picking { 
     background-color: orange;
 }
 
-table tbody#data-body tr.centrar td p.pick-status.wait-for-merge  {
+table tbody#data-body tr.centrar td.status-picked  {
     background-color: lightsalmon;
 }
 
-table tbody#data-body tr.centrar td p.pick-status.check-started  {
+table tbody#data-body tr.centrar td.status-check-started  {
     background-color: rgb(255, 255, 0);
 }
 
-table tbody#data-body tr.centrar td p.pick-status.checked  {
+table tbody#data-body tr.centrar td.status-checked  {
     background-color: rgb(191, 255, 0);
 }
 
-table tbody#data-body tr.centrar td p.pick-status.completed  {
+table tbody#data-body tr.centrar td.status-completed  {
     background-color: lightgreen
 }
 
 table tbody#data-body tr.centrar td p.pick-status.open-return,  
 table tbody#data-body tr.centrar td p.pick-status.returned  {
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 
 table tbody#data-body tr:hover {

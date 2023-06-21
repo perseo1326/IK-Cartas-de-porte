@@ -1,7 +1,5 @@
 
 
-
-
     // *********************************************************
     function showProcessValues (dateCutOffDate, title, timeCutOffTime, serviceName, serviceValues ) {
         if(dateCutOffDate) {
@@ -12,7 +10,6 @@
         document.getElementById("resume-cut-off-time").innerText = title + " (" + timeCutOffTime + ")";
         document.getElementById("resume-service-window").innerText = serviceName + " (" + serviceValues + ")";
     }
-
 
 
     // *********************************************************
@@ -125,7 +122,49 @@
         }
     }
 
+
+    // *********************************************************
+    // Function to round a value for better presentation
+    function roundValue(value) {
+        value *= 100;
+        value = Math.round(value); 
+        return (value / 100);
+    }
     
+    
+    // *********************************************************
+    // add a CSS class to indicate the 'status' for the current order
+    function indicateStatusOrder(status) {
+
+        let typeOfStatus = "";
+        switch (status) {
+            case STATUS_NOT_STARTED:
+                typeOfStatus = "status-not-started";
+                break;
+            case STATUS_STARTED:
+            case STATUS_PICKING:
+            case STATUS_WAIT_FOR_MERGE:
+                typeOfStatus = "status-picking";
+                break;
+            case STATUS_PICKED:
+                typeOfStatus = "status-picked";
+                break;
+            case STATUS_CHECK_STARTED:
+                typeOfStatus = "status-check-started";
+                break;
+            case STATUS_CHECKED:
+                typeOfStatus = "status-checked";
+                break;
+            case STATUS_COMPLETED:
+                typeOfStatus = "status-completed";
+                break;
+            default:
+        }
+        return typeOfStatus;
+    }
+    
+
+
 
 
     // *********************************************************
@@ -138,15 +177,13 @@
 
         let count = 1;
 
+        let totalPackagesShipment = 0;
+        let totalWeightShipment = 0;
+        let totalVolumeShipment = 0;
 
-
-        // let totalPackagesShipment = 0;
-        // let totalWeightShipment = 0;
-        // let totalVolumeShipment = 0;
-
-        // let totalMarkethallOrders = 0;
-        // let totalSelfServiceOrders = 0;
-        // let totalFullInternalOrders = 0;
+        let totalMarkethallOrders = 0;
+        let totalSelfServiceOrders = 0;
+        let totalFullInternalOrders = 0;
                 
         // fill rows with data
         data.forEach( (value, key) => {
@@ -162,21 +199,23 @@
 
         // // get the totals for "Packages", "Kgs" and "Volume"
         // // get total orders by sales method (Markethall, self service, full internal)
-        // data.forEach( (value, key ) => {
-        //     totalPackagesShipment += value.totalPackages;
-        //     totalWeightShipment += value.totalWeight;
-        //     totalVolumeShipment += value.totalVolume;
-        //     (value.containPickArea(MARKET_HALL) === "X") ? totalMarkethallOrders++ : false;
-        //     (value.containPickArea(SELF_SERVICE) === "X") ? totalSelfServiceOrders++ : false;
-        //     (value.containPickArea(WAREHOUSE) === "X") ? totalFullInternalOrders++ : false;
-        // });
+        data.forEach( (value, key ) => {
+            totalPackagesShipment += value.totalOrderPackages;
+            totalWeightShipment += value.totalOrderWeight;
+            totalVolumeShipment += value.totalOrderVolume;
+            if(value.details !== undefined){
+                // console.log("Pick area: ", value.details);
+                (value.details.containPickArea(MARKET_HALL)) ? totalMarkethallOrders++ : false;
+                (value.details.containPickArea(SELF_SERVICE)) ? totalSelfServiceOrders++ : false;
+                (value.details.containPickArea(WAREHOUSE)) ? totalFullInternalOrders++ : false;
+            }
+        });
 
-        // dataTableBody += drawTotalOrders(totalMarkethallOrders, totalSelfServiceOrders, totalFullInternalOrders);
-        // dataTableBody += drawTotalsTable(totalPackagesShipment, totalWeightShipment, totalVolumeShipment);
+        dataTableBody += drawTotalOrders(totalMarkethallOrders, totalSelfServiceOrders, totalFullInternalOrders);
+        dataTableBody += drawTotalsTable(totalPackagesShipment, totalWeightShipment, totalVolumeShipment);
 
         tableBody.innerHTML += dataTableBody;
     }
-
 
 
     // *********************************************************
@@ -185,22 +224,23 @@
         // console.log("Dibujar fila valor: ", value);
 
         // first column: counter
-        dataTableBody += "<tr class='centrar'>";
+        dataTableBody += "<tr class='centrar' title='";
+        dataTableBody += value.source;
+        dataTableBody += "'>";
+
         dataTableBody += "<td>";
         dataTableBody += count;
         dataTableBody += "</td>";
 
         // second column: ISELL
         dataTableBody += "<td class='isell' >";
-        // dataTableBody += "<div class='back2 ' onclick='xx(this)'>";
-        // dataTableBody += "<input type='text' class='unstyle' value='";
-        // dataTableBody += value.isellOrderNumber + "' readonly />";
-        dataTableBody += value[SALES_REF];
-        // dataTableBody += "</div>";
+        dataTableBody += value[ISELL_ORDER];
         dataTableBody += "</td>";
         
         // third column: Order Status
-        dataTableBody += "<td class='centrar'>";
+        dataTableBody += "<td class='";
+        dataTableBody += indicateStatusOrder(value[ORDER_STATUS]);
+        dataTableBody += "'>";
         dataTableBody += value[ORDER_STATUS];
         dataTableBody += "</td>";
 
@@ -208,38 +248,87 @@
 
         // ********
         dataTableBody += "<td class='container-column hide-print'>";
-        dataTableBody += "<p class='pick-id'>";
-        // dataTableBody += value.containPickArea(MARKET_HALL);
+        dataTableBody += "<p>";
+        if(value.details !== undefined){ 
+            dataTableBody += value.details.containPickArea(MARKET_HALL) ? "X" : "";
+        }
         dataTableBody += "</p>";
         dataTableBody += "</td>";
 
         dataTableBody += "<td class='container-column hide-print'>";
-        dataTableBody += "<p class='pick-id'>";
-        // dataTableBody += value.containPickArea(SELF_SERVICE);
+        dataTableBody += "<p>";
+        if(value.details !== undefined){ 
+            // dataTableBody += value.source;
+            dataTableBody += (value.details.containPickArea(SELF_SERVICE) ? "X" : "" );
+        }
         dataTableBody += "</p>";
         dataTableBody += "</td>";
 
         dataTableBody += "<td class='container-column hide-print'>";
-        dataTableBody += "<p class='pick-id'>";
-        // dataTableBody += value.containPickArea(WAREHOUSE);
+        dataTableBody += "<p>";
+        if(value.details !== undefined){ 
+            dataTableBody += value.details.containPickArea(WAREHOUSE) ? "X" : "";
+        }
         dataTableBody += "</p>";
         dataTableBody += "</td>";
 
-        // *******
-
-        dataTableBody += "<td>";
-        // dataTableBody += roundValue(value.totalPackages);
-        dataTableBody += "</td>";
-        dataTableBody += "<td>";
-        // dataTableBody += roundValue(value.totalWeight);
-        dataTableBody += "</td>";
-        dataTableBody += "<td>";
-        // dataTableBody += roundValue(value.totalVolume );
-        dataTableBody += "</td>";
+        // COLUMN: packages, weight and volume
+        if(value.details === undefined) {
+            dataTableBody += "<td colspan='3' class='no-info'>";
+            dataTableBody += NO_INFO;
+            dataTableBody += "</td>";
+        } else {
+            dataTableBody += "<td>";
+            dataTableBody += roundValue(value.totalOrderPackages);
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            dataTableBody += roundValue(value.totalOrderWeight);
+            dataTableBody += "</td>";
+            dataTableBody += "<td>";
+            dataTableBody += roundValue(value.totalOrderVolume );
+            dataTableBody += "</td>";
+        }
 
         return dataTableBody;
     }
 
 
+    // *********************************************************
+    // Draw the total orders by sales method (Markethall, Self Service, Full Internal)
+    function drawTotalOrders (totalMarket, totalSelfService, totalFullInternal) {
+        let dataTableBody = ""; 
+        dataTableBody += "<tr class='centrar totales hide-print'>";
+        dataTableBody += "<td colspan='3'>Total de pedidos</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalMarket;
+        dataTableBody += "</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalSelfService;
+        dataTableBody += "</td>";
+        dataTableBody += "<td class='total-orders'>";
+        dataTableBody += totalFullInternal;
+        dataTableBody += "</td>";
+        dataTableBody += "<td colspan='3'>";
+        dataTableBody += totalMarket + totalSelfService + totalFullInternal;
+        dataTableBody += "</td>";
+        dataTableBody += "</tr>";
+
+        return dataTableBody;
+    }
 
 
+    // *********************************************************
+    // Draw the bottom totals of the data table
+    function drawTotalsTable (totalPackages, totalWeight, totalVolume ) {
+        let dataTableBody = ""; 
+        dataTableBody += "<tr class='centrar totales'>";
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "<td colspan='3'>Totales</td>";
+        dataTableBody += "<td>" + roundValue(totalPackages) + " bultos</td>";
+        dataTableBody += "<td>" + roundValue(totalWeight) + " Kgs</td>";
+        dataTableBody += "<td>" + roundValue(totalVolume) + " m<sup>3</sup></td>";
+
+        return dataTableBody;
+    }

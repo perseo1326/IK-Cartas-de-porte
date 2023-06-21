@@ -1,37 +1,21 @@
 
 
 class Order {
-    // {
-    //     "Ref. de Ventas": "1363469152",
-    //     "Pick order": "1160",
-    //     "Creado el": "2023-06-10 20:06",
-    //     "Tipo de pedido": "Punto de recogida",
-    //     "Prioridad": "Normal",
-    //     "Estado del pedido.": "No empezado",
-    //     "cut_off_date": "2023-06-21",
-    //     "cut_off_time": "19:45:00",
-    //     "Service from": "2023-06-22 17:00",
-    //     "Service To": "2023-06-22 19:00",
-    //     "Info\r": "private\r"
-    //   }
-
-        //   // minimum required columns from 'Overview.csv' file
-        //   const SALES_REF = "Ref. de Ventas";
-        //   const ORDER_TYPE = "Tipo de pedido";
-        //   const ORDER_STATUS = "Estado del pedido.";
-        //   const CUT_OFF_DATE_TIME = "Fuera plazo";
-        //   const SERVICE_FROM = "Service from";
-        //   const SERVICE_TO = "Service To";
 
     constructor( rowData ){
 
         try {
-            this[SALES_REF]         = rowData[SALES_REF];
-            this[ORDER_TYPE]        = rowData[ORDER_TYPE];
+            this[ISELL_ORDER]       = rowData[ISELL_ORDER];
+            // this[ORDER_TYPE]        = rowData[ORDER_TYPE];
             this[ORDER_STATUS]      = rowData[ORDER_STATUS];
             // this[CUT_OFF_DATE_TIME] = rowData[CUT_OFF_DATE_TIME];
             this[CUT_OFF_DATE]      = rowData[CUT_OFF_DATE];
             this[CUT_OFF_TIME]      = rowData[CUT_OFF_TIME];
+            this.source             = undefined;
+            this.details            = undefined;
+            this.totalOrderPackages = 0;
+            this.totalOrderVolume   = 0;
+            this.totalOrderWeight   = 0;
 
             this.setServiceFrom( rowData[SERVICE_FROM]);
             this.setServiceTo( rowData[SERVICE_TO]);
@@ -52,8 +36,78 @@ class Order {
         let array = stringServiceTo.split(' ');
         this[SERVICE_TO] = array[1];
     }
+
+    calculateTotals(){
+        let order = this;
+
+        // console.log("VAlor de la ORDEN (Objeto): ", this);
+        if(order.details !== undefined) {
+
+            // console.log("Orden isell : ", order)
+            order.details.pickArea.forEach(area => {
+
+                area.forEach( product => {
+
+                    // console.log("Calcular Totales: ", product);
+
+                    order.totalOrderWeight += (product.WEIGHT * product.ORDERED_QTY);
+                    order.totalOrderVolume += (product.VOLUME_ORDERED * product.ORDERED_QTY);
+                    order.totalOrderPackages += (product.PACKAGES * product.ORDERED_QTY);
+
+                    // product.ORDERED_QTY;
+                }) 
+            });
+        }
+    }
 }
 
+class Product {
+
+    constructor(excelRow){
+
+        this[ARTICLE_NAME]      = excelRow[ARTICLE_NAME].trim();
+        this[ARTICLE_NUMBER]    = excelRow[ARTICLE_NUMBER].trim();
+        this[PACKAGES]          = Number (excelRow[PACKAGES].trim());
+        this[WEIGHT]            = Number (excelRow[WEIGHT].trim());
+        this[VOLUME_ORDERED]    = Number (excelRow[VOLUME_ORDERED].trim());
+        this[ORDERED_QTY]       = Number (excelRow[ORDERED_QTY].trim());
+        
+        // this[ARTICLES]          = excelRow[ARTICLES].trim();
+        // this.orderedQty       = Number (orderedQty.trim().replace(',', '.'));
+    }
+}
+
+    // *********************************************************
+    // *********************************************************
+    // *********************************************************
+    class OrderDetail {
+        constructor(isell) {
+
+            this.isell          = isell.trim();
+            this.pickArea       = new Map([
+                [MARKET_HALL, []],
+                [SELF_SERVICE, []], 
+                [WAREHOUSE, []]
+            ]);
+        }
+
+        addProduct(product, pickArea){
+            let newProduct = product;
+            this.pickArea.get(pickArea).push(newProduct);
+        }
+
+        containPickArea(area){
+            let orderDetail = this;
+            // console.log("containPickArea: ", orderDetail.pickArea.get(area));
+            if(orderDetail.pickArea.get(area).length < 1 ){
+                return false;
+            }
+            return true;
+        }
+    }
+
+    // *********************************************************
+    // *********************************************************
     // *********************************************************
     // Function to validate a given date
     function validateDate(inputDate) {

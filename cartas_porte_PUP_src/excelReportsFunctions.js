@@ -65,6 +65,26 @@ class ExcelFileOpen {
     }
 
 
+    // *********************************************************
+    function mappingArrayDataExcel(dataArrayExcel) {
+
+        let orderDetailsMap = new Map();
+        dataArrayExcel.forEach(rowData => {
+            
+            if(!orderDetailsMap.has(rowData[ISELL])) {
+                let orderDetail = new OrderDetail(rowData[ISELL]);
+                orderDetailsMap.set(rowData[ISELL], orderDetail);
+            }
+            
+            let producto = new Product(rowData);
+            let orderDetailObject = orderDetailsMap.get(rowData[ISELL]);
+
+            orderDetailObject.addProduct(producto, rowData[PICK_AREA]);
+            orderDetailsMap.set(orderDetailObject.isell, orderDetailObject);
+        });
+        
+        return orderDetailsMap;
+    }
 
 
 

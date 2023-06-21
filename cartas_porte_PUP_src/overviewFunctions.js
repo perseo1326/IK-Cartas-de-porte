@@ -16,7 +16,7 @@ class TextFileOpen {
 
     // *********************************************************
     // convert string data to bidimensional array (rows and columns)
-    function loadOverviewFileCSV(grossData) {
+    function loadOverviewFileCSV(file, grossData) {
 
         let rows = grossData.replaceAll(", ", ";");
         rows = rows.replaceAll("\"", "");
@@ -30,7 +30,7 @@ class TextFileOpen {
 
         if( !verifyRequiredInfoCSV(headlines)) {
             // console.log("El archivo ", filesArray[0].file.name, " NO contiene la información mínima requerida.");
-            throw new Error("El archivo \"" + filesArray[0].file.name + "\" NO contiene la información mínima requerida.")
+            throw new Error("El archivo \"" + file.name + "\" NO contiene la información mínima requerida.")
         }
         
         let content = [];
@@ -77,7 +77,7 @@ class TextFileOpen {
         arrayData.forEach( row => {  
             // console.log("ORDER: ", row[CUT_OFF_DATE_TIME]);
             let orderObj = new Order(row);
-            dataMap.set( row[SALES_REF], orderObj ); 
+            dataMap.set( row[ISELL_ORDER], orderObj ); 
         } );
         return dataMap;
     }
@@ -116,7 +116,7 @@ class TextFileOpen {
     // *********************************************************
     function verifyRequiredInfoCSV(headlinesArray) {
         
-        if(headlinesArray.includes(SALES_REF) && 
+        if(headlinesArray.includes(ISELL_ORDER) && 
         headlinesArray.includes(ORDER_TYPE) && 
         headlinesArray.includes(ORDER_STATUS) &&
         headlinesArray.includes(CUT_OFF_DATE_TIME) &&

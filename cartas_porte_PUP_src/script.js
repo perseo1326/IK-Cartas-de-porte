@@ -6,11 +6,10 @@
 
     const fileSelectorOverview = document.getElementById('file-input-overview');
     const uploadFileOverviewButton = document.getElementById("upload-file-b-overview");
-    const fileSelectorByStatus = document.getElementById('file-input-by-order-status');
-    const uploadFileByStatus = document.getElementById("upload-file-b-by-order-status");
     const fileSelectorHistorical = document.getElementById('file-input-historical');
     const uploadFileHistorical = document.getElementById("upload-file-b-historical");
-            // const loadFilesButton = document.getElementById("loadFiles");
+    const fileSelectorByStatus = document.getElementById('file-input-by-order-status');
+    const uploadFileByStatus = document.getElementById("upload-file-b-by-order-status");
 
     const selectedDate = document.getElementById("selected-date");
     const cutOffTimeSelector = document.getElementById("destino-cut-off-time");
@@ -31,29 +30,32 @@
     
     // *********************************************************
 
-    const filesArray = [undefined, undefined, undefined];
-    
-    // data structure for containing all the info combined
-    let isellsOverviewMapComplet = new Map();
-    let isellsMap = new Map();
-
-    // let contentOriginal = [];
-    let windowServiceObj = {};
-    let todayDate = "";
-    // variable to hold the basic name for the printed document
-    let printDocumentTitle = "";
-
     const VERSION = "3.0";
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     // minimum required columns from 'Overview.csv' file
-        const SALES_REF = "Ref. de Ventas";
+        const ISELL_ORDER = "Ref. de Ventas";
         const ORDER_TYPE = "Tipo de pedido";
         const ORDER_STATUS = "Estado del pedido.";
         const CUT_OFF_DATE_TIME = "Fuera plazo";
         const SERVICE_FROM = "Service from";
         const SERVICE_TO = "Service To";
 
+    // required columns from 'Historical' and/or 'By Status' file
+        const ISELL             = "ISELL_ORDER_NUMBER";
+        const ARTICLE_NAME      = "ARTICLE_NAME";
+        const ARTICLE_NUMBER    = "ARTICLE_NUMBER";
+        // const ORDER_TYPE_EXCEL  = "ORDER_TYPE";
+        const PACKAGES          = "PACKAGES";
+        const WEIGHT            = "WEIGHT";
+        const VOLUME_ORDERED    = "VOLUME_ORDERED";
+        const ARTICLES          = "ARTICLES";
+        const ORDERED_QTY       = "ORDERED_QTY";
+        const PICK_AREA         = "PICK_AREA";
+        
+    
+    const REPORT_HISTORICAL     = "Historical";
+    const REPORT_BY_STATUS      = "By_Status";
     const PICK_UP_POINT = "Punto de recogida";
     const CUT_OFF_DATE = "cut_off_date";
     const CUT_OFF_TIME = "cut_off_time";
@@ -65,10 +67,48 @@
     const SELF_SERVICE = "SELFSERVE";
     const WAREHOUSE = "FULLSERVE_INTERNAL";
 
+    const NO_INFO = "No Info";
+    // Order Status variables
+        const STATUS_NOT_STARTED     = "No empezado";
+        const STATUS_STARTED         = "Empezado";
+        const STATUS_PICKING         = "Picking";
+        const STATUS_WAIT_FOR_MERGE  = "Espera para juntar";
+        const STATUS_PICKED          = "Recogido";
+        const STATUS_CHECK_STARTED   = "Comprobación iniciada";
+        const STATUS_CHECKED         = "Comprobado";
+        const STATUS_COMPLETED       = "Entregado";
+
     const DEFAULT_DROPDOWNLIST_VALUE = { 
         value : "",
         text : "Selecciona una opción..." 
     };
+
+    
+    // data structure for containing all the info combined
+        // complet, filtered and clean info for 'Overview.csv'
+        let isellsOverviewMapComplet = new Map();
+        
+        // complet, filtered and clean info for 'Overview.csv'
+        let isellsHistorical = {
+            type : REPORT_HISTORICAL,
+            isellsMap : new Map()
+        };
+
+        // complet, filtered and clean info for 'By Status.xlsx'
+        let isellsByStatus = { 
+            type : REPORT_BY_STATUS, 
+            isellsMap : new Map()
+        };
+
+    // will contain the orders (isells) filtered by CUT OFF DATE, CUT OFF TIME AND SERVICE WINDOW
+    let ordersMap = new Map();
+
+    // let contentOriginal = [];
+    let windowServiceObj = {};
+    let todayDate = "";
+    // variable to hold the basic name for the printed document
+    let printDocumentTitle = "";
+
 
     // *********************************************************
     // Event Listeners 
@@ -130,7 +170,7 @@
                             let arrayDataClean = readOverviewFileCSV(fileCSV.file, this.result);
                             isellsOverviewMapComplet = mappingArrayDataCSV(arrayDataClean);
 
-                            console.log("isellsOverviewMapComplet: ", isellsOverviewMapComplet);
+                            // console.log("isellsOverviewMapComplet: ", isellsOverviewMapComplet);
     
                             // showContent(isellsOverviewMap); 
                             
@@ -147,17 +187,6 @@
                     };
                     break;
 
-                // case file 'By Order Status'
-                case 'file-input-by-order-status':            
-                    let fileStatus = new ExcelFileOpen(file);
-                    fileDate = new Date(file.lastModified);
-
-                    uploadFileByStatus.innerText = fileStatus.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
-
-                    loadReportsExcel(fileStatus, uploadFileByStatus);
-
-                    break;
-
                 // case file 'Historical'
                 case 'file-input-historical':
                     let fileHistorical = new ExcelFileOpen(file);
@@ -166,14 +195,22 @@
                     uploadFileHistorical.innerText = fileHistorical.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
                     loadReportsExcel(fileHistorical, uploadFileHistorical);
+                    break;
 
+                // case file 'By Order Status'
+                case 'file-input-by-order-status':            
+                    let fileStatus = new ExcelFileOpen(file);
+                    fileDate = new Date(file.lastModified);
+
+                    uploadFileByStatus.innerText = fileStatus.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
+
+                    loadReportsExcel(fileStatus, uploadFileByStatus);
                     break;
             }
 
         } catch (error) {
             console.log("ERROR:openFile: ", error);
             alert(error.message);
-            // return;
         }
     }
 
@@ -187,7 +224,7 @@
             throw new Error("El archivo \"" + file.name + "\" NO es válido.")
         }
 
-        overviewDataArray = loadOverviewFileCSV(fileData);
+        overviewDataArray = loadOverviewFileCSV(file, fileData);
         console.log("loadOverviewFileCSV Data CARGADO: ", overviewDataArray);
 
         overviewDataArray = filterOnlyPUP_FileCSV(overviewDataArray);
@@ -198,7 +235,6 @@
 
     // *********************************************************
     function loadReportsExcel (excelFile, button){
-        // let fileStatus = new ExcelFileOpen(file);
 
         let fileReader = new FileReader();
         fileReader.readAsArrayBuffer(excelFile.file);
@@ -211,7 +247,11 @@
                 // process and clean info from the file
                 let arrayExcelClean = readReportsExcel(excelFile.file, contentFile);
                 console.log("Carga \"" + excelFile.file.name + "\" Finalizada!", arrayExcelClean); 
-                
+                if(button.id === "upload-file-b-historical"){
+                    isellsHistorical.isellsMap = mappingArrayDataExcel( arrayExcelClean );
+                } else {
+                    isellsByStatus.isellsMap = mappingArrayDataExcel( arrayExcelClean );
+                }
             } catch (error) {
                 console.log("ERROR:", error);
                 alert(error.message);
@@ -248,25 +288,35 @@
             windowServiceObj = windowServiceObject;
 
             // filter by date
-            console.log("Antes filter fecha: ", isellsOverviewMapComplet.size);
-            let isellsMap = dataFilterByDate(isellsOverviewMapComplet, dateCutOffDate);
+            // console.log("Antes filter fecha: ", isellsOverviewMapComplet.size);
 
-            console.log("Despues de filtrar x fecha", isellsMap);
+            let ordersMap = dataFilterByDate(isellsOverviewMapComplet, dateCutOffDate);
+
+            // console.log("Despues de filtrar x fecha", ordersMap);
 
             // Data filtered by "CUT OFF TIME"
-            isellsMap = dataFilterByCutOffTime(isellsMap, cutOffTimeObj.cutOffTime); 
-            console.log("Filtrado por cut off time: ", isellsMap);
+            ordersMap = dataFilterByCutOffTime(ordersMap, cutOffTimeObj.cutOffTime); 
+            // console.log("Filtrado por cut off time: ", ordersMap);
             
-            isellsMap = dataFilterByServiceWindow(isellsMap, windowServiceObject.serviceValues );
-            console.log("filter by service window: ", isellsMap);
+            ordersMap = dataFilterByServiceWindow(ordersMap, windowServiceObject.serviceValues );
+            // console.log("filter by service window: ", ordersMap);
 
-            // Bind orders with the same "ISELL_ORDER_NUMBER"
-            // const dataMap = bindOrdersPUP_FromArray(content);
+            // console.log("isellsHistoricalMapComplet", isellsHistorical);
+
+            combineOrdersWithDetails(ordersMap, isellsHistorical);
+            combineOrdersWithDetails(ordersMap, isellsByStatus);
+            // console.log("ORDERS MAP: ", ordersMap);
+
+
+            // ordersMap.get("1363760186").calculateTotals();
+            // ordersMap.get("1363813064").calculateTotals();
+
+            // console.log("Despues de la sumatoria: ", ordersMap.get("1363813064"));
 
             // Calculate the totals for each "Order" 
-            // dataMap.forEach( function(value, key){
-            //     value.calculateTotals();
-            // });
+            ordersMap.forEach( function(order, isell){
+                order.calculateTotals();
+            });
 
             printDocumentationB.disabled = false;
             printDocumentationB.classList.remove("disable");
@@ -293,16 +343,15 @@
             commentsContainer.classList.add("no-visible");
             addCommentsB.value = "Añadir comentarios";
 
-            showContent(isellsMap);
+            showContent(ordersMap);
 
             printDocumentTitle = windowServiceObject.serviceName + "_" + cutOffTimeObj.title;
 
         } catch (error) {
             console.log("ERROR:", error);
             alert(error.message);
-            return;
+            // return;
         }
-
     }
 
 
@@ -348,11 +397,54 @@
             // console.log("VALOR: ", windowServiceArrayOptions.includes(value[SERVICE_FROM]));
             if(windowServiceArrayOptions.includes(value[SERVICE_FROM])){
                 data.set(key, value);
-                console.log("VAlor de VALUE: ", value);
+                // console.log("VAlor de VALUE: ", value);
             }
         });
         return data;
     }
 
+    // *********************************************************
+    function combineOrdersWithDetails(orders, detailsMap){
+
+        // console.log("ORDERS IN: ", orders);
+
+        // let ordersAndDetails = new Map();
+        
+        // console.log("ORDERS : ", orders);
+        // console.log("MAPA DETALLES. ", detailsMap);
+
+        orders.forEach( (order, isell) => { 
+
+            // console.log("ORDER: ", detailsMap.get("1356316870"));
+            // console.log("ORDEN: ", order);
+
+            console.log("IF order.details !== undefined ", order.details === undefined, detailsMap.isellsMap.has(order[ISELL_ORDER]));
+
+            if(order.details === undefined && detailsMap.isellsMap.has(order[ISELL_ORDER])) {
+
+                let orderDetail = detailsMap.isellsMap.get(order[ISELL_ORDER]);
+                order.details = orderDetail;
+                order.source = detailsMap.type;
+
+                // console.log("Detalles order: ", order);
+
+                orders.set(isell, order);
+            }
+            
+            // order.details = detailsMap.isellsMap.get(order[ISELL_ORDER]);
+            
+            // console.log("DETALLES:  ", detailsMap.isellsMap.get( order[ISELL_ORDER] ));
+
+            
+            // ordersAndDetails.set(isell, order);
+            
+            // order.source = detailsMap.type;
+            
+        });
+        
+        // console.log("Ordenes con detalles: ", ordersAndDetails);
+        
+        // return ordersAndDetails;
 
 
+    }
