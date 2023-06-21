@@ -162,6 +162,42 @@
         }
         return typeOfStatus;
     }
+
+
+    // *********************************************************
+    function showPanelPrint(){
+        panel.style.display = "flex";
+        frameShippingDate.value = "----------";
+    }
+
+
+    // *********************************************************
+    function printDocument() {
+
+        try {
+            const shippingDateValue = validateDate(frameShippingDate);
+            
+            const shippingDate = new Date(shippingDateValue);
+            document.getElementById("transport-document-number").innerText = windowServiceObj.documentTransport_A + 
+                                                                                shippingDate.toLocaleDateString() +
+                                                                                windowServiceObj.documentTransport_B; 
+            document.getElementById("transport-document-loading-date").innerText = shippingDate.toLocaleDateString();
+            document.getElementById("transport-document-receipt-date").innerText = shippingDate.toLocaleDateString();
+    
+            panel.style.display = "none";
+    
+            comments.innerText = commentsText.value;
+            
+            // Set document title for printing purpose
+            document.title = shippingDateValue + "_" + printDocumentTitle;
+    
+            window.print();
+                
+        } catch (error) {
+            console.log("ERROR:printDocument: ", error);
+            alert(error.message);
+        }
+    }
     
 
 
@@ -238,7 +274,7 @@
         dataTableBody += "</td>";
         
         // third column: Order Status
-        dataTableBody += "<td class='";
+        dataTableBody += "<td class='hide-print ";
         dataTableBody += indicateStatusOrder(value[ORDER_STATUS]);
         dataTableBody += "'>";
         dataTableBody += value[ORDER_STATUS];
@@ -322,10 +358,11 @@
     function drawTotalsTable (totalPackages, totalWeight, totalVolume ) {
         let dataTableBody = ""; 
         dataTableBody += "<tr class='centrar totales'>";
+        dataTableBody += "<td colspan='2'>Totales</td>";
         dataTableBody += "<td class='hide-print'></td>"
         dataTableBody += "<td class='hide-print'></td>"
         dataTableBody += "<td class='hide-print'></td>"
-        dataTableBody += "<td colspan='3'>Totales</td>";
+        dataTableBody += "<td class='hide-print'></td>"
         dataTableBody += "<td>" + roundValue(totalPackages) + " bultos</td>";
         dataTableBody += "<td>" + roundValue(totalWeight) + " Kgs</td>";
         dataTableBody += "<td>" + roundValue(totalVolume) + " m<sup>3</sup></td>";

@@ -120,8 +120,8 @@
     cutOffTimeSelector.addEventListener('change', loadServiceWindowOptions);
 
     processDataB.addEventListener('click', processData);
-    // printDocumentationB.addEventListener('click', showPanelPrint);
-    // frameOkB.addEventListener('click', printDocument);
+    printDocumentationB.addEventListener('click', showPanelPrint);
+    frameOkB.addEventListener('click', printDocument);
 
     addCommentsB.addEventListener('click', () => {
         if (commentsContainer.classList.contains("no-visible")) {
