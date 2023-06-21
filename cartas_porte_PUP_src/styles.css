@@ -32,6 +32,8 @@ body {
     background-color: var(--background);
 }
 
+/* ***** PANEL ENVIO ***** */
+
 div.panel {
     /* display: flex; // activado con JS */
     display: none;
@@ -71,6 +73,8 @@ div.panel div.frame div.frame-content div p span {
     color: var(--first-color);
 }
 
+/* ***** FIN PANEL ENVIO ***** */
+
 body {
     padding: 0 0.4rem;
 }
@@ -104,10 +108,6 @@ div.container-column {
     margin-left: 1rem;
 }
 
-/* .ancho-100 {
-    width: 100%;
-} */
-
 .ancho-50 {
     width: 50%;
 }
@@ -130,6 +130,7 @@ h1 {
 
 label {
     display: inline-block;
+    font-size: large;
 }
 
 div p.version {
