@@ -294,7 +294,6 @@
         dataTableBody += "<td class='container-column hide-print'>";
         dataTableBody += "<p>";
         if(value.details !== undefined){ 
-            // dataTableBody += value.source;
             dataTableBody += (value.details.containPickArea(SELF_SERVICE) ? "X" : "" );
         }
         dataTableBody += "</p>";
@@ -314,10 +313,9 @@
             dataTableBody += NO_INFO;
             dataTableBody += "</td>";
 
-            dataTableBody += "<td class='hide-print remove' onclick='javascript:deleteRow(\"" + (value[ISELL_ORDER]) + "\")'>";
+            dataTableBody += "<td class='hide-print remove no-info' onclick='javascript:deleteRow(\"" + (value[ISELL_ORDER]) + "\")'>";
             
             // SVG image icon
-            // dataTableBody += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/></svg>';
             dataTableBody += '<svg role="img" title="edit-rows-icon">';
             dataTableBody += '<use href="#edit-rows-icon"/>'; 
             dataTableBody += '</svg>';
@@ -398,7 +396,7 @@
     }
 
     // *********************************************************
-    function allowRemoveRows() {
+    // function allowRemoveRows() {
 
-        console.log("allowRemoveRows: ", this);
-    }
+    //     console.log("allowRemoveRows: ", this);
+    // }

@@ -140,7 +140,7 @@
         panel.style.display = "none";
     });
 
-    editRows.addEventListener('click', allowRemoveRows);
+    // editRows.addEventListener('click', allowRemoveRows);
 
     window.onload = function(){
         // TODO: inicializar la pagina al cargarla 

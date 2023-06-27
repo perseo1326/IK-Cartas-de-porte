@@ -39,7 +39,6 @@ class Order {
 
     calculateTotals(){
         let order = this;
-
         // console.log("VAlor de la ORDEN (Objeto): ", this);
         if(order.details !== undefined) {
 
@@ -48,11 +47,13 @@ class Order {
 
                 area.forEach( product => {
 
-                    // console.log("Calcular Totales: ", product);
+                    console.log("Calcular Totales: ", product);
 
                     order.totalOrderWeight += (product.WEIGHT * product.ORDERED_QTY);
                     order.totalOrderVolume += (product.VOLUME_ORDERED * product.ORDERED_QTY);
                     order.totalOrderPackages += (product.PACKAGES * product.ORDERED_QTY);
+
+                    console.log("ARTICLE_NUMBER: ", product.ARTICLE_NUMBER, "totalOrderWeight: ", (product.WEIGHT * product.ORDERED_QTY), "totalOrderVolume: ", (product.VOLUME_ORDERED * product.ORDERED_QTY), "totalOrderPackages: ", (product.PACKAGES * product.ORDERED_QTY) );
 
                     // product.ORDERED_QTY;
                 }) 
@@ -148,7 +149,7 @@ class Product {
 
         // TODO: cambiar fecha manual
         // todayDate = new Date("----------");
-        todayDate = new Date("2023-06-13");
+        todayDate = new Date("2023-06-22");
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
