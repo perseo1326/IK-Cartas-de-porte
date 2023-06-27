@@ -3,7 +3,7 @@
 *, *:after, *:before {
     --background: white;
     --first-color: #0057a4;
-    --second-color: #ffdb01;
+    --second-color: rgb(255, 219, 1);
     --warning-color: rgba(255, 165, 0, 1);
     --doc-font: 8px;
     --A4-width: 21cm;
@@ -236,6 +236,36 @@ thead tr th.isell {
     width: 20%;
 }
 
+/* ***** STYLES SVG MAIN IMAGE ***** */
+div.main-svg-icon svg {
+    display: none;
+}
+
+/* ***** END STYLES SVG MAIN IMAGE ***** */
+/* ***** STYLES SVG ICON IMAGE ***** */
+
+thead tr th.icon:hover div#edit-rows svg {
+    fill: var(--background);
+}
+
+thead tr th.icon div#edit-rows svg {
+    width: 2em;
+    height: 2em;
+    vertical-align: text-bottom;
+    fill: var(--second-color);
+    cursor: pointer;
+}
+
+table tbody#data-body tr td.remove svg {
+    width: 1.2em;
+    height: 1.5em;
+    padding: 2px 2px;
+    vertical-align: text-bottom;
+    fill: var(--first-color);  
+}
+
+/* ***** END STYLES SVG ICON IMAGE ***** */
+
 table tbody#data-body tr.warning-row {
     background-color: orange !important;
 }
@@ -246,13 +276,13 @@ table tbody#data-body tr td {
     max-height: 1rem;
 }
 
+table tbody#data-body tr td.status {
+    padding: 0 0.3em;
+}
+
 table tbody#data-body tr td.total-orders {
     border: 1px solid gray;
 }
-
-table tbody#data-body tr td.isell.isell-focus {
-    /* background-color: red; */
-} 
 
 table tbody#data-body tr td.container-column {
     border: 1px solid gray;
@@ -262,9 +292,10 @@ table tbody#data-body tr:nth-last-of-type(2n+0) {
     background-color: lightgray;
 }
 
-/* table tbody#tata-body tr td.no-info { */
 table tbody#data-body td.no-info {
-    background-color: rgba(255, 0, 0, 0.5);
+    /* background-color: rgba(255, 0, 0, 0.5); */
+    background-color: var(--second-color);
+
 }
 
 table tbody#data-body tr.centrar td.status-not-started  {

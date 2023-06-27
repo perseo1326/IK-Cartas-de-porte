@@ -23,6 +23,7 @@
     const frameShippingDate = document.getElementById("frame-shipping-date");
     const frameOkB = document.getElementById("frame-ok-b");
     const frameCancelB = document.getElementById("frame-cancel-b");
+    const editRows = document.getElementById("edit-rows");
 
     const tableBody = document.getElementById("data-body");
 
@@ -139,6 +140,8 @@
         panel.style.display = "none";
     });
 
+    editRows.addEventListener('click', allowRemoveRows);
+
     window.onload = function(){
         // TODO: inicializar la pagina al cargarla 
         initializePage();
@@ -169,11 +172,6 @@
                             // process and clean info from the file
                             let arrayDataClean = readOverviewFileCSV(fileCSV.file, this.result);
                             isellsOverviewMapComplet = mappingArrayDataCSV(arrayDataClean);
-
-                            // console.log("isellsOverviewMapComplet: ", isellsOverviewMapComplet);
-    
-                            // showContent(isellsOverviewMap); 
-                            
                             showSelectionButton();
                             console.log("Carga Overview \"" + fileCSV.file.name + "\" Finalizada!");
 
@@ -181,8 +179,8 @@
                             console.log("ERROR:", error);
                             alert(error.message);
                             window.onload();
+                            // initializePage();
                             uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
-                            return;
                         }
                     };
                     break;
@@ -207,7 +205,6 @@
                     loadReportsExcel(fileStatus, uploadFileByStatus);
                     break;
             }
-
         } catch (error) {
             console.log("ERROR:openFile: ", error);
             alert(error.message);
@@ -228,7 +225,7 @@
         console.log("loadOverviewFileCSV Data CARGADO: ", overviewDataArray);
 
         overviewDataArray = filterOnlyPUP_FileCSV(overviewDataArray);
-        console.log("filterOnlyPUP_FileCSV Data: ", overviewDataArray);
+        // console.log("filterOnlyPUP_FileCSV Data: ", overviewDataArray);
 
         return overviewDataArray;
     }
@@ -256,7 +253,6 @@
                 console.log("ERROR:", error);
                 alert(error.message);
                 window.onload();
-                button.innerText = "Subir archivo 'By Order Status'...";
                 return;
             }
         };
@@ -289,9 +285,7 @@
 
             // filter by date
             // console.log("Antes filter fecha: ", isellsOverviewMapComplet.size);
-
-            let ordersMap = dataFilterByDate(isellsOverviewMapComplet, dateCutOffDate);
-
+            ordersMap = dataFilterByDate(isellsOverviewMapComplet, dateCutOffDate);
             // console.log("Despues de filtrar x fecha", ordersMap);
 
             // Data filtered by "CUT OFF TIME"
@@ -301,17 +295,8 @@
             ordersMap = dataFilterByServiceWindow(ordersMap, windowServiceObject.serviceValues );
             // console.log("filter by service window: ", ordersMap);
 
-            // console.log("isellsHistoricalMapComplet", isellsHistorical);
-
             combineOrdersWithDetails(ordersMap, isellsHistorical);
             combineOrdersWithDetails(ordersMap, isellsByStatus);
-            // console.log("ORDERS MAP: ", ordersMap);
-
-
-            // ordersMap.get("1363760186").calculateTotals();
-            // ordersMap.get("1363813064").calculateTotals();
-
-            // console.log("Despues de la sumatoria: ", ordersMap.get("1363813064"));
 
             // Calculate the totals for each "Order" 
             ordersMap.forEach( function(order, isell){
@@ -343,6 +328,8 @@
             commentsContainer.classList.add("no-visible");
             addCommentsB.value = "Añadir comentarios";
 
+            // make visible the bin icon
+            editRows.classList.remove("no-visible");
             showContent(ordersMap);
 
             printDocumentTitle = windowServiceObject.serviceName + "_" + cutOffTimeObj.title;
@@ -350,7 +337,6 @@
         } catch (error) {
             console.log("ERROR:", error);
             alert(error.message);
-            // return;
         }
     }
 
@@ -361,8 +347,6 @@
     
         let data = new Map();
         dataMap.forEach( (value, key) => {
-            // console.log("dataFilterByDate: ", value, key);
-            // console.log("** ", value.cut_off_date);
 
             if(value.cut_off_date === textDate){
                 data.set(key, value);
@@ -374,12 +358,9 @@
     // *********************************************************
     // Function to filter data by "CUT_OFF_TIME" value selected
     function dataFilterByCutOffTime(dataMap, selection) {
-        // console.log("CUT_OFF_TIME, MAPA datos: ", selection, dataMap);
 
         let data = new Map();
         dataMap.forEach( (value, key) => {    
-            // console.log("dataFilterByCutOffTime: ", value, key);
-            // console.log("**KEY**: ", value.cut_off_time);
             if(value.cut_off_time === selection){
                 data.set(key, value);
             }
@@ -390,14 +371,11 @@
     // *********************************************************
     function dataFilterByServiceWindow(dataMap, windowServiceArrayOptions) {
         
-        // console.log("Dentro de SERVICE WINDOW filter.....", windowServiceArrayOptions, dataMap);
         let data = new Map();
 
         dataMap.forEach( (value, key) => {
-            // console.log("VALOR: ", windowServiceArrayOptions.includes(value[SERVICE_FROM]));
             if(windowServiceArrayOptions.includes(value[SERVICE_FROM])){
                 data.set(key, value);
-                // console.log("VAlor de VALUE: ", value);
             }
         });
         return data;
@@ -405,46 +383,23 @@
 
     // *********************************************************
     function combineOrdersWithDetails(orders, detailsMap){
-
-        // console.log("ORDERS IN: ", orders);
-
-        // let ordersAndDetails = new Map();
         
-        // console.log("ORDERS : ", orders);
-        // console.log("MAPA DETALLES. ", detailsMap);
-
         orders.forEach( (order, isell) => { 
-
-            // console.log("ORDER: ", detailsMap.get("1356316870"));
-            // console.log("ORDEN: ", order);
-
-            console.log("IF order.details !== undefined ", order.details === undefined, detailsMap.isellsMap.has(order[ISELL_ORDER]));
-
+            
             if(order.details === undefined && detailsMap.isellsMap.has(order[ISELL_ORDER])) {
-
+                
                 let orderDetail = detailsMap.isellsMap.get(order[ISELL_ORDER]);
                 order.details = orderDetail;
                 order.source = detailsMap.type;
-
-                // console.log("Detalles order: ", order);
-
+                
                 orders.set(isell, order);
             }
-            
-            // order.details = detailsMap.isellsMap.get(order[ISELL_ORDER]);
-            
-            // console.log("DETALLES:  ", detailsMap.isellsMap.get( order[ISELL_ORDER] ));
-
-            
-            // ordersAndDetails.set(isell, order);
-            
-            // order.source = detailsMap.type;
-            
         });
-        
-        // console.log("Ordenes con detalles: ", ordersAndDetails);
-        
-        // return ordersAndDetails;
+    }
+    
+    // *********************************************************
+    // function to remove a specific ISELL from the table to avoid print it
+    function removeOrder( isell ){
 
-
+        ordersMap.delete(isell);
     }

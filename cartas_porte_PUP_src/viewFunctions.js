@@ -274,7 +274,7 @@
         dataTableBody += "</td>";
         
         // third column: Order Status
-        dataTableBody += "<td class='hide-print ";
+        dataTableBody += "<td class='hide-print status ";
         dataTableBody += indicateStatusOrder(value[ORDER_STATUS]);
         dataTableBody += "'>";
         dataTableBody += value[ORDER_STATUS];
@@ -313,6 +313,17 @@
             dataTableBody += "<td colspan='3' class='no-info'>";
             dataTableBody += NO_INFO;
             dataTableBody += "</td>";
+
+            dataTableBody += "<td class='hide-print remove' onclick='javascript:deleteRow(\"" + (value[ISELL_ORDER]) + "\")'>";
+            
+            // SVG image icon
+            // dataTableBody += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/></svg>';
+            dataTableBody += '<svg role="img" title="edit-rows-icon">';
+            dataTableBody += '<use href="#edit-rows-icon"/>'; 
+            dataTableBody += '</svg>';
+    
+            dataTableBody += "</td>";
+    
         } else {
             dataTableBody += "<td>";
             dataTableBody += roundValue(value.totalOrderPackages);
@@ -323,7 +334,11 @@
             dataTableBody += "<td>";
             dataTableBody += roundValue(value.totalOrderVolume );
             dataTableBody += "</td>";
+            dataTableBody += "<td class='hide-print'>";
+            dataTableBody += "</td>";
         }
+
+        dataTableBody += "</tr>";
 
         return dataTableBody;
     }
@@ -347,6 +362,9 @@
         dataTableBody += "<td colspan='3'>";
         dataTableBody += totalMarket + totalSelfService + totalFullInternal;
         dataTableBody += "</td>";
+        dataTableBody += "<td class='hide-print'>"
+        dataTableBody += "";
+        dataTableBody += "</td>";
         dataTableBody += "</tr>";
 
         return dataTableBody;
@@ -366,6 +384,21 @@
         dataTableBody += "<td>" + roundValue(totalPackages) + " bultos</td>";
         dataTableBody += "<td>" + roundValue(totalWeight) + " Kgs</td>";
         dataTableBody += "<td>" + roundValue(totalVolume) + " m<sup>3</sup></td>";
+        dataTableBody += "<td class='hide-print'></td>"
+        dataTableBody += "</tr>";
 
         return dataTableBody;
+    }
+
+    // *********************************************************
+    function deleteRow( row ) {
+        // console.log("Fila a eliminar: ", row);
+        removeOrder(row);
+        showContent(ordersMap);
+    }
+
+    // *********************************************************
+    function allowRemoveRows() {
+
+        console.log("allowRemoveRows: ", this);
     }
