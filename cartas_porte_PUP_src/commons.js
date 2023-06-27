@@ -107,8 +107,6 @@ class Product {
     }
 
     // *********************************************************
-    // *********************************************************
-    // *********************************************************
     // Function to validate a given date
     function validateDate(inputDate) {
         const date = inputDate.valueAsDate;
@@ -127,18 +125,39 @@ class Product {
         console.log("Inicializando los valores por defecto de la página.");
         document.title = printDocumentTitle = "PUP's Cartas de Porte V" + VERSION;
 
-        fileReader = new FileReader();
-        // document.getElementById("upload-file-b").innerText = "Subir archivo...";
-        contentOriginal = [];
+        // data structure for containing all the info combined
+        // complet, filtered and clean info for 'Overview.csv'
+        isellsOverviewMapComplet = new Map();
+        
+        // complet, filtered and clean info for 'Overview.csv'
+        isellsHistorical = {
+            type : REPORT_HISTORICAL,
+            isellsMap : new Map()
+        };
+
+        // complet, filtered and clean info for 'By Status.xlsx'
+        isellsByStatus = { 
+            type : REPORT_BY_STATUS, 
+            isellsMap : new Map()
+        };
+
+        // will contain the orders (isells) filtered by CUT OFF DATE, CUT OFF TIME AND SERVICE WINDOW
+        ordersMap = new Map();
+
         windowServiceObj = {};
+
         // TODO: cambiar fecha manual
         // todayDate = new Date("----------");
         todayDate = new Date("2023-06-13");
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
-        showContent(contentOriginal);
-        
+        showContent([]);
+
+        uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
+        uploadFileHistorical.innerText = "Subir archivo 'Historical'...";
+        uploadFileByStatus.innerText = "Subir archivo 'By Order Status'...";
+
         selectedDate.disabled = true;
         selectedDate.classList.add("disable");
         
