@@ -27,13 +27,15 @@ const configData =
         windowService : [ 
             { 
                 serviceName : "Primera Furgo", 
-                serviceCode : "FURGO_ONE",
+                serviceNameShort : "Dg F1", 
+                serviceCode : "FURGO_ONE", 
                 documentTransport_A : "406PUPT-",
                 documentTransport_B : "(Furgo 1)",        
                 serviceValues : ["08:00:00-10:00:00", "10:00:00-13:00:00"] 
             }, 
             { 
                 serviceName : "Segunda Furgo", 
+                serviceNameShort : "Dg F2", 
                 serviceCode : "FURGO_TWO",
                 documentTransport_A : "406PUPT-",
                 documentTransport_B : "(Furgo 2)",        
@@ -41,6 +43,7 @@ const configData =
             }, 
             { 
                 serviceName : "Tercera Furgo", 
+                serviceNameShort : "Dg F3", 
                 serviceCode : "FURGO_THREE",
                 documentTransport_A : "406PUPT-",
                 documentTransport_B : "(Furgo 3)",        
@@ -74,6 +77,7 @@ const configData =
         windowService : [ 
             { 
                 serviceName : "Primera Furgo",
+                serviceNameShort : "SP1", 
                 serviceCode : "FURGO_ONE",
                 documentTransport_A : "406SP ",
                 documentTransport_B : " SANT PERE (FURGO 1)",        
@@ -81,6 +85,7 @@ const configData =
             }, 
             { 
                 serviceName : "Segunda Furgo",
+                serviceNameShort : "SP2", 
                 serviceCode : "FURGO_TWO",
                 documentTransport_A : "406SP ",
                 documentTransport_B : " SANT PERE (FURGO 2)",        
@@ -113,7 +118,8 @@ const configData =
         ],
         windowService : [ 
             { 
-                serviceName : "Primera Furgo", 
+                serviceName : "Primera Furgo",
+                serviceNameShort : "T1", 
                 serviceCode : "FURGO_ONE",
                 documentTransport_A : "406TGN ",
                 documentTransport_B : " FURGO 1",        
@@ -121,6 +127,7 @@ const configData =
             }, 
             { 
                 serviceName : "Segunda Furgo", 
+                serviceNameShort : "T2", 
                 serviceCode : "FURGO_TWO",
                 documentTransport_A : "406TGN ",
                 documentTransport_B : " FURGO 2",        
