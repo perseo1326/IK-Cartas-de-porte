@@ -74,6 +74,36 @@ div.panel div.frame div.frame-content div p span {
 }
 
 /* ***** FIN PANEL ENVIO ***** */
+/* ***** PANEL PLEASE WAIT  ***** */
+
+    div#wait-panel {
+        background-color: rgba(190, 190, 190, 0.6);
+        display: none;
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+    }
+
+    div#wait-panel div.wait-text {
+        font-size: calc( var(--doc-font) * 4);
+        font-weight: bolder;
+        color : var(--first-color);
+        background-color: var(--second-color);
+        text-align: center;
+        padding: 1em;
+        /* box-shadow: 0.5em 0.5em 0.5em ; */
+        border: 2px solid var(--first-color);
+        border-radius: 6px;
+    }
+    
+
+/* ***** END PANEL PLEASE WAIT  ***** */
 
 body {
     padding: 0 0.4rem;

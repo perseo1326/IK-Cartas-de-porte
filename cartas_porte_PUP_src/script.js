@@ -27,6 +27,8 @@
 
     const tableBody = document.getElementById("data-body");
 
+    const waitPanel = document.getElementById("wait-panel");
+
 
     
 
@@ -230,12 +232,19 @@
 
                 // case file 'overview.csv'
                 case 'file-input-overview':
+                    waitPanel.style.display = "flex";
+
                     let fileCSV = new TextFileOpen(file);
                     fileDate = new Date(file.lastModified);
                     uploadFileOverviewButton.innerText = fileCSV.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
                     // Load data from file
                     let fileReaderOverview = new FileReader();
+
+                    fileReaderOverview.onloadend = (evento) => {
+                        waitPanel.style.display = "none";
+                    };
+
                     fileReaderOverview.readAsText(fileCSV.file, "windows-1252");
                     fileReaderOverview.onload = function() {
                         try {
@@ -257,6 +266,8 @@
 
                 // case file 'Historical'
                 case 'file-input-historical':
+                    waitPanel.style.display = "flex";
+
                     let fileHistorical = new ExcelFileOpen(file);
                     fileDate = new Date(file.lastModified);
 
@@ -266,7 +277,9 @@
                     break;
 
                 // case file 'By Order Status'
-                case 'file-input-by-order-status':            
+                case 'file-input-by-order-status':   
+                    waitPanel.style.display = "flex";
+
                     let fileStatus = new ExcelFileOpen(file);
                     fileDate = new Date(file.lastModified);
 
@@ -304,6 +317,11 @@
     function loadReportsExcel (excelFile, button){
 
         let fileReader = new FileReader();
+
+        fileReader.onloadend = (event) => { 
+            waitPanel.style.display = "none";
+        };
+
         fileReader.readAsArrayBuffer(excelFile.file);
         fileReader.onload =  function(){
             try {
