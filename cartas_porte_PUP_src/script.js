@@ -69,6 +69,7 @@
     const WAREHOUSE = "FULLSERVE_INTERNAL";
 
     const NO_INFO = "No Info";
+    const ISELL_EMPTY  = "-";
     // Order Status variables
         const STATUS_NOT_STARTED     = "No empezado";
         const STATUS_STARTED         = "Empezado";

@@ -228,10 +228,20 @@
         });
         
         // // fill with empty rows
-        // let emptyOrder = new Order("-", "-", "-", "-");
-        // for(let i = data.size + 1; i < 36; i++ ) {
-        //     dataTableBody += drawRow(emptyOrder, i);
-        // }
+        let emptyOrder = { [ISELL_ORDER]    :  ISELL_EMPTY,
+                            [ORDER_STATUS]  : "",
+                            [CUT_OFF_DATE]  : "",
+                            [CUT_OFF_TIME]  : "",
+                            source          : "Vacío",
+                            details         : [],
+                            totalOrderPackages  : 0,
+                            totalOrderVolume    : 0,
+                            totalOrderWeight    : 0
+                        };
+
+        for(let i = data.size + 1; i < 36; i++ ) {
+            dataTableBody += drawRow(emptyOrder, i);
+        }
 
         // // get the totals for "Packages", "Kgs" and "Volume"
         // // get total orders by sales method (Markethall, self service, full internal)
@@ -285,7 +295,7 @@
         // ********
         dataTableBody += "<td class='container-column hide-print'>";
         dataTableBody += "<p>";
-        if(value.details !== undefined){ 
+        if(value.details !== undefined && value[ISELL_ORDER] !== ISELL_EMPTY ){ 
             dataTableBody += value.details.containPickArea(MARKET_HALL) ? "X" : "";
         }
         dataTableBody += "</p>";
@@ -293,7 +303,7 @@
 
         dataTableBody += "<td class='container-column hide-print'>";
         dataTableBody += "<p>";
-        if(value.details !== undefined){ 
+        if(value.details !== undefined && value[ISELL_ORDER] !== ISELL_EMPTY){ 
             dataTableBody += (value.details.containPickArea(SELF_SERVICE) ? "X" : "" );
         }
         dataTableBody += "</p>";
@@ -301,7 +311,7 @@
 
         dataTableBody += "<td class='container-column hide-print'>";
         dataTableBody += "<p>";
-        if(value.details !== undefined){ 
+        if(value.details !== undefined && value[ISELL_ORDER] !== ISELL_EMPTY){ 
             dataTableBody += value.details.containPickArea(WAREHOUSE) ? "X" : "";
         }
         dataTableBody += "</p>";
