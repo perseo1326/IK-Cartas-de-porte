@@ -232,7 +232,7 @@
 
                 // case file 'overview.csv'
                 case 'file-input-overview':
-                    waitPanel.style.display = "flex";
+                    waitPanel.style.display = "block";
 
                     let fileCSV = new TextFileOpen(file);
                     fileDate = new Date(file.lastModified);
@@ -266,7 +266,7 @@
 
                 // case file 'Historical'
                 case 'file-input-historical':
-                    waitPanel.style.display = "flex";
+                    waitPanel.style.display = "block";
 
                     let fileHistorical = new ExcelFileOpen(file);
                     fileDate = new Date(file.lastModified);
@@ -278,7 +278,7 @@
 
                 // case file 'By Order Status'
                 case 'file-input-by-order-status':   
-                    waitPanel.style.display = "flex";
+                    waitPanel.style.display = "block";
 
                     let fileStatus = new ExcelFileOpen(file);
                     fileDate = new Date(file.lastModified);
