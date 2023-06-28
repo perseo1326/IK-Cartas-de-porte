@@ -4,7 +4,7 @@ const configData =
     {
         pupId : "DIAGONAL",
         title : "Diagonal",
-        cutOffTime : "20:15:00",
+        cutOffTime : "20:15",
         senderAddress : [ 
             "IKEA Gran Via 406", 
             "Gran Via de l'Hospitalet 115-133", 
