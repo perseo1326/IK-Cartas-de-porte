@@ -358,11 +358,23 @@ table tbody#transport-document-info tr td.document-title {
     border-right: 1px solid transparent;
 }
 
-table tbody#transport-document-info tr td.page-number {
-    font-size: var(--doc-font);
+table tbody#transport-document-info tr td div.page-number {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    /* justify-content: space-between; */
+    align-items: center;
+    border: none;
+}
+
+table tbody#transport-document-info tr td div.page-number div.service-name-short {
+    margin-right: 2em;
+}
+
+table tbody#transport-document-info tr td div.page-number div.page {
     text-align: right;
-    padding: 0 0.5rem;
-    vertical-align: top;
+    align-self: flex-start;
+    font-size: var(--doc-font);
 }
 
 table tbody#transport-document-info tr td h3 {
@@ -376,7 +388,7 @@ table tbody#transport-document-info tr td {
 }
 
 table tbody#transport-document-info tr td.value {
-    font-size: calc( var(--doc-font) + 4px);
+    font-size: calc( var(--doc-font) * 2)px;
     text-align: center;
 }
 

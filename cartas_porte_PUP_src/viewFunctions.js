@@ -167,7 +167,7 @@
     // *********************************************************
     function showPanelPrint(){
         panel.style.display = "flex";
-        frameShippingDate.value = "----------";
+        // frameShippingDate.value = "----------";
     }
 
 
@@ -178,6 +178,7 @@
             const shippingDateValue = validateDate(frameShippingDate);
             
             const shippingDate = new Date(shippingDateValue);
+            document.getElementById("service-name-short").innerText = windowServiceObj.serviceNameShort;
             document.getElementById("transport-document-number").innerText = windowServiceObj.documentTransport_A + 
                                                                                 shippingDate.toLocaleDateString() +
                                                                                 windowServiceObj.documentTransport_B; 

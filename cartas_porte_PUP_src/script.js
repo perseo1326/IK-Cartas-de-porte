@@ -333,7 +333,7 @@
             editRows.classList.remove("no-visible");
             showContent(ordersMap);
 
-            printDocumentTitle = windowServiceObject.serviceName + "_" + cutOffTimeObj.title;
+            printDocumentTitle = windowServiceObject.serviceNameShort + "_" + cutOffTimeObj.title;
 
         } catch (error) {
             console.log("ERROR:", error);

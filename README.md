@@ -7,7 +7,12 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ### Versión 3.0:
 
-* Debido a la inconsistencia del reporte tomado como fuente de datos para el análisis de la información (historical report), se deben hacer cambios en las fuentes de datos, lo cual desencadena un cambio radical en la lógica de negocio planteada. Por lo tanto ahora como fuente de datos se necesitarán tres informes los cuáles se deben combinar para obtener una información confiable. 
+* Debido a la inconsistencia del reporte tomado como fuente de datos para el análisis de la información, se hicieron cambios en las fuentes de datos, lo cual desencadena un cambio radical en la lógica de negocio planteada. Por lo tanto ahora como fuente de datos se necesitará un informe base y uno o dos complementarios que al combinarlos con el informe base entregarán el detalle de cada linea de información.
+* Adición de una columna indicando el estado actual del pedido.
+* Posible eliminación de filas que no presenten información para evitar ser impresas en el documento final.
+* Mejora visual en la vista de impresión para reconocer más facilmente cada uno de los documentos. 
+* Adición de un nuevo campo ("serviceNameShort") al archivo de configuración de los destinos o flujos de mercancia.
+* Ajuste al nombre propuesto al guardar el documento en formato PDF.
 
 ### Versión 2.1.1:
 

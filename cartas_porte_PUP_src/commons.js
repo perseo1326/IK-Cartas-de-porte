@@ -155,6 +155,9 @@ class Product {
         showProcessValues(null, "", "", "", "");
         showContent([]);
 
+        frameShippingDate.value = "----------";
+
+
         uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
         uploadFileHistorical.innerText = "Subir archivo 'Historical'...";
         uploadFileByStatus.innerText = "Subir archivo 'By Order Status'...";
