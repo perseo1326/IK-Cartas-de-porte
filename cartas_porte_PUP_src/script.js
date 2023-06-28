@@ -29,7 +29,32 @@
 
 
     
+
     // *********************************************************
+
+    // location for config Pick Up Points file
+    // const CONFIG_PUPS_DATA_PATH = "./cartas_porte_PUP_src/config_data_pups.json";
+    const CONFIG_PUPS_DATA_PATH = "http://servidor.com/IK-Cartas-de-porte/cartas_porte_PUP_src/config_data_pups.json";
+    // const configData = getJsonConfig(CONFIG_PUPS_DATA_PATH);
+    // let configData = [];
+
+    // let configData = new Promise(function(resolve, reject){ 
+    //                                                         const data = getJsonConfig(CONFIG_PUPS_DATA_PATH);
+    //                                                         console.log("DATA IN PROMISE: ", data);
+    //                                                         if(data.status === 200 ) {
+    //                                                             resolve(data);
+    //                                                         } else {
+    //                                                             reject(data);
+    //                                                         }
+    //                                                     });
+
+    // configData.then(function(response){
+    //     console.log("REPONSE THEN: ", response);
+    //     configData = response;
+    // })
+    // .catch(function(error){
+    //     console.log("ERROR CATCH: ", error);
+    // });
 
     const VERSION = "3.0";
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -112,13 +137,13 @@
     let printDocumentTitle = "";
 
 
+
     // *********************************************************
     // Event Listeners 
     fileSelectorOverview.addEventListener('change', openFile); 
     fileSelectorByStatus.addEventListener('change', openFile);
     fileSelectorHistorical.addEventListener('change', openFile);
 
-    // selectedDate.addEventListener('change', cleanFiles);
     cutOffTimeSelector.addEventListener('change', loadServiceWindowOptions);
 
     processDataB.addEventListener('click', processData);
@@ -134,21 +159,65 @@
             addCommentsB.value = "Añadir comentarios";            
         }
         commentsText.focus();
-        // console.log("elemento: ", commentsText);
     });
 
     frameCancelB.addEventListener('click', () => { 
         panel.style.display = "none";
     });
 
-    // editRows.addEventListener('click', allowRemoveRows);
 
     window.onload = function(){
         // TODO: inicializar la pagina al cargarla 
-        initializePage();
-        console.log("Versión: ", VERSION);
-        document.getElementById("version-titulo").innerText = "(v" + VERSION + ")";
-        document.getElementById("version-footer").innerText = "Versión " + VERSION + " - (https://github.com/perseo1326)";
+
+        try {
+            // configData = getJsonConfig(CONFIG_PUPS_DATA_PATH);
+            // console.log("ONLOAD: configData: ", typeof(configData), configData);
+            
+            // configData.then(function(response){
+            //     console.log("RESPONSE: ", response);
+            // })
+            // .catch(function(error)  {
+            //     console.log("Error fuera de la funcion: ", error);
+            //     alert("Error fuera de la funcion: " + error.message);
+            // })
+
+            console.log("Versión: ", VERSION);
+            document.getElementById("version-titulo").innerText = "(v" + VERSION + ")";
+            document.getElementById("version-footer").innerText = "Versión " + VERSION + " - (https://github.com/perseo1326)";
+            initializePage();
+        } catch (error) {
+            console.log("ERROR ONLOAD: ", error);
+            alert("Error al cargar la configuracion, pruebe actualizar la página de nuevo.");
+        }
+        
+    }
+
+    // *********************************************************
+    // function to load config info from a JSON file via http
+    async function getJsonConfig( pathFile ) {
+        
+
+        const init = { mode: "no-cors", headers: { 'Content-Type': 'application/json' } };
+        let data = undefined;
+
+        let file = await fetch(pathFile, init);
+        console.log("FETCH: file: ", file);
+        
+        if(file.status !== 200 ) {
+            throw new Error("Http Status Error Code: " + file.status);
+        }
+        data = await file.json();
+        // let data = await file.text();
+        return data;
+
+        // fetch(pathFile, init)
+        //     .then(function(response) {
+        //         console.log("FETCH: response: ", response);
+        //     })
+        //     .catch(function(error){
+        //         console.log("Error: THEN: ", error);
+        //         throw new Error(error.message);
+        //     });
     }
 
     // *********************************************************

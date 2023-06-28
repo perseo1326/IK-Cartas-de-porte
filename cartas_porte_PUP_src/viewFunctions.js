@@ -19,15 +19,19 @@
         cleanChildNodes(cutOffTimeSelector);
         loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
 
+        console.log("Valor de CONFIGDATA: ", typeof(configData));
         if(typeof(configData) === "undefined") {
-            console.log("No fue posible cargar la configuración inicial.");
-            alert("No fue posible cargar la configuración inicial.");
-            // TODO: retornar un obj Eror ?
+            console.log("ERROR:loadConfigurationPUP:Fallo al cargar la configuración inicial de los PUP.");
+            throw new Error("Fallo al cargar la configuración inicial.");
+
+        } 
+        else {
+            configData.forEach( (destination) => {
+                    loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
+                } );
         }
 
-        configData.forEach( (destination) => {
-            loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
-        } );
+        console.log("loadConfigurationPUP: configData: ", configData);
     }
 
 
@@ -406,8 +410,3 @@
         showContent(ordersMap);
     }
 
-    // *********************************************************
-    // function allowRemoveRows() {
-
-    //     console.log("allowRemoveRows: ", this);
-    // }

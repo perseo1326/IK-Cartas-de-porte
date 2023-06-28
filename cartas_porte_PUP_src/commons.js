@@ -1,5 +1,4 @@
 
-
 class Order {
 
     constructor( rowData ){
@@ -62,10 +61,10 @@ class Order {
     }
 }
 
+
 class Product {
 
     constructor(excelRow){
-
         this[ARTICLE_NAME]      = excelRow[ARTICLE_NAME].trim();
         this[ARTICLE_NUMBER]    = excelRow[ARTICLE_NUMBER].trim();
         this[PACKAGES]          = Number (excelRow[PACKAGES].trim());
@@ -81,6 +80,7 @@ class Product {
     // *********************************************************
     // *********************************************************
     // *********************************************************
+
     class OrderDetail {
         constructor(isell) {
 
@@ -107,6 +107,7 @@ class Product {
         }
     }
 
+
     // *********************************************************
     // Function to validate a given date
     function validateDate(inputDate) {
@@ -119,10 +120,11 @@ class Product {
         return inputDate.value;
     }
 
+
     // *********************************************************
     // Function to initialize the variables and environment 
     function initializePage() {
-        console.clear();
+        // console.clear();
         console.log("Inicializando los valores por defecto de la página.");
         document.title = printDocumentTitle = "PUP's Cartas de Porte V" + VERSION;
 
@@ -148,7 +150,6 @@ class Product {
         windowServiceObj = {};
 
         // TODO: cambiar fecha manual
-        // todayDate = new Date("----------");
         todayDate = new Date("2023-06-22");
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
@@ -184,5 +185,10 @@ class Product {
 
         loadConfigurationPUP();
     }
+
+
+
+
+
 
 
