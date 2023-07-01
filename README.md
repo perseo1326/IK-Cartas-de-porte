@@ -9,10 +9,11 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 * Debido a la inconsistencia del reporte tomado como fuente de datos para el análisis de la información, se hicieron cambios en las fuentes de datos, lo cual desencadena un cambio radical en la lógica de negocio planteada. Por lo tanto ahora como fuente de datos se necesitará un informe base y uno o dos complementarios que al combinarlos con el informe base entregarán el detalle de cada linea de información.
 * Adición de una columna indicando el estado actual del pedido.
-* Posible eliminación de filas que no presenten información para evitar ser impresas en el documento final.
+* Adición de una columna para permitir la eliminación de filas de ordenes que no han sido terminadas y por consiguiente no serán enviadas a su destino.
 * Mejora visual en la vista de impresión para reconocer más facilmente cada uno de los documentos. 
 * Adición de un nuevo campo ("serviceNameShort") al archivo de configuración de los destinos o flujos de mercancia.
-* Ajuste al nombre propuesto al guardar el documento en formato PDF.
+* Ajuste al nombre propuesto al guardar el documento en formato PDF basado en el nuevo campo 'serviceNameShort'.
+* Correción del cálculo de los pesos, volúmenes, paquetes y sus totales.
 
 ### Versión 2.1.1:
 

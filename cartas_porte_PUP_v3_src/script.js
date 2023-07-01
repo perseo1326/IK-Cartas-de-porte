@@ -36,7 +36,7 @@
 
     // location for config Pick Up Points file
     // const CONFIG_PUPS_DATA_PATH = "./cartas_porte_PUP_src/config_data_pups.json";
-    const CONFIG_PUPS_DATA_PATH = "http://servidor.com/IK-Cartas-de-porte/cartas_porte_PUP_src/config_data_pups.json";
+    // const CONFIG_PUPS_DATA_PATH = "http://servidor.com/IK-Cartas-de-porte/cartas_porte_PUP_src/config_data_pups.json";
     // const configData = getJsonConfig(CONFIG_PUPS_DATA_PATH);
     // let configData = [];
 
@@ -139,7 +139,6 @@
     let printDocumentTitle = "";
 
 
-
     // *********************************************************
     // Event Listeners 
     fileSelectorOverview.addEventListener('change', openFile); 
@@ -233,6 +232,7 @@
                 // case file 'overview.csv'
                 case 'file-input-overview':
                     waitPanel.style.display = "block";
+                    initializePage();
 
                     let fileCSV = new TextFileOpen(file);
                     fileDate = new Date(file.lastModified);
@@ -417,7 +417,6 @@
             addCommentsB.value = "Añadir comentarios";
 
             // make visible the bin icon
-            editRows.classList.remove("no-visible");
             showContent(ordersMap);
 
             printDocumentTitle = windowServiceObject.serviceNameShort + "_" + cutOffTimeObj.title;

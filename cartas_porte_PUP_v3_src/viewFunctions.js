@@ -13,8 +13,8 @@
 
 
     // *********************************************************
+    // Function to load the destination ("CUT_OFF_TIME") options into the drop down list selector 
     function loadConfigurationPUP() {
-        // Function to load the destination ("CUT_OFF_TIME") options into the drop down list selector 
 
         cleanChildNodes(cutOffTimeSelector);
         loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
@@ -30,8 +30,6 @@
                     loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
                 } );
         }
-
-        // console.log("loadConfigurationPUP: configData: ", configData);
     }
 
 
@@ -171,7 +169,6 @@
     // *********************************************************
     function showPanelPrint(){
         panel.style.display = "flex";
-        // frameShippingDate.value = "----------";
     }
 
 
@@ -326,17 +323,7 @@
         if(value.details === undefined) {
             dataTableBody += "<td colspan='3' class='no-info'>";
             dataTableBody += NO_INFO;
-            dataTableBody += "</td>";
-
-            dataTableBody += "<td class='hide-print remove no-info' onclick='javascript:deleteRow(\"" + (value[ISELL_ORDER]) + "\")'>";
-            
-            // SVG image icon
-            dataTableBody += '<svg role="img" title="edit-rows-icon">';
-            dataTableBody += '<use href="#edit-rows-icon"/>'; 
-            dataTableBody += '</svg>';
-    
-            dataTableBody += "</td>";
-    
+            dataTableBody += "</td>";    
         } else {
             dataTableBody += "<td>";
             dataTableBody += roundValue(value.totalOrderPackages);
@@ -347,6 +334,17 @@
             dataTableBody += "<td>";
             dataTableBody += roundValue(value.totalOrderVolume );
             dataTableBody += "</td>";
+        }
+
+        // COLUMN: Delete row
+        if (value[ORDER_STATUS] !== STATUS_COMPLETED && value[ORDER_STATUS] !== "") {
+            dataTableBody += "<td class='hide-print remove no-info' onclick='javascript:deleteRow(\"" + (value[ISELL_ORDER]) + "\")'>";
+                        // SVG image icon
+                        dataTableBody += '<svg role="img" title="Eliminar Fila">';
+                        dataTableBody += '<use href="#trash-can-icon"/>'; 
+                        dataTableBody += '</svg>';
+            dataTableBody += "</td>";
+        } else {
             dataTableBody += "<td class='hide-print'>";
             dataTableBody += "</td>";
         }
@@ -406,7 +404,9 @@
     // *********************************************************
     function deleteRow( row ) {
         // console.log("Fila a eliminar: ", row);
-        removeOrder(row);
-        showContent(ordersMap);
+        if(confirm("Esta seguro de eliminar la fila con ISELL: " + row + " ?")){
+            removeOrder(row);
+            showContent(ordersMap);
+        }
     }
 

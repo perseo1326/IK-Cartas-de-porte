@@ -5,9 +5,7 @@ class Order {
 
         try {
             this[ISELL_ORDER]       = rowData[ISELL_ORDER];
-            // this[ORDER_TYPE]        = rowData[ORDER_TYPE];
             this[ORDER_STATUS]      = rowData[ORDER_STATUS];
-            // this[CUT_OFF_DATE_TIME] = rowData[CUT_OFF_DATE_TIME];
             this[CUT_OFF_DATE]      = rowData[CUT_OFF_DATE];
             this[CUT_OFF_TIME]      = rowData[CUT_OFF_TIME];
             this.source             = undefined;
@@ -51,15 +49,13 @@ class Order {
 
                 area.forEach( product => {
 
-                    console.log("Calcular Totales: ", product);
+                    // console.log("Calcular Totales: ", product);
 
                     order.totalOrderWeight += (product[WEIGHT] * product[ORDERED_QTY]);
                     order.totalOrderVolume += (product[VOLUME_ORDERED] * product[ORDERED_QTY]);
                     order.totalOrderPackages += (product[ORDERED_QTY]);
 
-                    console.log("ARTICLE_NUMBER: ", product[ARTICLE_NUMBER], "totalOrderWeight: ", (product[WEIGHT] * product[ORDERED_QTY]), "totalOrderVolume: ", (product[VOLUME_ORDERED] * product[ORDERED_QTY]), "totalOrderPackages: ", (product[ARTICLES] * product[ORDERED_QTY]) );
-
-                    // product.ORDERED_QTY;
+                    // console.log("ARTICLE_NUMBER: ", product[ARTICLE_NUMBER], "totalOrderWeight: ", (product[WEIGHT] * product[ORDERED_QTY]), "totalOrderVolume: ", (product[VOLUME_ORDERED] * product[ORDERED_QTY]), "totalOrderPackages: ", (product[ARTICLES] * product[ORDERED_QTY]) );
                 }) 
             });
         }
@@ -78,7 +74,6 @@ class Product {
         this[ORDERED_QTY]       = Number (excelRow[ORDERED_QTY].trim());
         
         this[ARTICLES]          = Number (excelRow[ARTICLES].trim());
-        // this.orderedQty       = Number (orderedQty.trim().replace(',', '.'));
     }
 }
 
@@ -129,7 +124,7 @@ class Product {
     // *********************************************************
     // Function to initialize the variables and environment 
     function initializePage() {
-        // console.clear();
+        console.clear();
         console.log("Inicializando los valores por defecto de la página.");
         document.title = printDocumentTitle = "PUP's Cartas de Porte V" + VERSION;
 
