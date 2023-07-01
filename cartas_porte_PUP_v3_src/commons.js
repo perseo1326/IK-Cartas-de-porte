@@ -38,6 +38,11 @@ class Order {
 
     calculateTotals(){
         let order = this;
+        // init variables
+        order.totalOrderWeight = 0;
+        order.totalOrderVolume = 0;
+        order.totalOrderPackages = 0;
+
         // console.log("VAlor de la ORDEN (Objeto): ", this);
         if(order.details !== undefined) {
 
@@ -48,11 +53,11 @@ class Order {
 
                     console.log("Calcular Totales: ", product);
 
-                    order.totalOrderWeight += (product.WEIGHT * product.ORDERED_QTY);
-                    order.totalOrderVolume += (product.VOLUME_ORDERED * product.ORDERED_QTY);
-                    order.totalOrderPackages += (product.PACKAGES * product.ORDERED_QTY);
+                    order.totalOrderWeight += (product[WEIGHT] * product[ORDERED_QTY]);
+                    order.totalOrderVolume += (product[VOLUME_ORDERED] * product[ORDERED_QTY]);
+                    order.totalOrderPackages += (product[ORDERED_QTY]);
 
-                    console.log("ARTICLE_NUMBER: ", product.ARTICLE_NUMBER, "totalOrderWeight: ", (product.WEIGHT * product.ORDERED_QTY), "totalOrderVolume: ", (product.VOLUME_ORDERED * product.ORDERED_QTY), "totalOrderPackages: ", (product.PACKAGES * product.ORDERED_QTY) );
+                    console.log("ARTICLE_NUMBER: ", product[ARTICLE_NUMBER], "totalOrderWeight: ", (product[WEIGHT] * product[ORDERED_QTY]), "totalOrderVolume: ", (product[VOLUME_ORDERED] * product[ORDERED_QTY]), "totalOrderPackages: ", (product[ARTICLES] * product[ORDERED_QTY]) );
 
                     // product.ORDERED_QTY;
                 }) 
@@ -72,7 +77,7 @@ class Product {
         this[VOLUME_ORDERED]    = Number (excelRow[VOLUME_ORDERED].trim());
         this[ORDERED_QTY]       = Number (excelRow[ORDERED_QTY].trim());
         
-        // this[ARTICLES]          = excelRow[ARTICLES].trim();
+        this[ARTICLES]          = Number (excelRow[ARTICLES].trim());
         // this.orderedQty       = Number (orderedQty.trim().replace(',', '.'));
     }
 }

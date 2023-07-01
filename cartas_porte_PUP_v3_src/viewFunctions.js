@@ -19,7 +19,7 @@
         cleanChildNodes(cutOffTimeSelector);
         loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
 
-        console.log("Valor de CONFIGDATA: ", typeof(configData));
+        console.log("Valor de CONFIGDATA: ", typeof(configData), configData);
         if(typeof(configData) === "undefined") {
             console.log("ERROR:loadConfigurationPUP:Fallo al cargar la configuración inicial de los PUP.");
             throw new Error("Fallo al cargar la configuración inicial.");
@@ -31,7 +31,7 @@
                 } );
         }
 
-        console.log("loadConfigurationPUP: configData: ", configData);
+        // console.log("loadConfigurationPUP: configData: ", configData);
     }
 
 
