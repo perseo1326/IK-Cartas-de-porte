@@ -14,6 +14,7 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 * Adición de un nuevo campo ("serviceNameShort") al archivo de configuración de los destinos o flujos de mercancia.
 * Ajuste al nombre propuesto al guardar el documento en formato PDF basado en el nuevo campo 'serviceNameShort'.
 * Correción del cálculo de los pesos, volúmenes, paquetes y sus totales.
+* Resuelto problema del icono del cubo de basura para eliminar las filas no terminadas.
 
 ### Versión 2.1.1:
 
