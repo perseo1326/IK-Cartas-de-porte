@@ -11,7 +11,6 @@ class ExcelFileOpen {
         this.file = pointerFile;
         this.contentFile = "";
     }
-    
 }
 
 
@@ -19,8 +18,6 @@ class ExcelFileOpen {
     // Verify the valid structure of data readed from the file based on the headers of info
     function validateContentExcel(dataRows) {
         
-        // console.log("VAlidate Content, arrayRow: ", dataRows);
-
         if(dataRows === undefined || dataRows.length <= 0 ) {
             return false;
         }
@@ -47,7 +44,7 @@ class ExcelFileOpen {
 
         let excelDataArray = fileDataArray;
 
-        // verificar tipo de archivo
+        // check the file type
         if(file === undefined || (!file.name.toLowerCase().endsWith(".xlsx") && file.type !== EXCEL_MIME_TYPE) ) {
             throw new Error("El archivo \"" + file.name + "\" NO es válido.");
         }
@@ -57,9 +54,7 @@ class ExcelFileOpen {
             throw new Error("Contenido del archivo NO válido.");
         }
         
-        // console.log("filterOrderTypeOnlyPUP ANTES: ", excelDataArray);
         excelDataArray = filterOrderTypeOnlyPUP(excelDataArray);
-        // console.log("filterOrderTypeOnlyPUP DESPUES: ", excelDataArray, fileDataArray);
 
         return excelDataArray;
     }

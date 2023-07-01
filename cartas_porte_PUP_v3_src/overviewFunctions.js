@@ -22,14 +22,11 @@ class TextFileOpen {
         rows = rows.replaceAll("\"", "");
         rows = rows.split('\n');
 
-        // console.log("CANTIDAD DE FILAS: ", rows);
-
         // remove headers AND from removed element split into an array by 'comma'
         let headlines = rows.shift().split(',');
-        console.log("Encabezados: ", headlines);
+        // console.log("Encabezados: ", headlines);
 
         if( !verifyRequiredInfoCSV(headlines)) {
-            // console.log("El archivo ", filesArray[0].file.name, " NO contiene la información mínima requerida.");
             throw new Error("El archivo \"" + file.name + "\" NO contiene la información mínima requerida.")
         }
         
@@ -41,8 +38,6 @@ class TextFileOpen {
             });
 
         content = deleteEmptyFinalLines(content, headlines.length);
-
-        // console.log("Despues de 'deleteEmptyFinalLines': ", content);
 
         if(!verifyDataIntegrityCSV(content, headlines.length)) {
             throw new Error("Datos NO válidos.");
@@ -63,7 +58,6 @@ class TextFileOpen {
             }
             cleanArrayData.push(objeto);
         })
-                
         return cleanArrayData;
     }
 
@@ -71,11 +65,8 @@ class TextFileOpen {
     // *********************************************************
     function mappingArrayDataCSV(arrayData) {
 
-        // console.log("mappingArrayDataCSV: ", arrayData[2]);
-
         let dataMap = new Map();
         arrayData.forEach( row => {  
-            // console.log("ORDER: ", row[CUT_OFF_DATE_TIME]);
             let orderObj = new Order(row);
             dataMap.set( row[ISELL_ORDER], orderObj ); 
         } );
@@ -86,8 +77,6 @@ class TextFileOpen {
     // *********************************************************
     // Elimina todas las lineas no validas del final de archivo.
     function deleteEmptyFinalLines(array, totalColumns) {
-        // console.log("deleteEmptyFinalLines, rows: ", array.length, " total de columnas: ", totalColumns, " columnas de esta fila: ", array[array.length - 1].length);
-        // console.log("(", array[array.length - 1], ")");
         if (array[array.length - 1].length !== totalColumns) {
             array.pop();
             deleteEmptyFinalLines(array, totalColumns);
@@ -99,16 +88,13 @@ class TextFileOpen {
     // *********************************************************
     // validate the integrity of the CSV file 
     function verifyDataIntegrityCSV(array, totalColumns) {
-        // console.log("Integrity check - Total de columnas: ", totalColumns);
         array.forEach(element => {
-            // console.log("Columnas en esta fila: ", element.length);
             if(element.length !== totalColumns){
-                
                 console.log("Data integrity FAILED!! Cantidad correcta de columnas: ", totalColumns, "Columnas en fila: ", element.length, element);
                 throw new Error("Check Data integrity FAILED!");
             }
         });
-        console.log("Integrity PASS OK!!");
+        console.log("Integrity check PASS OK!!");
         return true;
     }
 
@@ -131,6 +117,6 @@ class TextFileOpen {
 
     // *********************************************************
     function filterOnlyPUP_FileCSV( dataArray) {
-        // console.log("filterOnlyPUP_CSVFile: ", dataArray[1271][ORDER_TYPE] === PICK_UP_POINT);
         return dataArray.filter( row => row[ORDER_TYPE] === PICK_UP_POINT );
     }
+    

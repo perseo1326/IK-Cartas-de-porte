@@ -5,6 +5,7 @@
     --first-color: #0057a4;
     --second-color: rgb(255, 219, 1);
     --warning-color: rgba(255, 165, 0, 1);
+    --panel-background-color: rgba(190, 190, 190, 0.6);
     --doc-font: 8px;
     --A4-width: 21cm;
     --A4-height: 29.7cm;
@@ -37,22 +38,29 @@ body {
 div.panel {
     /* display: flex; // activado con JS */
     display: none;
+    /* display: block; */
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--panel-background-color);
+    z-index: 2;
 }
 
-div.panel div.frame {
+div.panel div.container {
+    width: 100%;
+    height: 100%;
+}
+
+div.panel div.container div.frame {
     margin: auto;
     width: 40%;
     background-color: whitesmoke;
     border-radius: 4px;
 }
 
-div.panel div.frame div.frame-title h3 {
+div.panel div.container div.frame div.frame-title h3 {
     background-color: var(--first-color);
     color: var(--second-color);
     text-align: center;
@@ -62,11 +70,11 @@ div.panel div.frame div.frame-title h3 {
     border-top-right-radius: 4px;
 }
 
-div.panel div.frame div.frame-content {
+div.panel div.container div.frame div.frame-content {
     padding: 0.5rem;
 }
 
-div.panel div.frame div.frame-content div p span {
+div.panel div.container div.frame div.frame-content div p span {
     text-decoration: underline;
     display: inline-block;
     margin-bottom: 0.3rem;
@@ -77,7 +85,7 @@ div.panel div.frame div.frame-content div p span {
 /* ***** PANEL PLEASE WAIT  ***** */
 
     div#wait-panel {
-        background-color: rgba(190, 190, 190, 0.6);
+        background-color: var(--panel-background-color);
         display: none;
         /* display: block; */
         position: absolute;
@@ -89,7 +97,6 @@ div.panel div.frame div.frame-content div p span {
     }
 
     div#wait-panel div.main-panel {
-        /* background-color: aqua; */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -184,7 +191,6 @@ div h1 span.version-titulo {
 }
 
 .custom-button {
-    /* min-width: 14rem; */
     border: 1px solid var(--first-color);
     border-radius: 4px;
 	background-color: var(--first-color);
@@ -333,7 +339,6 @@ table tbody#data-body tr:nth-last-of-type(2n+0) {
 }
 
 table tbody#data-body td.no-info {
-    /* background-color: rgba(255, 0, 0, 0.5); */
     background-color: var(--second-color);
 
 }
