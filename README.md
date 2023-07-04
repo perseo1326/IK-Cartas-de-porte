@@ -5,6 +5,12 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 3.1:
+* Resuelto problema del icono del cubo de basura para eliminar las filas no terminadas.
+* Agregada advertencia al usuario acerca de los pedidos no terminados para ser impresos en el documento final o no.
+* Generación de información para depuración por consola (logs). 
+* Verificación de concordancia en las versiones de actualizaciones.
+
 ### Versión 3.0:
 
 * Debido a la inconsistencia del reporte tomado como fuente de datos para el análisis de la información, se hicieron cambios en las fuentes de datos, lo cual desencadena un cambio radical en la lógica de negocio planteada. Por lo tanto ahora como fuente de datos se necesitará un informe base y uno o dos complementarios que al combinarlos con el informe base entregarán el detalle de cada linea de información.
@@ -14,7 +20,6 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 * Adición de un nuevo campo ("serviceNameShort") al archivo de configuración de los destinos o flujos de mercancia.
 * Ajuste al nombre propuesto al guardar el documento en formato PDF basado en el nuevo campo 'serviceNameShort'.
 * Correción del cálculo de los pesos, volúmenes, paquetes y sus totales.
-* Resuelto problema del icono del cubo de basura para eliminar las filas no terminadas.
 
 ### Versión 2.1.1:
 

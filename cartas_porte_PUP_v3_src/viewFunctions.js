@@ -19,11 +19,10 @@
         cleanChildNodes(cutOffTimeSelector);
         loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
 
-        console.log("Valor de CONFIGDATA: ", typeof(configData), configData);
+        console.log("Valor de Datos de Configuracion PUPs: ", typeof(configData), configData);
         if(typeof(configData) === "undefined") {
             console.log("ERROR:loadConfigurationPUP:Fallo al cargar la configuración inicial de los PUP.");
             throw new Error("Fallo al cargar la configuración inicial.");
-
         } 
         else {
             configData.forEach( (destination) => {
@@ -181,9 +180,7 @@
                 showContent(ordersMap);
             }
         }
-
         panelShippingDate.style.display = "block";
-        // console.log("PANEL: ", panelShippingDate);
     }
 
 
@@ -207,9 +204,8 @@
             
             // Set document title for printing purpose
             document.title = shippingDateValue + "_" + printDocumentTitle;
-    
             window.print();
-                
+
         } catch (error) {
             console.log("ERROR:printDocument: ", error);
             alert(error.message);
@@ -353,16 +349,13 @@
             dataTableBody += "<td class='hide-print remove no-info' onclick='javascript:deleteRow(\"" + (value[ISELL_ORDER]) + "\")'>";
             // SVG image icon
             dataTableBody += '<svg aria-labelledby="rubbish-bin-icon" id="trash-can-icon" title="Eliminar Fila" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">';
-            dataTableBody += '<path d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"/></svg>';
-
-            dataTableBody += '<svg id="#trash-can-icon"></svg>'; 
+            dataTableBody += '<path d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"/>';
             dataTableBody += '</svg>';
             dataTableBody += "</td>";
         } else {
             dataTableBody += "<td class='hide-print'>";
             dataTableBody += "</td>";
         }
-
         dataTableBody += "</tr>";
 
         return dataTableBody;

@@ -5,6 +5,7 @@ class ExcelFileOpen {
 
     constructor(pointerFile) {
         if(!pointerFile) {
+            console.log("ERROR:ExcelFileOpen: No se ha seleccionado ningun archivo.");
             throw new Error("No se ha seleccionado ningun archivo.");
         }
 
@@ -22,7 +23,7 @@ class ExcelFileOpen {
             return false;
         }
 
-        if(dataRows[0].ORDER_TYPE === undefined || dataRows[dataRows.length - 1].ISELL_ORDER_NUMBER === undefined) {
+        if(dataRows[0][ORDER_TYPE_EXCEL] === undefined || dataRows[dataRows.length - 1][ISELL] === undefined) {
             return false;
         }
     
@@ -34,7 +35,7 @@ class ExcelFileOpen {
     // Check and remove all elements with "Order Type" different that "PUP"
     function filterOrderTypeOnlyPUP(dataArray) {
         return dataArray.filter( (row) => { 
-            return row.ORDER_TYPE.trim() === ORDER_TYPE_DATA;
+            return row[ORDER_TYPE_EXCEL].trim() === ORDER_TYPE_DATA;
         } );
     }
     
@@ -46,11 +47,13 @@ class ExcelFileOpen {
 
         // check the file type
         if(file === undefined || (!file.name.toLowerCase().endsWith(".xlsx") && file.type !== EXCEL_MIME_TYPE) ) {
+            console.log("ERROR:readReportsExcel: El archivo \"" + file.name + "\" NO es válido.");
             throw new Error("El archivo \"" + file.name + "\" NO es válido.");
         }
 
         // Validate the format of the file and data structure
         if(!validateContentExcel(excelDataArray)) {
+            console.log("ERROR:readReportsExcel: Contenido del archivo NO válido.");
             throw new Error("Contenido del archivo NO válido.");
         }
         
@@ -80,8 +83,3 @@ class ExcelFileOpen {
         
         return orderDetailsMap;
     }
-
-
-
-
-

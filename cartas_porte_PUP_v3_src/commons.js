@@ -13,7 +13,6 @@ class Order {
             this.totalOrderPackages = 0;
             this.totalOrderVolume   = 0;
             this.totalOrderWeight   = 0;
-
             this.setServiceFrom( rowData[SERVICE_FROM]);
             this.setServiceTo( rowData[SERVICE_TO]);
 
@@ -21,7 +20,6 @@ class Order {
             console.log("constructor de Order: ", error);
             return;
         }
-
     }
 
     setServiceFrom(stringServiceFrom) {
@@ -41,20 +39,14 @@ class Order {
         order.totalOrderVolume = 0;
         order.totalOrderPackages = 0;
 
-        // console.log("VAlor de la ORDEN (Objeto): ", this);
         if(order.details !== undefined) {
 
-            // console.log("Orden isell : ", order)
             order.details.pickArea.forEach(area => {
 
                 area.forEach( product => {
-
-                    // console.log("Calcular Totales: ", product);
-
                     order.totalOrderWeight += (product[WEIGHT] * product[ORDERED_QTY]);
                     order.totalOrderVolume += (product[VOLUME_ORDERED] * product[ORDERED_QTY]);
                     order.totalOrderPackages += (product[ORDERED_QTY]);
-
                     // console.log("ARTICLE_NUMBER: ", product[ARTICLE_NUMBER], "totalOrderWeight: ", (product[WEIGHT] * product[ORDERED_QTY]), "totalOrderVolume: ", (product[VOLUME_ORDERED] * product[ORDERED_QTY]), "totalOrderPackages: ", (product[ARTICLES] * product[ORDERED_QTY]) );
                 }) 
             });
@@ -64,7 +56,6 @@ class Order {
 
 
 class Product {
-
     constructor(excelRow){
         this[ARTICLE_NAME]      = excelRow[ARTICLE_NAME].trim();
         this[ARTICLE_NUMBER]    = excelRow[ARTICLE_NUMBER].trim();
@@ -72,7 +63,6 @@ class Product {
         this[WEIGHT]            = Number (excelRow[WEIGHT].trim());
         this[VOLUME_ORDERED]    = Number (excelRow[VOLUME_ORDERED].trim());
         this[ORDERED_QTY]       = Number (excelRow[ORDERED_QTY].trim());
-        
         this[ARTICLES]          = Number (excelRow[ARTICLES].trim());
     }
 }
@@ -83,7 +73,6 @@ class Product {
 
     class OrderDetail {
         constructor(isell) {
-
             this.isell          = isell.trim();
             this.pickArea       = new Map([
                 [MARKET_HALL, []],
@@ -99,7 +88,6 @@ class Product {
 
         containPickArea(area){
             let orderDetail = this;
-            // console.log("containPickArea: ", orderDetail.pickArea.get(area));
             if(orderDetail.pickArea.get(area).length < 1 ){
                 return false;
             }
@@ -113,7 +101,6 @@ class Product {
     function validateDate(inputDate) {
         const date = inputDate.valueAsDate;
         if(!date ){
-            // alert("La fecha seleccionada es inválida.");
             console.log("COMMONS:validateDate: La fecha seleccionada es inválida.");
             throw new Error("La fecha seleccionada es inválida.");
         } 
@@ -124,7 +111,10 @@ class Product {
     // *********************************************************
     // Function to initialize the variables and environment 
     function initializePage() {
-        console.clear();
+
+        checkVersion();
+
+        // console.clear();
         console.log("Inicializando los valores por defecto de la página.");
         document.title = printDocumentTitle = "PUP's Cartas de Porte V" + VERSION;
 
@@ -150,14 +140,13 @@ class Product {
         windowServiceObj = {};
 
         // TODO: cambiar fecha manual
-        todayDate = new Date("2023-06-22");
+        todayDate = new Date("2023-07-04");
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
         showContent([]);
 
         frameShippingDate.value = "----------";
-
 
         uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
         uploadFileHistorical.innerText = "Subir archivo 'Historical'...";
@@ -187,8 +176,24 @@ class Product {
     }
 
 
+    // *********************************************************
+    // Check the correct version of HTML and scripts
+    function checkVersion(){
+        
+        const APP_DOWNLOAD_PATH = "ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte_3.html";
 
+        if(typeof(HTML_VERSION) === "undefined" || HTML_VERSION !== VERSION){
+            
+            uploadFileOverviewButton.classList.add("disable");
+            uploadFileHistorical.classList.add("disable");
+            uploadFileByStatus.classList.add("disable");
+            fileSelectorOverview.disabled = true;
+            fileSelectorHistorical.disabled = true;
+            fileSelectorByStatus.disabled = true;
 
-
-
+            console.log("ERROR:initializePage: Debe actualizar a la última versión.");
+            throw new Error("Debe actualizar a la última versión.\n" + APP_DOWNLOAD_PATH);
+        }
+        console.log("Versión del HTML: ", HTML_VERSION);
+    }
 

@@ -5,6 +5,7 @@ class TextFileOpen {
 
     constructor(pointerFile) {
         if(!pointerFile) {
+            console.log("ERROR:TextFileOpen: No se ha seleccionado ningun archivo.");
             throw new Error("No se ha seleccionado ningun archivo.");
         }
 
@@ -27,7 +28,8 @@ class TextFileOpen {
         // console.log("Encabezados: ", headlines);
 
         if( !verifyRequiredInfoCSV(headlines)) {
-            throw new Error("El archivo \"" + file.name + "\" NO contiene la información mínima requerida.")
+            console.log("El archivo \"" + file.name + "\" NO contiene la información mínima requerida.");
+            throw new Error("El archivo \"" + file.name + "\" NO contiene la información mínima requerida.");
         }
         
         let content = [];
@@ -40,6 +42,7 @@ class TextFileOpen {
         content = deleteEmptyFinalLines(content, headlines.length);
 
         if(!verifyDataIntegrityCSV(content, headlines.length)) {
+            console.log("ERROR:loadOverviewFileCSV: Datos NO válidos.")
             throw new Error("Datos NO válidos.");
         }
 

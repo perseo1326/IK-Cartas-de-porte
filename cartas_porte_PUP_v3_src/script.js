@@ -33,7 +33,7 @@
 
     // *********************************************************
 
-    const VERSION = "3.0";
+    const VERSION = "3.1";
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     // minimum required columns from 'Overview.csv' file
@@ -48,7 +48,7 @@
         const ISELL             = "ISELL_ORDER_NUMBER";
         const ARTICLE_NAME      = "ARTICLE_NAME";
         const ARTICLE_NUMBER    = "ARTICLE_NUMBER";
-        // const ORDER_TYPE_EXCEL  = "ORDER_TYPE";
+        const ORDER_TYPE_EXCEL  = "ORDER_TYPE";
         const PACKAGES          = "PACKAGES";
         const WEIGHT            = "WEIGHT";
         const VOLUME_ORDERED    = "VOLUME_ORDERED";
@@ -153,7 +153,7 @@
             initializePage();
         } catch (error) {
             console.log("ERROR ONLOAD: ", error);
-            alert("Error al cargar la configuracion, pruebe actualizar la página de nuevo.");
+            alert(error.message);
         }
     }
 
@@ -213,7 +213,6 @@
                             alert(error.message);
                             window.onload();
                             initializePage();
-                            uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
                         }
                     };
                     break;
@@ -245,6 +244,8 @@
         } catch (error) {
             console.log("ERROR:openFile: ", error);
             alert(error.message);
+            initializePage();
+            waitPanel.style.display = "none";
         }
     }
 
@@ -443,7 +444,6 @@
 
         ordersMap.delete(isell);
     }
-
 
     // *********************************************************
     // function to verify that all orders have a status "STATUS_COMPLETED"
