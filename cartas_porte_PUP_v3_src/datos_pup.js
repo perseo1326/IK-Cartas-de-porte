@@ -164,7 +164,7 @@ const configData =
         ],
         windowService : [ 
             { 
-                serviceName : "Primera Furgo", 
+                serviceName : "Unica Furgo", 
                 serviceNameShort : "Dg Fes", 
                 serviceCode : "FURGO_ONE", 
                 documentTransport_A : "406PUPT-",
