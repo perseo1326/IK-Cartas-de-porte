@@ -1,6 +1,7 @@
 
 const configData = 
 [
+    // Diagonal Normal COT 20:15h
     {
         pupId : "DIAGONAL",
         title : "Diagonal",
@@ -52,6 +53,7 @@ const configData =
         ]
     }, 
 
+    // Sant Pere Normal COT 20:00h
     {
         pupId : "SANT_PERE",
         title : "Sant Pere",
@@ -94,6 +96,7 @@ const configData =
         ]
     }, 
 
+    // Tarragona Normal COT 19:45h
     {
         pupId : "TARRAGONA",
         title : "Tarragona",
@@ -134,5 +137,110 @@ const configData =
                 serviceValues : ["17:00", "19:00"] 
             }
         ]
-    }   
+    },
+
+    // Diagonal Domingo COT 16:15h
+    {
+        pupId : "DIAGONAL_DOMINGO",
+        title : "Diagonal Festivos",
+        cutOffTime : "16:15",
+        senderAddress : [ 
+            "IKEA Gran Via 406", 
+            "Gran Via de l'Hospitalet 115-133", 
+            "Hospitalet de Llobregat 08908", 
+            "Barcelona, Espanya"
+        ],
+        consigneeAddress : [
+            "PUP Travessera (PUPT-BCN)", 
+            "C/ Travessera de Gracia 12", 
+            "08012 - Barcelona (Barcelona)", 
+            "Spain"
+        ],
+        carrierAddress : [
+            "ADER Taxicomercial.com", 
+            "Avinguda Gran Via, 16-20, 4A", 
+            "08902, L'Hospitalet de Llobregat", 
+            "comunicacion@aderonline.com"
+        ],
+        windowService : [ 
+            { 
+                serviceName : "Primera Furgo", 
+                serviceNameShort : "Dg Fes", 
+                serviceCode : "FURGO_ONE", 
+                documentTransport_A : "406PUPT-",
+                documentTransport_B : "(Festivos)",        
+                serviceValues : [] 
+            }
+        ]
+    },
+    
+    // Tarragona Domingos COT 15:45h
+    {
+        pupId : "TARRAGONA_DOMINGO",
+        title : "Tarragona Domingos",
+        cutOffTime : "15:45",
+        senderAddress : [ 
+            "IKEA Gran Via 406", 
+            "Gran Via de l'Hospitalet 115-133", 
+            "Hospitalet de Llobregat 08908", 
+            "Barcelona, Espanya"
+        ],
+        consigneeAddress : [
+            "IKEA Tarragona Planning Studio", 
+            "Avenida Ramón y Cajal 155", 
+            "Tarragona, 43005", 
+            "Tarragona, Espanya"
+        ],
+        carrierAddress : [
+            "ADER Taxicomercial.com", 
+            "Avinguda Gran Via, 16-20, 4A", 
+            "08902, L'Hospitalet de Llobregat", 
+            "comunicacion@aderonline.com"
+        ],
+        windowService : [ 
+            { 
+                serviceName : "Unica Furgo",
+                serviceNameShort : "T1", 
+                serviceCode : "FURGO_ONE",
+                documentTransport_A : "406TGN ",
+                documentTransport_B : " (Domingos)",        
+                serviceValues : [""] 
+            }
+        ]
+    },
+
+    // Sant Pere Domingos COT 16:00h    
+    {
+        pupId : "SANT_PERE_DOMINGO",
+        title : "Sant Pere Domingos",
+        cutOffTime : "16:00",
+        senderAddress : [
+            "IKEA Gran Via 406", 
+            "Gran Via de l'Hospitalet 115-133", 
+            "Hospitalet de Llobregat 08908", 
+            "Barcelona, Espanya"
+        ],						
+        consigneeAddress : [
+            "IKEA St Pere Planning Studio", 
+            "Rambla del Garraf s/n, Parc d'Oci Les Roquetes Local 10-B2", 
+            "El Mas d'en Serra, 08812", 
+            "Barcelona, Espanya"
+        ],	
+        carrierAddress : [
+            "ADER Taxicomercial.com", 
+            "Avinguda Gran Via, 16-20, 4A", 
+            "08902, L'Hospitalet de Llobregat", 
+            "comunicacion@aderonline.com"
+        ],
+        windowService : [ 
+            { 
+                serviceName : "Unica Furgo",
+                serviceNameShort : "SP-DOM", 
+                serviceCode : "FURGO_ONE",
+                documentTransport_A : "406SP ",
+                documentTransport_B : " SANT PERE (Domingo)",        
+                serviceValues : [] 
+            }
+        ]
+    }
 ];

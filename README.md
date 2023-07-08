@@ -10,6 +10,7 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 * Agregada advertencia al usuario acerca de los pedidos no terminados para ser impresos en el documento final o no.
 * Generación de información para depuración por consola (logs). 
 * Verificación de concordancia en las versiones de actualizaciones.
+* Adición de nuevos COTs para flujos con entrega en domingos, Diagonal 16:15, Tarragona 15:45 y Sant Pere 16:00.
 
 ### Versión 3.0:
 
