@@ -140,7 +140,8 @@ class Product {
         windowServiceObj = {};
 
         // TODO: cambiar fecha manual
-        todayDate = new Date("2023-07-04");
+        // todayDate = new Date("2023-07-04");
+        todayDate = new Date();
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
         showProcessValues(null, "", "", "", "");
