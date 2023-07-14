@@ -169,7 +169,7 @@ const configData =
                 serviceCode : "FURGO_ONE", 
                 documentTransport_A : "406PUPT-",
                 documentTransport_B : "(Festivos)",        
-                serviceValues : [] 
+                serviceValues : ["10:00", "12:00", "15:00", "18:00"] 
             }
         ]
     },
