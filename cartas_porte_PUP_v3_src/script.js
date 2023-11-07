@@ -43,6 +43,7 @@
         const CUT_OFF_DATE_TIME = "Fuera plazo";
         const SERVICE_FROM = "Service from";
         const SERVICE_TO = "Service To";
+        const DROP_OFF = "Zona Entregas";
 
     // required columns from 'Historical' and/or 'By Status' file
         const ISELL             = "ISELL_ORDER_NUMBER";
@@ -200,6 +201,7 @@
                     };
 
                     fileReaderOverview.readAsText(fileCSV.file, "windows-1252");
+                    // fileReaderOverview.readAsText(fileCSV.file);
                     fileReaderOverview.onload = function() {
                         try {
                             // process and clean info from the file

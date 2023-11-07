@@ -25,7 +25,7 @@ class TextFileOpen {
 
         // remove headers AND from removed element split into an array by 'comma'
         let headlines = rows.shift().split(',');
-        // console.log("Encabezados: ", headlines);
+        console.log("Encabezados: ", headlines);
 
         if( !verifyRequiredInfoCSV(headlines)) {
             console.log("El archivo \"" + file.name + "\" NO contiene la información mínima requerida.");
@@ -38,6 +38,8 @@ class TextFileOpen {
                 let columns = row.split(',');
                 content.push(columns);
             });
+
+        console.log("Cantidad de lineas leidas y cargadas: ", content.length);
 
         content = deleteEmptyFinalLines(content, headlines.length);
 
@@ -94,7 +96,7 @@ class TextFileOpen {
         array.forEach(element => {
             if(element.length !== totalColumns){
                 console.log("Data integrity FAILED!! Cantidad correcta de columnas: ", totalColumns, "Columnas en fila: ", element.length, element);
-                throw new Error("Check Data integrity FAILED!");
+                throw new Error("Chequeo de integridad Fallido!");
             }
         });
         console.log("Integrity check PASS OK!!");
@@ -112,7 +114,12 @@ class TextFileOpen {
         headlinesArray.includes(SERVICE_FROM) && 
         headlinesArray.includes(SERVICE_TO) )
         {
-            return true;
+            if(headlinesArray.includes(DROP_OFF)){
+                console.log("Eliminar la columna '" + DROP_OFF + "' del reporte, ya que genera errores.");
+                throw new Error("Eliminar la columna '" + DROP_OFF + "' del reporte, ya que genera errores.");
+            } else {
+                return true;
+            }
         }
         return false;
     }
