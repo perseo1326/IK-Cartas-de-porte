@@ -5,6 +5,14 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 4.0:
+Debido a una actualizacion realizada en la aplicacion principal la cual genera los reportes desde los cuales esta aplicacion se alimenta, se han generado errores ya que los reportes han cambiado en estructura.
+
+* Reparado el problema de lectura del reporte "orders overview.csv", ya que la codificación cambio de "windows-1252" a UTF-8.
+* Mejorado la intercepción de Excepción para la verificación de integridad de la información leida desde el reporte.
+* Mensaje de error en caso que el reporte cuente con la columna "DROP OFF", ya que esta puede generar errores de integridad en la información leida. 
+
+
 ### Versión 3.1:
 * Resuelto problema del icono del cubo de basura para eliminar las filas no terminadas.
 * Agregada advertencia al usuario acerca de los pedidos no terminados para ser impresos en el documento final o no.
