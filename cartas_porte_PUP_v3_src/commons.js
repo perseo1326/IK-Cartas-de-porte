@@ -181,8 +181,6 @@ class Product {
     // Check the correct version of HTML and scripts
     function checkVersion(){
         
-        const APP_DOWNLOAD_PATH = "ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte_3.html";
-
         if(typeof(HTML_VERSION) === "undefined" || HTML_VERSION !== VERSION){
             
             uploadFileOverviewButton.classList.add("disable");
