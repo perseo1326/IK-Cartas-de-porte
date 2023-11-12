@@ -33,8 +33,8 @@
 
     // *********************************************************
 
-    const VERSION = "3.1";
-    const APP_DOWNLOAD_PATH = "Sharepoint / ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte_3.html";
+    const VERSION = "4.0";
+    const APP_DOWNLOAD_PATH = "Sharepoint / ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte.html";
 
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -93,27 +93,27 @@
     
     // data structure for containing all the info combined
         // complet, filtered and clean info for 'Overview.csv'
-        let isellsOverviewMapComplet = new Map();
+        // let isellsOverviewMapComplet = new Map();
         
         // complet, filtered and clean info for 'Overview.csv'
-        let isellsHistorical = {
-            type : REPORT_HISTORICAL,
-            isellsMap : new Map()
-        };
+        // let isellsHistorical = {
+        //     type : REPORT_HISTORICAL,
+        //     isellsMap : new Map()
+        // };
 
         // complet, filtered and clean info for 'By Status.xlsx'
-        let isellsByStatus = { 
-            type : REPORT_BY_STATUS, 
-            isellsMap : new Map()
-        };
+        // let isellsByStatus = { 
+        //     type : REPORT_BY_STATUS, 
+        //     isellsMap : new Map()
+        // };
 
     // will contain the orders (isells) filtered by CUT OFF DATE, CUT OFF TIME AND SERVICE WINDOW
-    let ordersMap = new Map();
+    // let ordersMap = new Map();
 
-    let windowServiceObj = {};
-    let todayDate = "";
+    // let windowServiceObj = {};
+    // let todayDate = "";
     // variable to hold the basic name for the printed document
-    let printDocumentTitle = "";
+    // let printDocumentTitle = "";
 
 
     // *********************************************************
@@ -160,29 +160,13 @@
         }
     }
 
-    // *********************************************************
-    // function to load config info from a JSON file via http
-    async function getJsonConfig( pathFile ) {
-        
-        const init = { mode: "no-cors", headers: { 'Content-Type': 'application/json' } };
-        let data = undefined;
 
-        let file = await fetch(pathFile, init);
-        console.log("FETCH: file: ", file);
-        
-        if(file.status !== 200 ) {
-            throw new Error("Http Status Error Code: " + file.status);
-        }
-        data = await file.json();
-        // let data = await file.text();
-        return data;
-    }
 
     // *********************************************************
     function openFile(evento) {
         
         try {
-            let file = evento.target.files[0];
+            // let file = evento.target.files[0];
             let fileDate = undefined;
             switch (evento.target.id) {
 
@@ -191,34 +175,58 @@
                     waitPanel.style.display = "block";
                     initializePage();
 
-                    let fileCSV = new TextFileOpen(file);
-                    fileDate = new Date(file.lastModified);
-                    uploadFileOverviewButton.innerText = fileCSV.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
+                    // "windows-1252"
+                    let fileCSVOverview = new TextFileOpen(evento.target.files[0]);
+
+                    fileDate = new Date(fileCSVOverview.file.lastModified, "windows-1252");
+                    uploadFileOverviewButton.innerText = fileCSVOverview.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
                     // Load data from file
-                    let fileReaderOverview = new FileReader();
 
-                    fileReaderOverview.onloadend = (evento) => {
+                    let dataPromise = fileCSVOverview.loadAndReadFile();
+
+                    dataPromise.then( (response) => {
+
+                        console.log(response);
+
                         waitPanel.style.display = "none";
-                    };
 
-                    fileReaderOverview.readAsText(fileCSV.file, "windows-1252");
-                    // fileReaderOverview.readAsText(fileCSV.file);
-                    fileReaderOverview.onload = function() {
-                        try {
-                            // process and clean info from the file
-                            let arrayDataClean = readOverviewFileCSV(fileCSV.file, this.result);
-                            isellsOverviewMapComplet = mappingArrayDataCSV(arrayDataClean);
-                            showSelectionButton();
-                            console.log("Carga Overview \"" + fileCSV.file.name + "\" Finalizada!");
-
-                        } catch (error) {
-                            console.log("ERROR:", error);
+                    })
+                    .catch( (error) => {
+                            console.log("ERROR:openFile:", error);
                             alert(error.message);
                             window.onload();
                             initializePage();
-                        }
-                    };
+                    });
+
+
+
+
+
+
+                    // let fileReaderOverview = new FileReader();
+                    // fileReaderOverview.onloadend = (evento) => {
+                    // };
+
+                    // fileReaderOverview.readAsText(fileCSV.file, "windows-1252");
+                    // fileReaderOverview.readAsText(fileCSV.file);
+                    // fileReaderOverview.onload = function() {
+                    //     try {
+                    //         // process and clean info from the file
+                    //         let arrayDataClean = readOverviewFileCSV(fileCSV.file, this.result);
+                    //         isellsOverviewMapComplet = mappingArrayDataCSV(arrayDataClean);
+                    //         showSelectionButton();
+                    //         console.log("Carga Overview \"" + fileCSV.file.name + "\" Finalizada!");
+
+                    //     } catch (error) {
+                    //         console.log("ERROR:", error);
+                    //         alert(error.message);
+                    //         window.onload();
+                    //         initializePage();
+                    //     }
+                    // };
+
+
                     break;
 
                 // case file 'Historical'

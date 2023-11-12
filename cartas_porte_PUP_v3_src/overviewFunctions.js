@@ -1,19 +1,6 @@
 
 'use strict';
 
-class TextFileOpen {
-
-    constructor(pointerFile) {
-        if(!pointerFile) {
-            console.log("ERROR:TextFileOpen: No se ha seleccionado ningun archivo.");
-            throw new Error("No se ha seleccionado ningun archivo.");
-        }
-
-        this.file = pointerFile;
-        this.contentFile = "";
-    }
-}
-
 
     // *********************************************************
     // convert string data to bidimensional array (rows and columns)
