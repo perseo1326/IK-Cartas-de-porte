@@ -34,6 +34,8 @@
     // *********************************************************
 
     const VERSION = "4.0";
+    const UPDATE_HTML = "4.0";
+
     const APP_DOWNLOAD_PATH = "Sharepoint / ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte.html";
 
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";

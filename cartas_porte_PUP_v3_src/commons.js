@@ -181,7 +181,7 @@ class Product {
     // Check the correct version of HTML and scripts
     function checkVersion(){
         
-        if(typeof(HTML_VERSION) === "undefined" || HTML_VERSION !== VERSION){
+        if(typeof(HTML_VERSION) === "undefined" || HTML_VERSION !== UPDATE_HTML){
             
             uploadFileOverviewButton.classList.add("disable");
             uploadFileHistorical.classList.add("disable");
@@ -193,6 +193,6 @@ class Product {
             console.log("ERROR:initializePage: Debe actualizar a la última versión.");
             throw new Error("Debe actualizar a la última versión.\n" + APP_DOWNLOAD_PATH);
         }
-        console.log("Versión del HTML: ", HTML_VERSION);
+        console.log("Versión del HTML: ", VERSION);
     }
 
