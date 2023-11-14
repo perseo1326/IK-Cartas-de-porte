@@ -48,16 +48,16 @@
         const DROP_OFF = "Zona Entregas";
 
     // required columns from 'Historical' and/or 'By Status' file
-        const ISELL             = "ISELL_ORDER_NUMBER";
-        const ARTICLE_NAME      = "ARTICLE_NAME";
-        const ARTICLE_NUMBER    = "ARTICLE_NUMBER";
-        const ORDER_TYPE_EXCEL  = "ORDER_TYPE";
-        const PACKAGES          = "PACKAGES";
-        const WEIGHT            = "WEIGHT";
-        const VOLUME_ORDERED    = "VOLUME_ORDERED";
-        const ARTICLES          = "ARTICLES";
-        const ORDERED_QTY       = "ORDERED_QTY";
-        const PICK_AREA         = "PICK_AREA";
+        const ISELL             = "ISELL_Order_Number";
+        const ARTICLE_NAME      = "Article_Name";
+        const ARTICLE_NUMBER    = "Article_Number";
+        const ORDER_TYPE_EXCEL  = "Order_Type";
+        const PACKAGES          = "Packages";
+        const WEIGHT            = "Weight";
+        const VOLUME_ORDERED    = "Volume_Ordered";
+        const ARTICLES          = "Checked_Qty";
+        const ORDERED_QTY       = "Ordered_Qty";
+        const PICK_AREA         = "Pick_Area";
         
     
     const REPORT_HISTORICAL     = "Historical";
@@ -93,27 +93,27 @@
     
     // data structure for containing all the info combined
         // complet, filtered and clean info for 'Overview.csv'
-        // let isellsOverviewMapComplet = new Map();
+        let isellsOverviewMapComplet = new Map();
         
         // complet, filtered and clean info for 'Overview.csv'
-        // let isellsHistorical = {
-        //     type : REPORT_HISTORICAL,
-        //     isellsMap : new Map()
-        // };
+        let isellsHistorical = {
+            type : REPORT_HISTORICAL,
+            isellsMap : new Map()
+        };
 
         // complet, filtered and clean info for 'By Status.xlsx'
-        // let isellsByStatus = { 
-        //     type : REPORT_BY_STATUS, 
-        //     isellsMap : new Map()
-        // };
+        let isellsByStatus = { 
+            type : REPORT_BY_STATUS, 
+            isellsMap : new Map()
+        };
 
     // will contain the orders (isells) filtered by CUT OFF DATE, CUT OFF TIME AND SERVICE WINDOW
-    // let ordersMap = new Map();
+    let ordersMap = new Map();
 
-    // let windowServiceObj = {};
-    // let todayDate = "";
+    let windowServiceObj = {};
+    let todayDate = "";
     // variable to hold the basic name for the printed document
-    // let printDocumentTitle = "";
+    let printDocumentTitle = "";
 
 
     // *********************************************************
@@ -166,7 +166,7 @@
     function openFile(evento) {
         
         try {
-            // let file = evento.target.files[0];
+            let file = evento.target.files[0];
             let fileDate = undefined;
             switch (evento.target.id) {
 
@@ -178,7 +178,7 @@
                     // "windows-1252"
                     let fileCSVOverview = new TextFileOpen(evento.target.files[0]);
 
-                    fileDate = new Date(fileCSVOverview.file.lastModified, "windows-1252");
+                    fileDate = new Date(fileCSVOverview.file.lastModified);
                     uploadFileOverviewButton.innerText = fileCSVOverview.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
                     // Load data from file
@@ -187,8 +187,12 @@
 
                     dataPromise.then( (response) => {
 
-                        console.log(response);
-
+                        // process and clean info from the file
+                        let arrayDataClean = readOverviewFileCSV(fileCSVOverview.file, response);
+                        
+                        isellsOverviewMapComplet = mappingArrayDataCSV(arrayDataClean);
+                        showSelectionButton();
+                        console.log("Carga Overview \"" + fileCSVOverview.file.name + "\" Finalizada!");
                         waitPanel.style.display = "none";
 
                     })
@@ -197,36 +201,8 @@
                             alert(error.message);
                             window.onload();
                             initializePage();
+                            waitPanel.style.display = "none";
                     });
-
-
-
-
-
-
-                    // let fileReaderOverview = new FileReader();
-                    // fileReaderOverview.onloadend = (evento) => {
-                    // };
-
-                    // fileReaderOverview.readAsText(fileCSV.file, "windows-1252");
-                    // fileReaderOverview.readAsText(fileCSV.file);
-                    // fileReaderOverview.onload = function() {
-                    //     try {
-                    //         // process and clean info from the file
-                    //         let arrayDataClean = readOverviewFileCSV(fileCSV.file, this.result);
-                    //         isellsOverviewMapComplet = mappingArrayDataCSV(arrayDataClean);
-                    //         showSelectionButton();
-                    //         console.log("Carga Overview \"" + fileCSV.file.name + "\" Finalizada!");
-
-                    //     } catch (error) {
-                    //         console.log("ERROR:", error);
-                    //         alert(error.message);
-                    //         window.onload();
-                    //         initializePage();
-                    //     }
-                    // };
-
-
                     break;
 
                 // case file 'Historical'
@@ -275,7 +251,7 @@
         console.log("loadOverviewFileCSV Data CARGADO: ", overviewDataArray);
 
         overviewDataArray = filterOnlyPUP_FileCSV(overviewDataArray);
-        // console.log("filterOnlyPUP_FileCSV Data: ", overviewDataArray);
+        console.log("filterOnlyPUP_FileCSV Data: ", overviewDataArray);
 
         return overviewDataArray;
     }
@@ -295,7 +271,9 @@
                 let buffer = this.result;
                 let workbook =  XLSX.read(buffer);
                 let contentFile =  XLSX.utils.sheet_to_row_object_array(workbook.Sheets[WORKING_SHEET]);
-
+                
+                // console.log("Content file: ", contentFile);
+                
                 // process and clean info from the file
                 let arrayExcelClean = readReportsExcel(excelFile.file, contentFile);
                 console.log("Carga \"" + excelFile.file.name + "\" Finalizada!", arrayExcelClean); 

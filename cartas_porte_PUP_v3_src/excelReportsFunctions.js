@@ -23,6 +23,8 @@ class ExcelFileOpen {
             return false;
         }
 
+        // console.log("Data rows: ", dataRows[0]);
+
         if(dataRows[0][ORDER_TYPE_EXCEL] === undefined || dataRows[dataRows.length - 1][ISELL] === undefined) {
             return false;
         }
@@ -46,7 +48,7 @@ class ExcelFileOpen {
         let excelDataArray = fileDataArray;
 
         // check the file type
-        if(file === undefined || (!file.name.toLowerCase().endsWith(".xlsx") && file.type !== EXCEL_MIME_TYPE) ) {
+        if(file === undefined || (!file.name.toLowerCase().endsWith(".csv") && file.type !== EXCEL_MIME_TYPE) ) {
             console.log("ERROR:readReportsExcel: El archivo \"" + file.name + "\" NO es válido.");
             throw new Error("El archivo \"" + file.name + "\" NO es válido.");
         }

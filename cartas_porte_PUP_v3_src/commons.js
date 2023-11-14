@@ -111,69 +111,69 @@ class Product {
     // *********************************************************
     // Function to initialize the variables and environment 
     function initializePage() {
-
+        
+        // console.clear();
         checkVersion();
 
-        // console.clear();
         console.log("Inicializando los valores por defecto de la página.");
         document.title = printDocumentTitle = "PUP's Cartas de Porte V" + VERSION;
 
         // data structure for containing all the info combined
         // complet, filtered and clean info for 'Overview.csv'
-        // isellsOverviewMapComplet = new Map();
+        isellsOverviewMapComplet = new Map();
         
         // complet, filtered and clean info for 'Overview.csv'
-        // isellsHistorical = {
-        //     type : REPORT_HISTORICAL,
-        //     isellsMap : new Map()
-        // };
+        isellsHistorical = {
+            type : REPORT_HISTORICAL,
+            isellsMap : new Map()
+        };
 
         // complet, filtered and clean info for 'By Status.xlsx'
-        // isellsByStatus = { 
-        //     type : REPORT_BY_STATUS, 
-        //     isellsMap : new Map()
-        // };
+        isellsByStatus = { 
+            type : REPORT_BY_STATUS, 
+            isellsMap : new Map()
+        };
 
         // will contain the orders (isells) filtered by CUT OFF DATE, CUT OFF TIME AND SERVICE WINDOW
-        // ordersMap = new Map();
+        ordersMap = new Map();
 
-        // windowServiceObj = {};
+        windowServiceObj = {};
 
         // TODO: cambiar fecha manual
         // todayDate = new Date("2023-07-04");
         todayDate = new Date();
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
-        // showProcessValues(null, "", "", "", "");
-        // showContent([]);
+        showProcessValues(null, "", "", "", "");
+        showContent([]);
 
-        // frameShippingDate.value = "----------";
+        frameShippingDate.value = "----------";
 
-        // uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
-        // uploadFileHistorical.innerText = "Subir archivo 'Historical'...";
-        // uploadFileByStatus.innerText = "Subir archivo 'By Order Status'...";
+        uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
+        uploadFileHistorical.innerText = "Subir archivo 'Historical'...";
+        uploadFileByStatus.innerText = "Subir archivo 'By Order Status'...";
 
-        // selectedDate.disabled = true;
-        // selectedDate.classList.add("disable");
+        selectedDate.disabled = true;
+        selectedDate.classList.add("disable");
         
-        // cutOffTimeSelector.disabled = true;
-        // cutOffTimeSelector.classList.add("disable");
+        cutOffTimeSelector.disabled = true;
+        cutOffTimeSelector.classList.add("disable");
 
-        // serviceWindowSelector.disabled = true;
-        // serviceWindowSelector.classList.add("disable");
+        serviceWindowSelector.disabled = true;
+        serviceWindowSelector.classList.add("disable");
 
-        // processDataB.disabled = true;
-        // processDataB.classList.add("disable");
+        processDataB.disabled = true;
+        processDataB.classList.add("disable");
 
-        // printDocumentationB.disabled = true;
-        // printDocumentationB.classList.add("disable");
+        printDocumentationB.disabled = true;
+        printDocumentationB.classList.add("disable");
 
-        // addCommentsB.disabled = true;
-        // addCommentsB.classList.add("disable");
+        addCommentsB.disabled = true;
+        addCommentsB.classList.add("disable");
 
-        // commentsContainer.classList.add("no-visible");
+        commentsContainer.classList.add("no-visible");
 
-        // loadConfigurationPUP();
+        loadConfigurationPUP();
     }
 
 

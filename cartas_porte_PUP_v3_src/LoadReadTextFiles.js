@@ -17,12 +17,10 @@ class TextFileOpen {
     loadAndReadFile(){
         return new Promise( (resolve, reject) => {
             let fileReader = new FileReader();
-            fileReader.readAsArrayBuffer(this.file);
-            // fileReader.readAsText(this.file, this.codification);
+            fileReader.readAsText(this.file, this.codification);
             fileReader.onload = function() {
                 
                 try {
-                    debugger
                     console.log("contenido del archivo: ", this.result);
                     resolve(this.result);
                 } catch (error) {
