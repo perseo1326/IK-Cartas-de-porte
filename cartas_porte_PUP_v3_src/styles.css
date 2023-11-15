@@ -38,7 +38,6 @@ body {
 div.panel {
     /* display: flex; // activado con JS */
     display: none;
-    /* display: block; */
     position: absolute;
     top: 0px;
     left: 0px;
@@ -87,7 +86,6 @@ div.panel div.container div.frame div.frame-content div p span {
     div#wait-panel {
         background-color: var(--panel-background-color);
         display: none;
-        /* display: block; */
         position: absolute;
         top: 0;
         left: 0;

@@ -279,7 +279,6 @@
     // *********************************************************
     function drawRow(value, count) {
         let dataTableBody = "";
-        // console.log("Dibujar fila valor: ", value);
 
         // first column: counter
         dataTableBody += "<tr class='centrar' title='";
@@ -410,7 +409,6 @@
 
     // *********************************************************
     function deleteRow( row ) {
-        // console.log("Fila a eliminar: ", row);
         if(confirm("Esta seguro de eliminar la fila con ISELL: " + row + " ?")){
             removeOrder(row);
             showContent(ordersMap);

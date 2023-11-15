@@ -140,7 +140,6 @@ class Product {
         windowServiceObj = {};
 
         // TODO: cambiar fecha manual
-        // todayDate = new Date("2023-07-04");
         todayDate = new Date();
         selectedDate.valueAsDate = todayDate;
         commentsText.value = "";
@@ -193,6 +192,6 @@ class Product {
             console.log("ERROR:initializePage: Debe actualizar a la última versión.");
             throw new Error("Debe actualizar a la última versión.\n" + APP_DOWNLOAD_PATH);
         }
-        console.log("Versión del HTML: ", VERSION);
+        console.log("Versión del HTML: ", HTML_VERSION);
     }
 

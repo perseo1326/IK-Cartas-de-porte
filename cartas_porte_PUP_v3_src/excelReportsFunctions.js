@@ -23,12 +23,9 @@ class ExcelFileOpen {
             return false;
         }
 
-        // console.log("Data rows: ", dataRows[0]);
-
         if(dataRows[0][ORDER_TYPE_EXCEL] === undefined || dataRows[dataRows.length - 1][ISELL] === undefined) {
             return false;
         }
-    
         return true;
     }
 

@@ -33,7 +33,7 @@
 
     // *********************************************************
 
-    const VERSION = "4.0";
+    const VERSION = "4.1";
     const UPDATE_HTML = "4.0";
 
     const APP_DOWNLOAD_PATH = "Sharepoint / ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte.html";
@@ -177,21 +177,18 @@
                     waitPanel.style.display = "block";
                     initializePage();
 
-                    // "windows-1252"
-                    let fileCSVOverview = new TextFileOpen(evento.target.files[0]);
+                    let fileCSVOverview = new TextFileOpen(file);
 
                     fileDate = new Date(fileCSVOverview.file.lastModified);
                     uploadFileOverviewButton.innerText = fileCSVOverview.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
 
                     // Load data from file
-
                     let dataPromise = fileCSVOverview.loadAndReadFile();
 
                     dataPromise.then( (response) => {
 
                         // process and clean info from the file
                         let arrayDataClean = readOverviewFileCSV(fileCSVOverview.file, response);
-                        
                         isellsOverviewMapComplet = mappingArrayDataCSV(arrayDataClean);
                         showSelectionButton();
                         console.log("Carga Overview \"" + fileCSVOverview.file.name + "\" Finalizada!");
@@ -215,7 +212,6 @@
                     fileDate = new Date(file.lastModified);
 
                     uploadFileHistorical.innerText = fileHistorical.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
-
                     loadReportsExcel(fileHistorical, uploadFileHistorical);
                     break;
 
@@ -227,7 +223,6 @@
                     fileDate = new Date(file.lastModified);
 
                     uploadFileByStatus.innerText = fileStatus.file.name + " (" + fileDate.getHours() + ":" + fileDate.getMinutes() + "h)";
-
                     loadReportsExcel(fileStatus, uploadFileByStatus);
                     break;
             }
@@ -274,11 +269,10 @@
                 let workbook =  XLSX.read(buffer);
                 let contentFile =  XLSX.utils.sheet_to_row_object_array(workbook.Sheets[WORKING_SHEET]);
                 
-                // console.log("Content file: ", contentFile);
-                
                 // process and clean info from the file
                 let arrayExcelClean = readReportsExcel(excelFile.file, contentFile);
                 console.log("Carga \"" + excelFile.file.name + "\" Finalizada!", arrayExcelClean); 
+
                 if(button.id === "upload-file-b-historical"){
                     isellsHistorical.isellsMap = mappingArrayDataExcel( arrayExcelClean );
                 } else {

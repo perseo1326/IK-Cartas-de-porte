@@ -21,7 +21,6 @@ class TextFileOpen {
             fileReader.onload = function() {
                 
                 try {
-                    console.log("contenido del archivo: ", this.result);
                     resolve(this.result);
                 } catch (error) {
                     console.log("Error cargando el archivo.");
