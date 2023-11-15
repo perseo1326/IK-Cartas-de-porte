@@ -5,12 +5,16 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 4.1:
+* Cambio de formato para el archivo de configuracion de los Pick up points, pasando de estar escrito en javascript a formato json, para mejorar su lectura.
+
 ### Versión 4.0:
 Debido a una actualizacion realizada en la aplicacion principal la cual genera los reportes desde los cuales esta aplicacion se alimenta, se han generado errores ya que los reportes han cambiado en estructura.
 
 * Reparado el problema de lectura del reporte "orders overview.csv", ya que la codificación cambio de "windows-1252" a UTF-8.
 * Mejorado la intercepción de Excepción para la verificación de integridad de la información leida desde el reporte.
-* Mensaje de error en caso que el reporte cuente con la columna "DROP OFF", ya que esta puede generar errores de integridad en la información leida. 
+* Mensaje de error en caso que el reporte cuente con la columna "DROP OFF" ("Zona de entregas"), ya que esta puede generar errores de integridad en la información leida. 
+* Ajuste en la lectura y carga de los reportes "Historical" y "By Status" que continen la informacion de volumen, peso y paquetes para cada ISELL.
 
 
 ### Versión 3.1:

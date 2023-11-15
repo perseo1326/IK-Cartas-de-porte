@@ -34,7 +34,7 @@
     // *********************************************************
 
     const VERSION = "4.1";
-    const UPDATE_HTML = "4.0";
+    const UPDATE_HTML = "4.1";
 
     const APP_DOWNLOAD_PATH = "Sharepoint / ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte.html";
 
