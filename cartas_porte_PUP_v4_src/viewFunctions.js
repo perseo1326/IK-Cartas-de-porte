@@ -13,26 +13,6 @@
 
 
     // *********************************************************
-    // Function to load the destination ("CUT_OFF_TIME") options into the drop down list selector 
-    function loadConfigurationPUP() {
-
-        cleanChildNodes(cutOffTimeSelector);
-        loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
-
-        console.log("Valor de Datos de Configuracion PUPs: ", typeof(configData), configData);
-        if(typeof(configData) === "undefined") {
-            console.log("ERROR:loadConfigurationPUP:Fallo al cargar la configuración inicial de los PUP.");
-            throw new Error("Fallo al cargar la configuración inicial.");
-        } 
-        else {
-            configData.forEach( (destination) => {
-                    loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
-                } );
-        }
-    }
-
-
-    // *********************************************************
     // Function to clean their HTML DOM element child nodes 
     function cleanChildNodes(parentNode) {
         if(parentNode.childNodes.length > 0 ) {

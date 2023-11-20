@@ -172,7 +172,39 @@ class Product {
 
         commentsContainer.classList.add("no-visible");
 
-        loadConfigurationPUP();
+    }
+
+
+    // *********************************************************
+    // Function to load the destination ("CUT_OFF_TIME") options into the drop down list selector 
+    async function loadConfigurationPUP() {
+
+        cleanChildNodes(cutOffTimeSelector);
+        loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
+
+        let requestOptions = {
+            method : "GET",
+            headers : {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Access-Control-Allow-Origin' : '*'
+            }
+        }
+        // load configuration file from url
+        let dataFile = await fetch(URL, requestOptions);
+        let dataText = await dataFile.text();
+        let configData = JSON.parse(dataText);
+
+        console.log("Valor de Datos de Configuracion PUPs: ", typeof(configData), configData);
+
+        if(typeof(configData) === "undefined") {
+            console.log("ERROR:loadConfigurationPUP:Fallo al cargar la configuración inicial de los PUP.");
+            throw new Error("Fallo al cargar la configuración inicial.");
+        } 
+        else {
+            configData.forEach( (destination) => {
+                    loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
+                } );
+        }
     }
 
 
@@ -195,3 +227,5 @@ class Product {
         console.log("Versión del HTML: ", HTML_VERSION);
     }
 
+
+    // *********************************************************

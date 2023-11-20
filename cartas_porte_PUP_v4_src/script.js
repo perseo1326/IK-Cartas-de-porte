@@ -36,6 +36,10 @@
     const VERSION = "4.1";
     const UPDATE_HTML = "4.1";
 
+    // const URL = "https://iweof.sharepoint.com/teams/o365g_all_retes406/_layouts/15/download.aspx?UniqueId=85324425c0894122b4c8d6bfd445f8f0&e=ub3y92";
+    const URL = "/cartas_porte_PUP_v4_src/datos_pup.json";
+
+
     const APP_DOWNLOAD_PATH = "Sharepoint / ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte.html";
 
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -155,6 +159,7 @@
             console.log("Versión: ", VERSION);
             document.getElementById("version-titulo").innerText = "(v" + VERSION + ")";
             document.getElementById("version-footer").innerText = "Versión " + VERSION + " - (https://github.com/perseo1326)";
+            loadConfigurationPUP();
             initializePage();
         } catch (error) {
             console.log("ERROR ONLOAD: ", error);
