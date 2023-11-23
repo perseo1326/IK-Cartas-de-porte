@@ -40,9 +40,6 @@
     const URL = "/cartas_porte_PUP_v4_src/datos_pup.json";
 
 
-    const APP_DOWNLOAD_PATH = "Sharepoint / ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte.html";
-
-    const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     // minimum required columns from 'Overview.csv' file
         const ISELL_ORDER = "Ref. de Ventas";

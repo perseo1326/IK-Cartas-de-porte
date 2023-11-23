@@ -1,4 +1,8 @@
-
+{
+    "shopCode" : 406,
+    "shopName" :"IKEA L'Hospitalet",
+    "APP_DOWNLOAD_PATH" : "Sharepoint / ALL(RETES406) / !!LOGISTICA / !OUTFLOW / CMP's / PUP_cartas_porte.html",
+    "CMPs" :
 [
     {
         "name" : "Diagonal Normal COT 20:15h",
@@ -242,3 +246,4 @@
         ]
     }
 ]
+}

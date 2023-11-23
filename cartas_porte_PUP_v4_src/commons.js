@@ -192,16 +192,21 @@ class Product {
         // load configuration file from url
         let dataFile = await fetch(URL, requestOptions);
         let dataText = await dataFile.text();
-        let configData = JSON.parse(dataText);
+        configData = JSON.parse(dataText);
 
-        console.log("Valor de Datos de Configuracion PUPs: ", typeof(configData), configData);
+        console.log("Valor de Datos de Configuracion PUPs: ", typeof(configData), "\n", configData);
 
         if(typeof(configData) === "undefined") {
             console.log("ERROR:loadConfigurationPUP:Fallo al cargar la configuración inicial de los PUP.");
             throw new Error("Fallo al cargar la configuración inicial.");
         } 
         else {
-            configData.forEach( (destination) => {
+            if(configData.shopCode !== SHOP_CODE) {
+                console.log("ERROR: El Codigo de tienda no es compatible con el archivo de configuración.");
+                throw new Error("El Codigo de tienda no es compatible con el archivo de configuración.");
+            }
+
+            configData.CMPs.forEach( (destination) => {
                     loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
                 } );
         }

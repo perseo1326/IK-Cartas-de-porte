@@ -63,7 +63,7 @@
     // *********************************************************
     // Function to find a destination ("CUT_OFF_TIME") from a "pupId" given
     function findObjectPUP (value) {
-        return configData.find( obj => { return obj.pupId === value});
+        return configData.CMPs.find( obj => { return obj.pupId === value});
     }
     
     
