@@ -30,26 +30,26 @@ function dynamicallyLoadCustomScripts(){
 
     // xlsxScript.src            = "./cartas_porte_PUP_v4_src/xlsx.full.min.js";
     // loadTextFilesScript.src   = "./cartas_porte_PUP_v4_src/LoadReadTextFiles.js";
-    // configPUPScript.src       = "./cartas_porte_PUP_v4_src/datos_pup-280.js";
+    // configPUPScript.src       = "./cartas_porte_PUP_v4_src/datos_pup-406.js";
     // viewFunctionsScript.src   = "./cartas_porte_PUP_v4_src/viewFunctions.js";
     // scriptScript.src          = "./cartas_porte_PUP_v4_src/script.js";
     // commonsScript.src         = "./cartas_porte_PUP_v4_src/commons.js";
     // overviewFunctionsScript.src         = "./cartas_porte_PUP_v4_src/overviewFunctions.js";
     // excelReportsFunctionsScript.src     = "./cartas_porte_PUP_v4_src/excelReportsFunctions.js";
 
-    faviconLink.href    = "https://iweof.sharepoint.com/:i:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/favicon.ico?csf=1&web=1&e=EuSYkZ";
-    stylesLink.href     = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/styles.css?csf=1&web=1&e=I2elyq";
+    faviconLink.href    =
+    stylesLink.href     =
 
 
     // Badalona Online config
-    xlsxScript.src            = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/xlsx.full.min.js?csf=1&web=1&e=8GaVhu";
-    loadTextFilesScript.src   = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/loadReadTextFiles.js?csf=1&web=1&e=L9HNdc";
-    configPUPScript.src       = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/datos_pup-280.js?csf=1&web=1&e=GHwK6n";
-    viewFunctionsScript.src   = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/viewFunctions.js?csf=1&web=1&e=uT6Dp0";
-    scriptScript.src          = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/script.js?csf=1&web=1&e=VVw9zM";
-    commonsScript.src         = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/commons.js?csf=1&web=1&e=zaA5Wz";
-    overviewFunctionsScript.src         = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/overviewFunctions.js?csf=1&web=1&e=WyOIJg";
-    excelReportsFunctionsScript.src     = "https://iweof.sharepoint.com/:u:/r/teams/o365g_logistics_retes280/Shared%20Documents/02%20-%20OUTFLOW/!!CARTASDEPORTE_GIR-GLO/cartas_porte_PUP_v4_src/excelReportsFunctions.js?csf=1&web=1&e=q9LdNv";
+    xlsxScript.src            =
+    loadTextFilesScript.src   =
+    configPUPScript.src       =
+    viewFunctionsScript.src   =
+    scriptScript.src          =
+    commonsScript.src         =
+    overviewFunctionsScript.src         =
+    excelReportsFunctionsScript.src     =
 
 
     // Adding elements 
