@@ -32,10 +32,11 @@
 
 
     // *********************************************************
-
     const VERSION = "4.2";
     const UPDATE_HTML = "4.2";
 
+    const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    
     // minimum required columns from 'Overview.csv' file
         const ISELL_ORDER = "Ref. de Ventas";
         const ORDER_TYPE = "Tipo de pedido";
