@@ -189,10 +189,15 @@ class Product {
                 'Access-Control-Allow-Origin' : '*'
             }
         }
+
+        debugger
+        let jsonFile = new File("https://iweof.sharepoint.com/teams/o365g_all_retes406/_layouts/15/download.aspx?UniqueId=1bad15e1641f41e28c4389372dad6091&e=pTXK6a");
         // load configuration file from url
-        let dataFile = await fetch(URL, requestOptions);
-        let dataText = await dataFile.text();
-        configData = JSON.parse(dataText);
+        // let dataFile = await fetch(URL, requestOptions);
+        // let dataText = await dataFile.text();
+        // configData = JSON.parse(dataText);
+
+        console.log("valor de jsonFile: ", jsonFile);
 
         console.log("Valor de Datos de Configuracion PUPs: ", typeof(configData), "\n", configData);
 
