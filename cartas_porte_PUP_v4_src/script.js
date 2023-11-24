@@ -33,11 +33,12 @@
 
     // *********************************************************
 
-    const VERSION = "4.1";
-    const UPDATE_HTML = "4.1";
+    const VERSION = "4.2";
+    const UPDATE_HTML = "4.2";
 
     // const URL = "https://iweof.sharepoint.com/teams/o365g_all_retes406/_layouts/15/download.aspx?UniqueId=85324425c0894122b4c8d6bfd445f8f0&e=ub3y92";
-    const URL = "/cartas_porte_PUP_v4_src/datos_pup.json";
+    // const URL = "/cartas_porte_PUP_v4_src/datos_pup.json";
+    const URL = "https://iweof.sharepoint.com/teams/o365g_all_retes406/_layouts/15/download.aspx?UniqueId=1bad15e1641f41e28c4389372dad6091&e=3hEJrP";
 
 
 

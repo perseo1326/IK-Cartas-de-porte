@@ -5,6 +5,9 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 4.2:
+* Cambio de metodo de carga del archivo de configuración para los pick up points, pasando de ser un script en javascript a un archivo json.
+
 ### Versión 4.1:
 * Cambio de formato para el archivo de configuracion de los Pick up points, pasando de estar escrito en javascript a formato json, para mejorar su lectura.
 
