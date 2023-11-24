@@ -177,33 +177,16 @@ class Product {
 
     // *********************************************************
     // Function to load the destination ("CUT_OFF_TIME") options into the drop down list selector 
-    async function loadConfigurationPUP() {
+    function loadConfigurationPUP() {
 
         cleanChildNodes(cutOffTimeSelector);
         loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
 
-        let requestOptions = {
-            method : "GET",
-            headers : {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Access-Control-Allow-Origin' : '*'
-            }
-        }
-
-        debugger
-        let jsonFile = new File("https://iweof.sharepoint.com/teams/o365g_all_retes406/_layouts/15/download.aspx?UniqueId=1bad15e1641f41e28c4389372dad6091&e=pTXK6a");
-        // load configuration file from url
-        // let dataFile = await fetch(URL, requestOptions);
-        // let dataText = await dataFile.text();
-        // configData = JSON.parse(dataText);
-
-        console.log("valor de jsonFile: ", jsonFile);
-
-        console.log("Valor de Datos de Configuracion PUPs: ", typeof(configData), "\n", configData);
+        // console.log("Datos de Configuracion PUPs: ", configData);
 
         if(typeof(configData) === "undefined") {
             console.log("ERROR:loadConfigurationPUP:Fallo al cargar la configuración inicial de los PUP.");
-            throw new Error("Fallo al cargar la configuración inicial.");
+            throw new Error("Fallo al cargar la configuración inicial de los PUP");
         } 
         else {
             if(configData.shopCode !== SHOP_CODE) {
@@ -211,9 +194,14 @@ class Product {
                 throw new Error("El Codigo de tienda no es compatible con el archivo de configuración.");
             }
 
-            configData.CMPs.forEach( (destination) => {
-                    loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
-                } );
+            try {
+                configData.CMPs.forEach( (destination) => {
+                        loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
+                    } );
+            } catch (error) {
+                console.log("ERROR:loadConfigurationPUP: El archivo de configuración parace no tener la estructura adecuada.", error);
+                throw new Error("El archivo de configuración parace no tener la estructura adecuada.");
+            }
         }
     }
 
@@ -231,8 +219,8 @@ class Product {
             fileSelectorHistorical.disabled = true;
             fileSelectorByStatus.disabled = true;
 
-            console.log("ERROR:initializePage: Debe actualizar a la última versión.");
-            throw new Error("Debe actualizar a la última versión.\n" + APP_DOWNLOAD_PATH);
+            console.log("ERROR:checkVersion: Debe actualizar a la última versión.");
+            throw new Error("Debe actualizar a la última versión.\n" + configData.APP_DOWNLOAD_PATH);
         }
         console.log("Versión del HTML: ", HTML_VERSION);
     }

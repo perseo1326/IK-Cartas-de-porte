@@ -1,3 +1,5 @@
+const configData = 
+
 {
     "shopCode": 280,
     "shopName": "IKEA Badalona",

@@ -1,3 +1,6 @@
+
+const configData = 
+
 {
     "shopCode" : 406,
     "shopName" :"IKEA L'Hospitalet",

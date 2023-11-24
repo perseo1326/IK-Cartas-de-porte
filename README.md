@@ -1,12 +1,15 @@
 # **Cartas de Porte Pick Up Points**
 
 
-Esta **"applicación"** permite al usuario la creación de las cartas de porte para diferentes pick up points y la generación de su documentación correspondiente.
+Esta **"applicación"** permite al usuario la creación de las cartas de porte para diferentes pick up points (PUPs) y la generación de su documentación correspondiente.
 
 ## **Actualizaciones y mejoras**
 
 ### Versión 4.2:
-* Cambio de metodo de carga del archivo de configuración para los pick up points, pasando de ser un script en javascript a un archivo json.
+* Actualización de la estructura del archivo de configuración para los PUPs para el manejo de configuraciones personalizadas para diferentes tiendas.
+* Mejora en la captura de excepciones al cargar los datos de configuración de los PUPs.
+* Nueva verificación para la comprobación del archivo de configuración de los PUPs vs. la plantilla HTML para su correspondencia entre tiendas.
+* Nueva implementacin para la carga dinámica de los scripts de la página para permitir cambiar modo online/local y facilitar el cambiar links entre diversas tiendas.
 
 ### Versión 4.1:
 * Cambio de formato para el archivo de configuracion de los Pick up points, pasando de estar escrito en javascript a formato json, para mejorar su lectura.
