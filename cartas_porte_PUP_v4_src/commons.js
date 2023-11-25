@@ -74,16 +74,15 @@ class Product {
     class OrderDetail {
         constructor(isell) {
             this.isell          = isell.trim();
-            this.pickArea       = new Map([
-                [MARKET_HALL, []],
-                [SELF_SERVICE, []], 
-                [WAREHOUSE, []]
-            ]);
+            this.pickArea       = new Map();
         }
 
-        addProduct(product, pickArea){
-            let newProduct = product;
-            this.pickArea.get(pickArea).push(newProduct);
+        addProduct(product, pickZone){
+
+            if(!this.pickArea.has(pickZone)){
+                this.pickArea.set(pickZone, []);
+            }
+            this.pickArea.get(pickZone).push(product);
         }
 
         containPickArea(area){

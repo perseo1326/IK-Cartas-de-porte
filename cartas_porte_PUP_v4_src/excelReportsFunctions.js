@@ -65,6 +65,9 @@ class ExcelFileOpen {
     // *********************************************************
     function mappingArrayDataExcel(dataArrayExcel) {
 
+        pickAreas = getAllPickAreas(dataArrayExcel);
+        console.log("Zones 'Pick Area': ", pickAreas);
+
         let orderDetailsMap = new Map();
         dataArrayExcel.forEach(rowData => {
             
@@ -79,6 +82,26 @@ class ExcelFileOpen {
             orderDetailObject.addProduct(producto, rowData[PICK_AREA]);
             orderDetailsMap.set(orderDetailObject.isell, orderDetailObject);
         });
-        
         return orderDetailsMap;
     }
+
+
+    // *********************************************************
+    // function to get all "Pick up Areas" or sections have the shop to pick up the products
+    function getAllPickAreas(dataArray){
+
+        let zones = [];
+
+        dataArray.forEach( (row) => {
+            if( !zones.includes( row[PICK_AREA] )) {
+                zones.push(row[PICK_AREA]);
+            }
+        });
+
+        return zones;
+    }
+
+
+
+
+
