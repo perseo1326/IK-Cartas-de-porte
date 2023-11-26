@@ -5,17 +5,22 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 4.3:
+* Conversión y modificación de la lógica de ejecución cambiando las areas de picking de 3 estáticas (Markethall, selfservice, warehouse) para ser leídas, procesadas y mostradas de forma dinámica, permitiendo ajustarse a diferencias en los reportes respecto a cada tienda.
+* Instalada secuencia de verificación para la carga de los reportes para evitar inconsistencias a la hora de realizar la lógica de negocio.
+
 ### Versión 4.2:
 * Actualización de la estructura del archivo de configuración para los PUPs para el manejo de configuraciones personalizadas para diferentes tiendas.
 * Mejora en la captura de excepciones al cargar los datos de configuración de los PUPs.
 * Nueva verificación para la comprobación del archivo de configuración de los PUPs vs. la plantilla HTML para su correspondencia entre tiendas.
-* Nueva implementacin para la carga dinámica de los scripts de la página para permitir cambiar modo online/local y facilitar el cambiar links entre diversas tiendas.
+* Nueva implementación para la carga dinámica de los scripts de la página para permitir cambiar modo online/local y facilitar el cambiar links entre diversas tiendas.
+* Por problemas con los encabezados (CORS) se desecha la idea de mantener los datos de configuración en formato JSON y se regresa a formato js creando un objeto para manipular los datos.
 
 ### Versión 4.1:
-* Cambio de formato para el archivo de configuracion de los Pick up points, pasando de estar escrito en javascript a formato json, para mejorar su lectura.
+* Cambio de formato para el archivo de configuración de los Pick up points, pasando de estar escrito en javascript a formato json, para mejorar su lectura.
 
 ### Versión 4.0:
-Debido a una actualizacion realizada en la aplicacion principal la cual genera los reportes desde los cuales esta aplicacion se alimenta, se han generado errores ya que los reportes han cambiado en estructura.
+Debido a una actualizacion realizada en la aplicación principal la cual genera los reportes desde los cuales esta aplicacion se alimenta, se han generado errores ya que los reportes han cambiado en estructura.
 
 * Reparado el problema de lectura del reporte "orders overview.csv", ya que la codificación cambio de "windows-1252" a UTF-8.
 * Mejorado la intercepción de Excepción para la verificación de integridad de la información leida desde el reporte.

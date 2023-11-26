@@ -269,6 +269,7 @@ tbody#data-body tr td sup {
 thead tr.cabecera th.invert-colors {
     background-color: var(--second-color);
     color: var(--first-color);
+    border: 1px solid var(--first-color);
 }
 
 thead tr th.ordinal {

@@ -86,8 +86,10 @@ class Product {
         }
 
         containPickArea(area){
+            
             let orderDetail = this;
-            if(orderDetail.pickArea.get(area).length < 1 ){
+            
+            if(orderDetail.pickArea.get(area) === undefined || orderDetail.pickArea.get(area).length < 1 ){
                 return false;
             }
             return true;

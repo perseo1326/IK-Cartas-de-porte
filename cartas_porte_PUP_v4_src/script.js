@@ -25,15 +25,15 @@
     const frameCancelB = document.getElementById("frame-cancel-b");
     const editRows = document.getElementById("edit-rows");
 
-    const tableBody = document.getElementById("data-body");
+    const tableData = document.getElementById("table-data");
 
     const waitPanel = document.getElementById("wait-panel");
     const panelShippingDate = document.getElementById("panel-shipping-date");
 
 
     // *********************************************************
-    const VERSION = "4.2";
-    const UPDATE_HTML = "4.2";
+    const VERSION = "4.3";
+    const UPDATE_HTML = "4.3";
 
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     
@@ -68,9 +68,6 @@
 
     const WORKING_SHEET = "DATA";
     const ORDER_TYPE_DATA = "PICKUP_POINT";
-    const MARKET_HALL = "MARKETHALL";
-    const SELF_SERVICE = "SELFSERVE";
-    const WAREHOUSE = "FULLSERVE_INTERNAL";
 
     const NO_INFO = "No Info";
     const ISELL_EMPTY  = "-";
@@ -108,6 +105,9 @@
 
     // will contain the orders (isells) filtered by CUT OFF DATE, CUT OFF TIME AND SERVICE WINDOW
     let ordersMap = new Map();
+
+    // variable for keep all the "Pick Areas" for all orders lines
+    let pickAreas = [];
 
     let windowServiceObj = {};
     let todayDate = "";
@@ -265,7 +265,7 @@
                 let buffer = this.result;
                 let workbook =  XLSX.read(buffer);
                 let contentFile =  XLSX.utils.sheet_to_row_object_array(workbook.Sheets[WORKING_SHEET]);
-                
+
                 // process and clean info from the file
                 let arrayExcelClean = readReportsExcel(excelFile.file, contentFile);
                 console.log("Carga \"" + excelFile.file.name + "\" Finalizada!", arrayExcelClean); 

@@ -98,7 +98,7 @@ class ExcelFileOpen {
             }
         });
 
-        return zones;
+        return zones.sort();
     }
 
 
