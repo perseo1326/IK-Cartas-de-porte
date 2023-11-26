@@ -150,8 +150,14 @@ class Product {
         frameShippingDate.value = "----------";
 
         uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
+
         uploadFileHistorical.innerText = "Subir archivo 'Historical'...";
+        fileSelectorHistorical.disabled = true;
+        uploadFileHistorical.classList.add("disable");
+        
         uploadFileByStatus.innerText = "Subir archivo 'By Order Status'...";
+        fileSelectorByStatus.disabled = true;
+        uploadFileHistorical.classList.add("disable");
 
         selectedDate.disabled = true;
         selectedDate.classList.add("disable");

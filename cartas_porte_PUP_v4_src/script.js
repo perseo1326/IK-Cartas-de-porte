@@ -167,6 +167,7 @@
         try {
             let file = evento.target.files[0];
             let fileDate = undefined;
+
             switch (evento.target.id) {
 
                 // case file 'overview.csv'
@@ -191,6 +192,12 @@
                         console.log("Carga Overview \"" + fileCSVOverview.file.name + "\" Finalizada!");
                         waitPanel.style.display = "none";
 
+                        // active the buttons 'uploadFileHistorical' and '' to let load the Excel reports
+                        fileSelectorHistorical.disabled = false;
+                        uploadFileHistorical.classList.remove("disable");
+
+                        fileSelectorByStatus.disabled = false;
+                        uploadFileByStatus.classList.remove("disable");
                     })
                     .catch( (error) => {
                             console.log("ERROR:openFile:", error);
@@ -203,6 +210,7 @@
 
                 // case file 'Historical'
                 case 'file-input-historical':
+                    
                     waitPanel.style.display = "block";
 
                     let fileHistorical = new ExcelFileOpen(file);
@@ -213,7 +221,8 @@
                     break;
 
                 // case file 'By Order Status'
-                case 'file-input-by-order-status':   
+                case 'file-input-by-order-status': 
+
                     waitPanel.style.display = "block";
 
                     let fileStatus = new ExcelFileOpen(file);
