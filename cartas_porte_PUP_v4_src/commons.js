@@ -138,6 +138,8 @@ class Product {
         // will contain the orders (isells) filtered by CUT OFF DATE, CUT OFF TIME AND SERVICE WINDOW
         ordersMap = new Map();
 
+        pickAreas = [];
+
         windowServiceObj = {};
 
         // TODO: cambiar fecha manual

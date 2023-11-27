@@ -65,7 +65,8 @@ class ExcelFileOpen {
     // *********************************************************
     function mappingArrayDataExcel(dataArrayExcel) {
 
-        pickAreas = getAllPickAreas(dataArrayExcel);
+        // Global variable that contains all the pick areas from the report
+        pickAreas = getAllPickAreas(dataArrayExcel, pickAreas);
         console.log("Zones 'Pick Area': ", pickAreas);
 
         let orderDetailsMap = new Map();
@@ -88,7 +89,7 @@ class ExcelFileOpen {
 
     // *********************************************************
     // function to get all "Pick up Areas" or sections have the shop to pick up the products
-    function getAllPickAreas(dataArray){
+    function getAllPickAreas(dataArray, pickZones){
 
         let zones = [];
 
@@ -97,6 +98,14 @@ class ExcelFileOpen {
                 zones.push(row[PICK_AREA]);
             }
         });
+
+        if( pickZones.length > 0 ){
+            pickZones.forEach( area => {
+                if(!zones.includes(area)){
+                    zones.push(area);
+                }
+            });
+        } 
 
         return zones.sort();
     }
