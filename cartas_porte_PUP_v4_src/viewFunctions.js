@@ -376,7 +376,7 @@
         });
 
         dataTableBody += "<td colspan='3'>";
-        dataTableBody += "TOTAL";
+        dataTableBody += "Pedidos Totales ";
         dataTableBody += "</td>";
         
         dataTableBody += "<td class='hide-print'>"
