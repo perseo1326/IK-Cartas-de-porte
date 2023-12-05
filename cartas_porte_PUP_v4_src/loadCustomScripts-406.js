@@ -41,7 +41,7 @@ function dynamicallyLoadCustomScripts(){
     stylesLink.href     =
 
 
-    // Badalona Online config
+    // 406 Online config
     xlsxScript.src            =
     loadTextFilesScript.src   =
     configPUPScript.src       =
