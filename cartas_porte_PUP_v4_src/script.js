@@ -151,9 +151,7 @@
         try {
             console.log("Versión: ", VERSION);
             document.getElementById("version-titulo").innerText = "(v" + VERSION + ")";
-            TODO: 
-            // CAMBIAR POR ENLACE A CORREO
-            document.getElementById("version-footer").innerText = "Versión " + VERSION + " - (https://github.com/perseo1326)";
+            document.getElementById("version-footer").innerHTML = "Versión " + VERSION + " - " + '<a class="contact" href="mailto:Johnwilli.skolik@ingka.ikea.com">Johnwilli.skolik@ingka.ikea.com</a>';
             loadConfigurationPUP();
             initializePage();
         } catch (error) {

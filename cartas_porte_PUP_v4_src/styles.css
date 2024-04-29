@@ -168,6 +168,10 @@ div.container-column {
     text-align: center;
 }
 
+.block {
+    display: block;
+}
+
 h1 {
     font-size: 2rem;
 }
@@ -189,7 +193,6 @@ div h1 span.version-titulo {
 }
 
 a.contact {
-    display: block;
     text-align: right;
     text-decoration: none;
     color: gray;
