@@ -28,28 +28,28 @@ function dynamicallyLoadCustomScripts(){
     // script for handle Excel files and content
     // xlsxScript          = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
 
-    // xlsxScript.src            = "./cartas_porte_PUP_v4_src/xlsx.full.min.js";
-    // loadTextFilesScript.src   = "./cartas_porte_PUP_v4_src/LoadReadTextFiles.js";
-    // configPUPScript.src       = "./cartas_porte_PUP_v4_src/datos_pup-406.js";
-    // viewFunctionsScript.src   = "./cartas_porte_PUP_v4_src/viewFunctions.js";
-    // scriptScript.src          = "./cartas_porte_PUP_v4_src/script.js";
-    // commonsScript.src         = "./cartas_porte_PUP_v4_src/commons.js";
-    // overviewFunctionsScript.src         = "./cartas_porte_PUP_v4_src/overviewFunctions.js";
-    // excelReportsFunctionsScript.src     = "./cartas_porte_PUP_v4_src/excelReportsFunctions.js";
+    xlsxScript.src            = "./cartas_porte_PUP_v4_src/xlsx.full.min.js";
+    loadTextFilesScript.src   = "./cartas_porte_PUP_v4_src/LoadReadTextFiles.js";
+    configPUPScript.src       = "./cartas_porte_PUP_v4_src/datos_pup-406.js";
+    viewFunctionsScript.src   = "./cartas_porte_PUP_v4_src/viewFunctions.js";
+    scriptScript.src          = "./cartas_porte_PUP_v4_src/script.js";
+    commonsScript.src         = "./cartas_porte_PUP_v4_src/commons.js";
+    overviewFunctionsScript.src         = "./cartas_porte_PUP_v4_src/overviewFunctions.js";
+    excelReportsFunctionsScript.src     = "./cartas_porte_PUP_v4_src/excelReportsFunctions.js";
 
     faviconLink.href    =
     stylesLink.href     =
 
 
     // 406 Online config
-    xlsxScript.src            =
-    loadTextFilesScript.src   =
-    configPUPScript.src       =
-    viewFunctionsScript.src   =
-    scriptScript.src          =
-    commonsScript.src         =
-    overviewFunctionsScript.src         =
-    excelReportsFunctionsScript.src     =
+    // xlsxScript.src            =
+    // loadTextFilesScript.src   =
+    // configPUPScript.src       =
+    // viewFunctionsScript.src   =
+    // scriptScript.src          =
+    // commonsScript.src         =
+    // overviewFunctionsScript.src         =
+    // excelReportsFunctionsScript.src     =
 
 
     // Adding elements 

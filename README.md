@@ -5,6 +5,9 @@ Esta **"applicación"** permite al usuario la creación de las cartas de porte p
 
 ## **Actualizaciones y mejoras**
 
+### Versión 4.4:
+* Problema con acceso a archivos de recursos, cambio de arquitectura.
+
 ### Versión 4.3:
 * Conversión y modificación de la lógica de ejecución cambiando las areas de picking de 3 estáticas (Markethall, selfservice, warehouse) para ser leídas, procesadas y mostradas de forma dinámica, permitiendo ajustarse a diferencias en los reportes respecto a cada tienda.
 * Instalada secuencia de verificación para la carga de los reportes para evitar inconsistencias a la hora de realizar la lógica de negocio.
