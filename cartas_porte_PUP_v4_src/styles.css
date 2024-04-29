@@ -188,6 +188,15 @@ div h1 span.version-titulo {
     font-size: 1em;
 }
 
+a.contact {
+    display: block;
+    text-align: right;
+    text-decoration: none;
+    color: gray;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
 .custom-button {
     border: 1px solid var(--first-color);
     border-radius: 4px;

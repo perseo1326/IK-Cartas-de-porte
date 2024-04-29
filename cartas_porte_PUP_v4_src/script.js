@@ -32,8 +32,8 @@
 
 
     // *********************************************************
-    const VERSION = "4.3";
-    const UPDATE_HTML = "4.3";
+    const VERSION = "4.4";
+    const UPDATE_HTML = "4.4";
 
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     
@@ -151,6 +151,8 @@
         try {
             console.log("Versión: ", VERSION);
             document.getElementById("version-titulo").innerText = "(v" + VERSION + ")";
+            TODO: 
+            // CAMBIAR POR ENLACE A CORREO
             document.getElementById("version-footer").innerText = "Versión " + VERSION + " - (https://github.com/perseo1326)";
             loadConfigurationPUP();
             initializePage();
