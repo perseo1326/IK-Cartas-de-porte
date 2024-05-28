@@ -32,8 +32,8 @@
 
 
     // *********************************************************
-    const VERSION = "4.4";
-    const UPDATE_HTML = "4.4";
+    const VERSION = "4.5";
+    const UPDATE_HTML = "4.5";
 
     const EXCEL_MIME_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     

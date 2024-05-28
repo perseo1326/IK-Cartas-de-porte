@@ -12,12 +12,12 @@
 
     <!-- shop  -->
     <!-- <script src="./cartas_porte_PUP_v4_src/loadCustomScripts-280.js"></script> -->
-    <script src="./cartas_porte_PUP_v4_src/loadCustomScripts-406.js"></script>
+    <!-- <script src="./cartas_porte_PUP_v4_src/loadCustomScripts-406.js"></script> -->
 
     <script>
-        const HTML_VERSION = "4.4";
-        const SHOP_CODE = 406;      // L'Hospitalet
-        // const SHOP_CODE = 280;      // Badalona
+        const HTML_VERSION = "4.5";
+        const SHOP_CODE = 406;      
+        // const SHOP_CODE = 280;   
     </script>
     <style>
 
@@ -46,6 +46,23 @@
                             <input type="button" id="frame-cancel-b" class="custom-button" value="Cancelar">
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Welcome Shop Selector -->
+        <div id="shop-selector-panel" class="hide-print">
+            <div class="shop-selector-content">
+                <h1>Cartas de Porte PickUp Points </h1>
+                <div>
+                    <h2>Seleccione su tienda</h2>
+                    <select name="shop-selector" id="shop-id" class="custom-button">
+                        <option value="" >Selecciona una opción</option>
+                        <option value="280">280 - Badalona</option>
+                        <option value="406">406 - L'Hospitalet</option>
+                        <option value="100">100 - Sabadell</option>
+                    </select>
+                    <input type="button" id="shop-selector-b" class="custom-button" value="Continuar">
                 </div>
             </div>
         </div>
