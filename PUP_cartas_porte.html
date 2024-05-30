@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./cartas_porte_PUP_v4_src/styles.css">
+    <link rel="shortcut icon" href="./cartas_porte_PUP_v4_src/favicon.ico" type="image/x-icon">
 
     <!-- shop  -->
     <!-- <script src="./cartas_porte_PUP_v4_src/loadCustomScripts-280.js"></script> -->
@@ -16,7 +18,7 @@
 
     <script>
         const HTML_VERSION = "4.5";
-        const SHOP_CODE = 406;      
+        // const SHOP_CODE = 406;      
         // const SHOP_CODE = 280;   
     </script>
     <style>
@@ -55,8 +57,8 @@
             <div class="shop-selector-content">
                 <h1>Cartas de Porte PickUp Points </h1>
                 <div>
-                    <h2>Seleccione su tienda</h2>
-                    <select name="shop-selector" id="shop-id" class="custom-button">
+                    <label for="shop-selector">Seleccione su tienda</label>
+                    <select name="shop-selector" id="shop-id" class="custom-button" size="">
                         <option value="" >Selecciona una opción</option>
                         <option value="280">280 - Badalona</option>
                         <option value="406">406 - L'Hospitalet</option>
@@ -280,9 +282,14 @@
             <p class="show-print footer-page ancho-50">Imprimir 3 copias: 1 Consignatario, 1 transportista y 1 receptor.</p>
         </div>
     </div>
-    <script>
 
-    </script>
+    <script src="./cartas_porte_PUP_v4_src/xlsx.full.min.js"></script>
+    <script src="./cartas_porte_PUP_v4_src/LoadReadTextFiles.js"></script>
+    <script src="./cartas_porte_PUP_v4_src/viewFunctions.js"></script>
+    <script src="./cartas_porte_PUP_v4_src/script.js"></script>
+    <script src="./cartas_porte_PUP_v4_src/commons.js"></script>
+    <script src="./cartas_porte_PUP_v4_src/overviewFunctions.js"></script>
+    <script src="./cartas_porte_PUP_v4_src/excelReportsFunctions.js"></script>
 
 </body>
 </html>

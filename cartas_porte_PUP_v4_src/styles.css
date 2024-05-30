@@ -85,8 +85,6 @@ div.panel div.container div.frame div.frame-content div p span {
 
     div#shop-selector-panel {
         background-color: var(--panel-background-color);
-        background-color: var(--background);
-        /* display: none; */
         display: flex;
         flex-direction: column;
         align-content: center;
@@ -115,7 +113,8 @@ div.panel div.container div.frame div.frame-content div p span {
         margin-bottom: 0.5em;
     }
 
-    div.shop-selector-content h2 {
+    div.shop-selector-content label {
+        display: block;
         margin: 0.5em;
         font-size: 1.5em;
         text-align: center;

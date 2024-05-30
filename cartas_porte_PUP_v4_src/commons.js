@@ -116,6 +116,11 @@ class Product {
         // console.clear();
         checkVersion();
 
+        // activate Shop selector panel
+        shopSelectorPanel.style.display = "flex";
+        // TODO: inicializar selector de tienda a cero
+
+
         console.log("Inicializando los valores por defecto de la página.");
         document.title = printDocumentTitle = "PUP's Cartas de Porte V" + VERSION;
 
@@ -181,37 +186,6 @@ class Product {
 
         commentsContainer.classList.add("no-visible");
 
-    }
-
-
-    // *********************************************************
-    // Function to load the destination ("CUT_OFF_TIME") options into the drop down list selector 
-    function loadConfigurationPUP() {
-
-        cleanChildNodes(cutOffTimeSelector);
-        loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
-
-        // console.log("Datos de Configuracion PUPs: ", configData);
-
-        if(typeof(configData) === "undefined") {
-            console.log("ERROR:loadConfigurationPUP:Fallo al cargar la configuración inicial de los PUP.");
-            throw new Error("Fallo al cargar la configuración inicial de los PUP");
-        } 
-        else {
-            if(configData.shopCode !== SHOP_CODE) {
-                console.log("ERROR: El Codigo de tienda no es compatible con el archivo de configuración.");
-                throw new Error("El Codigo de tienda no es compatible con el archivo de configuración.");
-            }
-
-            try {
-                configData.CMPs.forEach( (destination) => {
-                        loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
-                    } );
-            } catch (error) {
-                console.log("ERROR:loadConfigurationPUP: El archivo de configuración parace no tener la estructura adecuada.", error);
-                throw new Error("El archivo de configuración parace no tener la estructura adecuada.");
-            }
-        }
     }
 
 
