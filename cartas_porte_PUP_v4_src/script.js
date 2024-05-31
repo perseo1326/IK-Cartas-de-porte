@@ -44,7 +44,7 @@ const shopIdSelector = document.getElementById("shop-id");
 
 // *********************************************************
 const VERSION = "5.0";
-const UPDATE_HTML = "4.5";
+const CURRENT_JSON_DATA_VERSION = "1.0";
 
 const EXCEL_MIME_TYPE =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -183,19 +183,20 @@ function loadConfigurationPUP( ) {
 
     console.log("INFO:loadConfigurationPUP");
     const SHOP_CODE_SELECTED = shopIdSelector.value;
-
+    
     if (SHOP_CODE_SELECTED === "") {
         console.log("INFO:loadConfigurationPUP: Debe seleccionar una tienda.");
         alert("Debe seleccionar una tienda.");
         return ;
     }
-        
+    
     const URL_Resource = PUPs_CONFIG_JSON + SHOP_CODE_SELECTED + ".json";
     const remoteResourcePromise = getRemoteResource(URL_Resource);
     
     remoteResourcePromise.then( (resource) => {
-
+        
         configData = resource;
+
         console.log("Configuration DATA: ", resource);
             
         if(typeof(configData) === undefined || configData === 0 ) {
@@ -208,6 +209,9 @@ function loadConfigurationPUP( ) {
                 throw new Error("El Codigo de tienda no es compatible con el archivo de configuración.");
             }
 
+            // verify json data config  Vs. current version
+            checkJsonDataVersion( configData.jsonDataVersion );
+
             configData.CMPs.forEach( (destination) => {
                 loadOptionsDropDownListView(cutOffTimeSelector, destination.pupId, destination.title);
             } );
@@ -219,6 +223,7 @@ function loadConfigurationPUP( ) {
         .catch( ( error ) =>  { 
             console.log(error);
             alert(error.message);
+            window.onload();
         } );
 }
 

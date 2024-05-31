@@ -197,21 +197,15 @@ class Product {
 
     // *********************************************************
     // Check the correct version of HTML and scripts
-    function checkVersion(){
+    function checkJsonDataVersion( jsonDataVersion ){
         
-        if(typeof(HTML_VERSION) === "undefined" || HTML_VERSION !== UPDATE_HTML){
+        if(typeof(jsonDataVersion) === "undefined" || jsonDataVersion !== CURRENT_JSON_DATA_VERSION ){
             
-            uploadFileOverviewButton.classList.add("disable");
-            uploadFileHistorical.classList.add("disable");
-            uploadFileByStatus.classList.add("disable");
-            fileSelectorOverview.disabled = true;
-            fileSelectorHistorical.disabled = true;
-            fileSelectorByStatus.disabled = true;
-
-            console.log("ERROR:checkVersion: Debe actualizar a la última versión.");
-            throw new Error("Debe actualizar a la última versión.\n" + configData.APP_DOWNLOAD_PATH);
+            const message = "Archivo de configuración no actualizado.";
+            console.log("ERROR:checkVersion: " + message );
+            throw new Error(message + "\n" + configData.APP_DOWNLOAD_PATH);
         }
-        console.log("Versión del HTML: ", HTML_VERSION);
+        console.log("Versión del archivo de configuración: ", jsonDataVersion);
     }
 
 
