@@ -113,16 +113,12 @@ class Product {
     // Function to initialize the variables and environment 
     function initializePage() {
         
-        // console.clear();
-        checkVersion();
+        console.log("Inicializando los valores por defecto de la página.");
+        console.log("Versión: ", VERSION);
 
         // activate Shop selector panel
         shopSelectorPanel.style.display = "flex";
-        // TODO: inicializar selector de tienda a cero
-
-
-        console.log("Inicializando los valores por defecto de la página.");
-        document.title = printDocumentTitle = "PUP's Cartas de Porte V" + VERSION;
+        shopIdSelector.value = "";
 
         // data structure for containing all the info combined
         // complet, filtered and clean info for 'Overview.csv'
@@ -154,6 +150,14 @@ class Product {
         showProcessValues(null, "", "", "", "");
         showContent([]);
 
+        document.title = printDocumentTitle = "PUP's Cartas de Porte V" + VERSION;
+        document.getElementById("version-titulo").innerText = "(v" + VERSION + ")";
+        document.getElementById("version-footer").innerHTML =
+            "Versión " +
+            VERSION +
+            " - " +
+            '<a class="contact" href="mailto:Johnwilli.skolik@ingka.ikea.com">Johnwilli.skolik@ingka.ikea.com</a>';
+
         frameShippingDate.value = "----------";
 
         uploadFileOverviewButton.innerText = "Subir archivo 'overview.csv'...";
@@ -164,7 +168,7 @@ class Product {
         
         uploadFileByStatus.innerText = "Subir archivo 'By Order Status'...";
         fileSelectorByStatus.disabled = true;
-        uploadFileHistorical.classList.add("disable");
+        uploadFileByStatus.classList.add("disable");
 
         selectedDate.disabled = true;
         selectedDate.classList.add("disable");
@@ -186,6 +190,8 @@ class Product {
 
         commentsContainer.classList.add("no-visible");
 
+        cleanChildNodes(cutOffTimeSelector);
+        loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
     }
 
 

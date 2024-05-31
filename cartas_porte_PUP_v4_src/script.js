@@ -40,7 +40,7 @@ const panelShippingDate = document.getElementById("panel-shipping-date");
 // shop selector panel
 const shopSelectorPanel = document.getElementById("shop-selector-panel");
 const shopSeleccionB = document.getElementById("shop-selector-b");
-const shopIdSelected = document.getElementById("shop-id");
+const shopIdSelector = document.getElementById("shop-id");
 
 // *********************************************************
 const VERSION = "5.0";
@@ -171,13 +171,6 @@ waitPanel.addEventListener("wheel", (evento) => {
 window.onload = function () {
     // TODO: inicializar la pagina al cargarla
     try {
-        console.log("Versión: ", VERSION);
-        document.getElementById("version-titulo").innerText = "(v" + VERSION + ")";
-        document.getElementById("version-footer").innerHTML =
-            "Versión " +
-            VERSION +
-            " - " +
-            '<a class="contact" href="mailto:Johnwilli.skolik@ingka.ikea.com">Johnwilli.skolik@ingka.ikea.com</a>';
         initializePage();
     } catch (error) {
         alert(error.message);
@@ -189,10 +182,14 @@ window.onload = function () {
 function loadConfigurationPUP( ) {
 
     console.log("INFO:loadConfigurationPUP");
-    cleanChildNodes(cutOffTimeSelector);
-    loadOptionsDropDownListView(cutOffTimeSelector, DEFAULT_DROPDOWNLIST_VALUE.value, DEFAULT_DROPDOWNLIST_VALUE.text );
+    const SHOP_CODE_SELECTED = shopIdSelector.value;
 
-    const SHOP_CODE_SELECTED = shopIdSelected.value;
+    if (SHOP_CODE_SELECTED === "") {
+        console.log("INFO:loadConfigurationPUP: Debe seleccionar una tienda.");
+        alert("Debe seleccionar una tienda.");
+        return ;
+    }
+        
     const URL_Resource = PUPs_CONFIG_JSON + SHOP_CODE_SELECTED + ".json";
     const remoteResourcePromise = getRemoteResource(URL_Resource);
     
@@ -220,6 +217,7 @@ function loadConfigurationPUP( ) {
         })
 
         .catch( ( error ) =>  { 
+            console.log(error);
             alert(error.message);
         } );
 }
@@ -273,7 +271,6 @@ function openFile(evento) {
             // case file 'overview.csv'
             case "file-input-overview":
                 waitPanel.style.display = "block";
-                // initializePage();
 
                 let fileCSVOverview = new TextFileOpen(file);
 
@@ -314,7 +311,6 @@ function openFile(evento) {
                         console.log("ERROR:openFile:", error);
                         alert(error.message);
                         window.onload();
-                        initializePage();
                         waitPanel.style.display = "none";
                     });
                 break;
@@ -356,7 +352,7 @@ function openFile(evento) {
     } catch (error) {
         console.log("ERROR:openFile: ", error);
         alert(error.message);
-        initializePage();
+        window.onload();
         waitPanel.style.display = "none";
     }
 }
