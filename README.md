@@ -2,6 +2,7 @@
 
 
 Esta **"applicación"** permite al usuario la creación de las cartas de porte para diferentes pick up points (PUPs) y la generación de su documentación correspondiente.
+La aplicación se encuentra disponible en [Cartas de Porte](https://perseo1326.github.io/IK-Cartas-de-porte/)
 
 ## **Actualizaciones y mejoras**
 
