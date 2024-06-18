@@ -50,7 +50,7 @@ const EXCEL_MIME_TYPE =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 // Json file with PUPs configuration data
-const PUPs_CONFIG_JSON = "./cartas_porte_PUP_v4_src/cartas_porte_v5_";
+const PUPs_CONFIG_JSON = "./cartas_porte_PUP_v5_src/cartas_porte_v5_";
 
 // minimum required columns from 'Overview.csv' file
 const ISELL_ORDER = "Ref. de Ventas";
