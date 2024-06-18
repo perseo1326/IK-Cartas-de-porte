@@ -5,7 +5,7 @@ La aplicación se encuentra disponible en [Cartas de Porte](https://perseo1326.g
 
 En el siguiente enlace se puede consultar la página de la aplicación en ejecución.
 
-[Cartas de porte v4.5](https://perseo1326.github.io/IK-Cartas-de-porte/PUP_cartas_porte.html)
+[Cartas de porte v5.0](https://perseo1326.github.io/IK-Cartas-de-porte/PUP_cartas_porte.html)
 
 ## **Actualizaciones y mejoras**
 
