@@ -84,7 +84,7 @@ div.panel div.container div.frame div.frame-content div p span {
 /* ***** PANEL SHOP SELECTOR  ***** */
 
     div#shop-selector-panel {
-        background-color: var(--panel-background-color);
+        background-color: var(--background);
         display: flex;
         flex-direction: column;
         align-content: center;
@@ -219,6 +219,10 @@ div.container-column {
     text-align: center;
 }
 
+.derecha {
+    text-align: right;
+}
+
 .block {
     display: block;
 }
@@ -244,7 +248,6 @@ div h1 span.version-titulo {
 }
 
 a.contact {
-    text-align: right;
     text-decoration: none;
     color: gray;
     font-style: italic;
