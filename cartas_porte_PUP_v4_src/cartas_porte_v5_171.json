@@ -1,0 +1,50 @@
+{
+    "jsonDataVersion": "1.0",
+    "shopCode": 171,
+    "shopName": "IKEA Sabadell",
+    "APP_DOWNLOAD_PATH": "Sharepoint/All (RETES171)/CFF PUP Granollers.html",
+    "CMPs": [
+        {
+            "name": "Granollers 20:00",
+            "pupId": "GRANOLLERS",
+            "title": "GRANOLLERS",
+            "cutOffTime": "20:00",
+            "senderAddress": [
+                "IKEA Sabadell",
+                "Carrer Serra de Ganillers S/N",
+                "Sabadell 08205",
+                "Barcelona, España"
+            ],
+            "consigneeAddress": [
+                "Punt de Recollida IKEA Granollers",
+                "Carrer de Francesc Macia i Llussa, 160, local 2",
+                "08402, Granollers",
+                "Barcelona, España"
+            ],
+            "carrierAddress": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "windowService": [
+                {
+                    "serviceName": "Franja Mañana",
+                    "serviceNameShort": "FMañana",
+                    "serviceCode": "FRANJA_MANYANA",
+                    "documentTransport_A": "171-",
+                    "documentTransport_B": "FMañana",
+                    "serviceValues": [ "10:00" ]
+                },
+                {
+                    "serviceName": "Franja Tarde",
+                    "serviceNameShort": "FTarde",
+                    "serviceCode": "FRANJA_TARDE",
+                    "documentTransport_A": "171-",
+                    "documentTransport_B": "FTarde",
+                    "serviceValues": [ "15:00" ]
+                }
+            ]
+        }
+    ]
+}
