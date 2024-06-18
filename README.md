@@ -13,6 +13,7 @@ En el siguiente enlace se puede consultar la página de la aplicación en ejecuc
 * Cambio de arquitectura de la aplicación. Pasamos de ejecutar la herramienta en un entorno de archivo a un servidor online, permitiendo acceder desde cualquier lugar, de esta manera pasamos a tener una aplicación multi tiendas. Este cambio en la arquitectura soluciona también un problema de cookies de terceros presentado en los navegadores web que comienzan a aplicar las nuevas políticas de bloqueo de cookies ya que estas eran imprecindibles a la hora de acceder a archivos de ejecución y configuración alojados en la nube interna.
 * Agregado selector de bienvenida para seleccionar y posteriormente cargar la configuracion personalizada a cada tienda.
 * Modificación de la información de configuración pasando a formato JSON.
+* Agregada configuración para una tercera tienda.
 
 ### Versión 4.4
 
